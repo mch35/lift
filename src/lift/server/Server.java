@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import lift.common.LiftEvent;
 import lift.server.exception.ConnectionExitsException;
+import lift.server.exception.ServerSleepsExeption;
 
 /**
  * Jeden z modulow symulatora windy.
@@ -12,8 +13,6 @@ import lift.server.exception.ConnectionExitsException;
  * 
  * @author Michal Chilczuk
  * 
- * 
- * @todo Sprawdzanie w connect czy serwer wystartowal
  */
 public class Server
 {
@@ -23,6 +22,8 @@ public class Server
 	private final ConcurrentMap<ModuleID, Listener> listeners;
 	/** Przetwarzacz pakietow otrzymanych od listenerow */
 	private final Worker worker;
+	/** Czy serwer pracuje */
+	private Boolean isRunning;
 	
 	/**
 	 * 
@@ -32,6 +33,7 @@ public class Server
 		recieved = new Channel<>();
 		listeners = new ConcurrentHashMap<ModuleID, Listener>();
 		worker = new Worker(recieved);
+		isRunning = false;
 	}
 	
 	/**
@@ -40,7 +42,10 @@ public class Server
 	 */
 	public void start()
 	{
-		(new Thread(worker)).start();
+		if(!isRunning)
+		{
+			(new Thread(worker)).start();
+		}
 	}
 		
 	/** 
@@ -50,32 +55,39 @@ public class Server
 	 * @param reciever Miejsce gdzie maja byc wysylane wiadomosci od serwera.
 	 * 
 	 * @return Polaczenie, za pomoca ktorego beda przesylane wiadomosci.
+	 * 
 	 * @throws ConnectionExitsException zwracany gdy istnieje juz polaczenie z klientem o takim id
+	 * @throws ServerSleepsExeption zwracany gdy serwer nie pracuje
 	 */
-	public Connection connect(final ModuleID id) throws ConnectionExitsException
+	public Connection connect(final ModuleID id) throws ConnectionExitsException, ServerSleepsExeption
 	{
-		System.out.println("SERWER: LACZENIE...");
-		// kanaly do komunikacji
-		Channel<LiftEvent> forSending = new Channel<>();
-		Channel<LiftEvent> forListening = new Channel<>();
-		
-		// nowe polaczenie na podstawie kanalow wczesniej zrobionych
-		Connection connection = new Connection(forListening, forSending);
-		
-		// listener sluchajacy na kanale w ktorym klient wrzuca wiadomosci
-		Listener listener = new Listener(id, forListening, recieved);
-		
-		// dodaje do mapy jezeli nie ma jeszcze takiego klucza
-		if(listeners.putIfAbsent(id, listener) != null)
+		if(isRunning)
 		{
-			throw new ConnectionExitsException();
+			System.out.println("SERWER: LACZENIE...");
+			// kanaly do komunikacji
+			Channel<LiftEvent> forSending = new Channel<>();
+			Channel<LiftEvent> forListening = new Channel<>();
+			
+			// nowe polaczenie na podstawie kanalow wczesniej zrobionych
+			Connection connection = new Connection(forListening, forSending);
+			
+			// listener sluchajacy na kanale w ktorym klient wrzuca wiadomosci
+			Listener listener = new Listener(id, forListening, recieved);
+			
+			// dodaje do mapy jezeli nie ma jeszcze takiego klucza
+			if(listeners.putIfAbsent(id, listener) != null)
+			{
+				throw new ConnectionExitsException();
+			}
+			
+			worker.addChannel(id, forSending);
+			
+			(new Thread(listener)).start();
+	
+			System.out.println("SERWER: POLACZONO z " + id);
+			return connection;
 		}
 		
-		worker.addChannel(id, forSending);
-		
-		(new Thread(listener)).start();
-
-		System.out.println("SERWER: POLACZONO z " + id);
-		return connection;
+		throw new ServerSleepsExeption();
 	}
 }
