@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import lift.common.events.SimulationStartEvent;
+import lift.common.events.SimulationStopEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
@@ -105,6 +107,23 @@ public class LiftSimulation extends JFrame {
       btnPanel.add(btnMoveBoxUp);
       btnPanel.add(btnMoveBoxDown);
       
+      startSimulation.addActionListener(new ActionListener()
+      {    		
+    		@Override
+    		public void actionPerformed(ActionEvent arg0)
+    		{
+    			connection.send(new SimulationStartEvent());    			
+    		}
+      });
+      
+      stopSimulation.addActionListener(new ActionListener()
+      {    		
+    		@Override
+    		public void actionPerformed(ActionEvent arg0)
+    		{
+    			connection.send(new SimulationStopEvent());    			
+    		}
+      });
       
       // add Listeners to buttons
       btnAddNewMan.addActionListener(new ActionListener() {
@@ -118,8 +137,8 @@ public class LiftSimulation extends JFrame {
   		}
   	});
       
-      btnMoveManLeft.addActionListener(new ActionListener() {
-		
+      btnMoveManLeft.addActionListener(new ActionListener()
+      {		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
