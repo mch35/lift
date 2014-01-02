@@ -12,6 +12,8 @@ import lift.server.exception.ConnectionExitsException;
  * 
  * @author Michal Chilczuk
  * 
+ * 
+ * @todo Sprawdzanie w connect czy serwer wystartowal
  */
 public class Server
 {
