@@ -14,20 +14,20 @@ import lift.common.LiftEvent;
 public class Connection
 {
 	/** Kolejka do ktorej beda wysylane wiadomosci do serwera */
-	private final Channel<LiftEvent> forSending;
+	private final Channel<LiftEvent> clientToServer;
 	/** Kolejka do ktorej beda wysylane wiadomosci od serwera */
-	private final Channel<LiftEvent> forRecieving;
+	private final Channel<LiftEvent> serverToClient;
 	/** Status polaczenia */
 	private final Status status;
 	
 	/** 
-	 * @param forSending kanal do ktorego beda wysylane wiadomosci do serwera
-	 * @param forRecieving kanal do ktorego beda wysylane wiadomosci od serwera
+	 * @param clientToServer kanal do ktorego beda wysylane wiadomosci do serwera
+	 * @param serverToClient kanal do ktorego beda wysylane wiadomosci od serwera
 	 */
 	Connection(final Channel<LiftEvent> forSending, final Channel<LiftEvent> forRecieving)
 	{
-		this.forSending = forSending;
-		this.forRecieving = forRecieving;
+		this.clientToServer = forSending;
+		this.serverToClient = forRecieving;
 		this.status = Status.OK;
 	}
 	
@@ -40,7 +40,7 @@ public class Connection
 	 */
 	public Status send(final LiftEvent event)
 	{
-		forSending.add(event);
+		clientToServer.add(event);
 		
 		return Status.OK;
 	}
@@ -52,7 +52,7 @@ public class Connection
 	 */
 	public final LiftEvent recieve()
 	{
-		return forRecieving.get();
+		return serverToClient.get();
 	}
 
 	/**
