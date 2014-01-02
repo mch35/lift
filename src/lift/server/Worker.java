@@ -15,6 +15,7 @@ import lift.common.events.*;
  * 
  * @author Micha³ Chilczuk
  *
+ * @TODO przy obsludze strategii trzeba zapewnic ze istnieje dany channel do wysylania
  */
 class Worker implements Runnable
 {
@@ -83,7 +84,7 @@ class Worker implements Runnable
 	{
 		while(true)
 		{
-			synchronized (monitor)
+			/*synchronized (monitor)
 			{
 				try
 				{
@@ -93,12 +94,15 @@ class Worker implements Runnable
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			JOptionPane.showMessageDialog(null, "mon");
+			}*/
+			
 			Packet packet = recieved.get();
+
+			JOptionPane.showMessageDialog(null, "mon");
 			
 			ModuleID sender = packet.getSender();
 			LiftEvent event = packet.getEvent();
+			
 			
 			clientsStrategies.get(sender).process(event);
 		}
