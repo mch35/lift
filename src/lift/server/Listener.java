@@ -3,7 +3,7 @@
  */
 package lift.server;
 
-import lift.common.LiftEvent;
+import lift.common.events.LiftEvent;
 
 /**
  * Nasluchuje na konkretnym polaczeniu i przesyla wiadomosci do watku obslugujacego.

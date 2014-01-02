@@ -5,6 +5,12 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import lift.server.Connection;
+import lift.server.ModuleID;
+import lift.server.Server;
+import lift.server.exception.ConnectionExitsException;
+import lift.server.exception.ServerSleepsExeption;
+
 public class LiftSimulation extends JFrame {
    /**
 	 * 
@@ -25,10 +31,19 @@ public class LiftSimulation extends JFrame {
    private Building building;
    private ElevatorShaft shaft;
    private ElevatorBox box;
+   
+   /** Polaczenie z serwerem */
+   private final Connection connection;
 
  
-   /** Constructor to set up the GUI */
-   public LiftSimulation() 
+   /** 
+    * Constructor to set up the GUI
+    * 
+    * @throws ConnectionExitsException
+    * @throws ServerSleepsExeption
+    *  
+ 	*/
+   public LiftSimulation(final Server server) throws Exception
    {  
 	  // Set up elements of the Simulation
       man = new Man(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 4, 2);
@@ -36,6 +51,16 @@ public class LiftSimulation extends JFrame {
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
+      
+      try
+      {
+		this.connection = server.connect(ModuleID.GUI);
+      }
+      catch (ConnectionExitsException | ServerSleepsExeption e)
+      {
+    	  e.printStackTrace();
+    	  throw e;
+      }
       
       vectorOfMen = new Vector<Man>();
       vectorOfMen.add(man);
@@ -163,11 +188,20 @@ public class LiftSimulation extends JFrame {
       requestFocus();    // "this" JFrame requests focus to receive KeyEvent
    }
    
+   /**
+    * Startuje modul GUI
+    * 
+    */
+   public void start()
+   {
+	   
+   }
+   
    protected void createNewMan() {
 	// TODO Auto-generated method stub
 	   
    }
-   
+      
    public void openTheDoor() 
    {
 	   Thread animationThread = new Thread () {
@@ -298,16 +332,5 @@ public class LiftSimulation extends JFrame {
          box.paint(g);
          
       }
-   }
- 
-   /** The entry main() method */
-   public static void main(String[] args) {
-      // Run GUI construction on the Event-Dispatching Thread for thread safety
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            new LiftSimulation(); // Let the constructor do the job
-         }
-      });
    }
 }

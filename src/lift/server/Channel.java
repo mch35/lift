@@ -6,8 +6,6 @@ package lift.server;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import lift.common.LiftEvent;
-
 /**
  * Kanal przez ktory mozna przesylac wiadomosci.
  * 

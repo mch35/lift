@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JOptionPane;
 
-import lift.common.*;
+import lift.common.events.*;
 
 /**
  * Przetwarza wiadomosci otrzymane od listenerow i wysyla je do odpowiednich klientow
@@ -37,7 +37,7 @@ class Worker implements Runnable
 		ClientStrategy liftStrategy = new ClientStrategy();
 		liftStrategy.addStrategy(ChangeDirectionEvent.class, new ChangeDirectionStrategy());
 		liftStrategy.addStrategy(LiftIsReadyEvent.class, new LiftIsReadyStrategy());
-		liftStrategy.addStrategy(LiftOnTheFloor.class, new LiftOnTheFloorStrategy());
+		liftStrategy.addStrategy(LiftOnTheFloorEvent.class, new LiftOnTheFloorStrategy());
 		clientsStrategies.put(ModuleID.WINDA, liftStrategy);
 		
 		ClientStrategy symStrategy = new ClientStrategy();

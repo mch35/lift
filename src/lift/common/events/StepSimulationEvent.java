@@ -1,4 +1,4 @@
-package lift.common;
+package lift.common.events;
 
 /**
  * @author Micha³

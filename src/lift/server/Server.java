@@ -3,7 +3,7 @@ package lift.server;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import lift.common.LiftEvent;
+import lift.common.events.LiftEvent;
 import lift.server.exception.ConnectionExitsException;
 import lift.server.exception.ServerSleepsExeption;
 
@@ -46,6 +46,8 @@ public class Server
 		{
 			(new Thread(worker)).start();
 		}
+		
+		isRunning = true;
 	}
 		
 	/** 

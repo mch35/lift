@@ -3,7 +3,7 @@
  */
 package lift.server;
 
-import lift.common.LiftEvent;
+import lift.common.events.LiftEvent;
 
 /**
  * Reprezentuje polaczenie miedzy danym modulem, a serwerem.

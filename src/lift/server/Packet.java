@@ -3,7 +3,7 @@
  */
 package lift.server;
 
-import lift.common.LiftEvent;
+import lift.common.events.LiftEvent;
 
 /**
  * Pakiet przechowujacy wiadomosc i jego nadawce

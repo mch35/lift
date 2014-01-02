@@ -3,9 +3,7 @@
  */
 package lift.server;
 
-import lift.common.LiftEvent;
-import lift.common.SimulationStopEvent;
-import lift.server.Worker.LiftEventStrategy;
+import lift.common.events.LiftEvent;
 
 /**
  * @author Micha³
