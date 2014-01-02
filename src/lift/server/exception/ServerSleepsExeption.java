@@ -11,5 +11,8 @@ package lift.server.exception;
  */
 public class ServerSleepsExeption extends Exception
 {
-
+	/**
+	 * generated
+	 */
+	private static final long serialVersionUID = -2179164738268572697L;
 }
