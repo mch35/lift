@@ -1,6 +1,7 @@
 package lift;
 import javax.swing.SwingUtilities;
 
+import lift.residents.ResidentsSimulation;
 import lift.server.Server;
 import lift.view.LiftSimulation;
 
@@ -26,16 +27,21 @@ public class Main
 		server.start();
 		
 	   // Run GUI construction on the Event-Dispatching Thread for thread safety
-	   SwingUtilities.invokeLater(new Runnable() {
-	      @Override
-	      public void run() {
-	         try {
-				new LiftSimulation(server);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} // Let the constructor do the job
-	      }
+	   SwingUtilities.invokeLater(new Runnable()
+	   {
+		   @Override
+		   public void run()
+		   {
+			   try
+			   {
+				   new LiftSimulation(server);
+				   new ResidentsSimulation(5, server);
+			   }
+			   catch (Exception e)
+			   {
+				   e.printStackTrace();
+			   }
+		   }
 	   });
 	}
 
