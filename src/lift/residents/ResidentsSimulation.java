@@ -2,6 +2,7 @@ package lift.residents;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 import lift.common.events.ChangeDirectionEvent;
 import lift.common.events.LiftEvent;
 import lift.common.events.LiftOnTheFloorEvent;
@@ -99,7 +100,15 @@ public class ResidentsSimulation implements Runnable{
 	{
 		//nie za bardzo wiem co tu powinienem zawrzec.
 		while(true)
+		{
 			generatePerson();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	
 	}
 	
