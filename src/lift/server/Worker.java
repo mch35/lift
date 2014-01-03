@@ -6,8 +6,6 @@ package lift.server;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.swing.JOptionPane;
-
 import lift.common.events.*;
 
 /**
@@ -35,6 +33,28 @@ class Worker implements Runnable
 		this.recieved = recieved;
 		this.monitor = new Object();
 		
+		addStrategies();
+		
+		System.out.println(clientsStrategies.size());
+	}
+	
+	/**
+	 * Dodaje nowy kanal do ktorego moze wysylac wiadomosci.
+	 *  
+	 * @param id identyfikator klienta
+	 * @param channel kanal do ktorego bedzie wysylal
+	 */
+	public void addChannel(final ModuleID id, final Channel<LiftEvent> channel)
+	{
+		channels.putIfAbsent(id, channel);
+	}
+	
+	/**
+	 * Dodaje strategie obslugi klientow
+	 * 
+	 */
+	private void addStrategies()
+	{
 		ClientStrategy liftStrategy = new ClientStrategy();
 		liftStrategy.addStrategy(ChangeDirectionEvent.class, new ChangeDirectionStrategy());
 		liftStrategy.addStrategy(LiftIsReadyEvent.class, new LiftIsReadyStrategy());
@@ -54,19 +74,6 @@ class Worker implements Runnable
 		guiStrategy.addStrategy(SimulationStartEvent.class, new SimulationStartStrategy());
 		guiStrategy.addStrategy(StepSimulationEvent.class, new StepSimulationStrategy());
 		clientsStrategies.put(ModuleID.GUI, guiStrategy);
-		
-		System.out.println(clientsStrategies.size());
-	}
-	
-	/**
-	 * Dodaje nowy kanal do ktorego moze wysylac wiadomosci.
-	 *  
-	 * @param id identyfikator klienta
-	 * @param channel kanal do ktorego bedzie wysylal
-	 */
-	public void addChannel(final ModuleID id, final Channel<LiftEvent> channel)
-	{
-		channels.putIfAbsent(id, channel);
 	}
 	
 	/**
@@ -79,6 +86,10 @@ class Worker implements Runnable
 		channels.remove(id);
 	}
 
+	/**
+	 * Pobiera wiadomosci z kolejki i uruchamia odpowiednie strategie
+	 * 
+	 */
 	@Override
 	public void run()
 	{
@@ -99,67 +110,13 @@ class Worker implements Runnable
 			Packet packet = recieved.get();
 			
 			ModuleID sender = packet.getSender();
-			LiftEvent event = packet.getEvent();
-			
+			LiftEvent event = packet.getEvent();			
 			
 			clientsStrategies.get(sender).process(event);
 		}
 	}
 	
-	/**
-	 * Strategia obslugi klienta
-	 * 
-	 * @author Micha³ Chilczuk
-	 *
-	 */
-	class ClientStrategy
-	{
-		/** strategie dla danego klienta */
-		private final HashMap<Class<? extends LiftEvent>, LiftEventStrategy> strategies;
-		
-		public ClientStrategy()
-		{
-			this.strategies = new HashMap<>();
-		}
-		
-		/** 
-		 * Wykonuje dana strategie 
-		 * 
-		 * @param event wiadomosc dla ktorej ma byc wykonana strategia
-		 * 
-		 */
-		public void process(final LiftEvent event)
-		{
-			LiftEventStrategy strategy = this.strategies.get(event.getClass());
-			if(strategy != null)
-			{
-				strategy.execute(event);
-			}
-		}
-		
-		/**
-		 * dodaje strategie dla danej wiadomosci
-		 * 
-		 * @param event wiadomosc dla ktorej bedzie wykonywana strategia
-		 * @param strategy strtegia do wykonania dla danej wiadomosci
-		 */
-		public void addStrategy(final Class<? extends LiftEvent> event, final LiftEventStrategy strategy)
-		{
-			System.out.println("dodaje strategie dla: " + event);
-			this.strategies.put(event, strategy);
-		}
-		
-		/**
-		 * Usuwa strategie dla danej wiadomosci
-		 * 
-		 * @param event wiadomosc dla ktorej bedzie usunieta strategia
-		 * 
-		 */
-		public void removeStrategy(final Class<? extends LiftEvent> event)
-		{
-			this.strategies.remove(event);
-		}
-	}
+	
 	
 	/**
 	 * Strategia obslugi eventu
