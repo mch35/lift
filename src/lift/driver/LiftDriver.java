@@ -2,6 +2,9 @@ package lift.driver;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+
 import lift.common.*;
 import lift.common.events.*;
 import lift.server.Connection;
@@ -65,6 +68,7 @@ public class LiftDriver implements Runnable {
 			try {
 			LiftEvent event = connection.recieve();
 			LiftAction liftAction = eventActionMap.get(event.getClass());
+			
 			liftAction.execute(event);
 			} catch(Exception e) {
 		        e.printStackTrace();

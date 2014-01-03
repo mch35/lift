@@ -4,6 +4,8 @@ import javax.swing.SwingUtilities;
 import lift.driver.LiftDriver;
 import lift.residents.ResidentsSimulation;
 import lift.server.Server;
+import lift.server.exception.ConnectionExitsException;
+import lift.server.exception.ServerSleepsExeption;
 import lift.view.LiftSimulation;
 
 
@@ -36,15 +38,26 @@ public class Main
 			   try
 			   {
 				   new LiftSimulation(server);
-				   new ResidentsSimulation(5, server);
-				   LiftDriver.getInstance(5, server);
 			   }
 			   catch (Exception e)
 			   {
 				   e.printStackTrace();
 			   }
 		   }
-	   });
+	   });	   
+
+	   try {
+		(new Thread(new ResidentsSimulation(5, server))).start();
+	} catch (ConnectionExitsException | ServerSleepsExeption e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   try {
+		   (new Thread(LiftDriver.getInstance(5, server))).start();
+	} catch (ConnectionExitsException | ServerSleepsExeption e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 
 }

@@ -97,8 +97,6 @@ class Worker implements Runnable
 			}*/
 			
 			Packet packet = recieved.get();
-
-			JOptionPane.showMessageDialog(null, "mon");
 			
 			ModuleID sender = packet.getSender();
 			LiftEvent event = packet.getEvent();
