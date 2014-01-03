@@ -42,9 +42,9 @@ public class ResidentsSimulation implements Runnable{
 	 */
 	private void generatePerson()
 	{
-		int homeFloor = rand.nextInt(numberOfFloors + 5);
+		int homeFloor = rand.nextInt(numberOfFloors + 3);
 		int destFloor = rand.nextInt(numberOfFloors);
-		if(homeFloor > numberOfFloors)
+		if(homeFloor >= numberOfFloors)
 			homeFloor = 0;											//zawsze najwiecej ludzi jest na zerowym
 		if(destFloor == homeFloor)
 			destFloor+=1%numberOfFloors;							// Jakby chcial jechac na to pietro na ktorym jest
