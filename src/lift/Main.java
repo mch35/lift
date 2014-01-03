@@ -29,35 +29,41 @@ public class Main
 		final Server server = new Server();	
 		server.start();
 		
-	   // Run GUI construction on the Event-Dispatching Thread for thread safety
-	   SwingUtilities.invokeLater(new Runnable()
-	   {
-		   @Override
-		   public void run()
-		   {
-			   try
-			   {
-				   new LiftSimulation(server);
-			   }
-			   catch (Exception e)
-			   {
-				   e.printStackTrace();
-			   }
-		   }
-	   });	   
-
-	   try {
-		(new Thread(new ResidentsSimulation(5, server))).start();
-	} catch (ConnectionExitsException | ServerSleepsExeption e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					new LiftSimulation(server);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		});	   
+		
+		
+		// Start drivera windy
+		try
+		{
+			(new Thread(LiftDriver.getInstance(5, server))).start();
+		}
+		catch (ConnectionExitsException | ServerSleepsExeption e)
+		{		
+			e.printStackTrace();
+		}
+		
+		// Start modulu mieszkancow
+		try
+		{
+			(new Thread(new ResidentsSimulation(5, server))).start();
+		}
+		catch (ConnectionExitsException | ServerSleepsExeption e)
+		{		
+			e.printStackTrace();
+		}
 	}
-	   try {
-		   (new Thread(LiftDriver.getInstance(5, server))).start();
-	} catch (ConnectionExitsException | ServerSleepsExeption e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	}
-
 }
