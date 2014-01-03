@@ -27,8 +27,8 @@ public class ResidentsSimulation implements Runnable{
 		this.connection = server.connect(ModuleID.MIESZKANCY);
 		
 		numberOfFloors = N;
-		floorList = new ArrayList<Floor>(N+1);
-		for(int i = 0; i <= N;i++)
+		floorList = new ArrayList<Floor>(N);
+		for(int i = 0; i < N;i++)
 		{
 			Floor pietro = new Floor(i,connection);
 			floorList.add(i,pietro);
