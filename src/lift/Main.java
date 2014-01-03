@@ -1,6 +1,7 @@
 package lift;
 import javax.swing.SwingUtilities;
 
+import lift.driver.LiftDriver;
 import lift.residents.ResidentsSimulation;
 import lift.server.Server;
 import lift.view.LiftSimulation;
@@ -36,6 +37,7 @@ public class Main
 			   {
 				   new LiftSimulation(server);
 				   new ResidentsSimulation(5, server);
+				   LiftDriver.getInstance(5, server);
 			   }
 			   catch (Exception e)
 			   {
