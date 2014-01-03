@@ -102,10 +102,12 @@ public class ResidentsSimulation implements Runnable{
 		while(true)
 		{
 			generatePerson();
-			try {
+			
+			try
+			{
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			} catch (InterruptedException e)
+			{
 				e.printStackTrace();
 			}
 		}
