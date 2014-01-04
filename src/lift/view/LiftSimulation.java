@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import lift.common.events.GuiGeneratePersonEvent;
+import lift.common.events.SetTimeIntervalEvent;
 import lift.common.events.SimulationStartEvent;
 import lift.common.events.SimulationStopEvent;
 import lift.server.Connection;
@@ -113,7 +114,7 @@ public class LiftSimulation extends JFrame {
       final JLabel minTimeLabel = new JLabel("Min Time Interval [s]:");
       final JTextField minTimeTextField = new JTextField(4);
       final JLabel maxTimeLabel = new JLabel("Max Time Interval [s]:");
-      final JTextField maxTimeField = new JTextField(4);
+      final JTextField maxTimeTextField = new JTextField(4);
       
       // Add buttons to Panels
       addResidentPanel.add(startSimulation);
@@ -130,7 +131,7 @@ public class LiftSimulation extends JFrame {
       setTimeIntervalPanel.add(minTimeLabel);
       setTimeIntervalPanel.add(minTimeTextField);
       setTimeIntervalPanel.add(maxTimeLabel);
-      setTimeIntervalPanel.add(maxTimeField);
+      setTimeIntervalPanel.add(maxTimeTextField);
       
       btnPanel.add(btnMoveManLeft);
       btnPanel.add(btnMoveManRight);
@@ -155,7 +156,6 @@ public class LiftSimulation extends JFrame {
     		}
       });
       
-      // add Listeners to buttons
       addNewResident.addActionListener(new ActionListener() {
   		
     	  @Override
@@ -165,6 +165,18 @@ public class LiftSimulation extends JFrame {
     		int destinationFloor = Integer.parseInt(dstJTextField.getText());
     		
   			connection.send(new GuiGeneratePersonEvent(homeFloor, destinationFloor));    			
+  		}
+  	});
+      
+      setTimeInterval.addActionListener(new ActionListener() {
+    		
+    	  @Override
+  		public void actionPerformed(ActionEvent arg0)
+  		{
+    		int minTime = Integer.parseInt(minTimeTextField.getText());
+    		int maxTime = Integer.parseInt(maxTimeTextField.getText());
+    		
+  			connection.send(new SetTimeIntervalEvent(minTime, maxTime));    			
   		}
   	});
       
