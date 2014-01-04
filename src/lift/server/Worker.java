@@ -56,8 +56,8 @@ class Worker implements Runnable
 	{
 		ClientStrategy liftStrategy = new ClientStrategy();
 		liftStrategy.addStrategy(ChangeDirectionEvent.class, new ChangeDirectionStrategy());
-		liftStrategy.addStrategy(LiftIsReadyEvent.class, new LiftIsReadyStrategy());
 		liftStrategy.addStrategy(LiftOnTheFloorEvent.class, new LiftOnTheFloorStrategy());
+		liftStrategy.addStrategy(LiftStopEvent.class, new LiftStopStrategy());
 		clientsStrategies.put(ModuleID.WINDA, liftStrategy);
 		
 		ClientStrategy symStrategy = new ClientStrategy();
@@ -66,6 +66,8 @@ class Worker implements Runnable
 		symStrategy.addStrategy(DownButtonEvent.class, new DownButtonStrategy());
 		symStrategy.addStrategy(UpButtonEvent.class, new UpButtonStrategy());
 		symStrategy.addStrategy(GeneratePersonEvent.class, new GeneratePersonStrategy());
+		symStrategy.addStrategy(InnerButtonEvent.class, new InnerButtonStrategy());
+		symStrategy.addStrategy(LiftIsReadyEvent.class, new LiftIsReadyStrategy());
 		clientsStrategies.put(ModuleID.MIESZKANCY, symStrategy);
 		
 		ClientStrategy guiStrategy = new ClientStrategy();
@@ -187,7 +189,25 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
+			channels.get(ModuleID.WINDA).add(event);
+		}
+	}
+	
+	class LiftStopStrategy extends LiftEventStrategy
+	{
+		@Override
+		public void execute(final LiftEvent event)
+		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
+		}
+	}
+	
+	class InnerButtonStrategy extends LiftEventStrategy
+	{
+		@Override
+		public void execute(final LiftEvent event)
+		{
+			channels.get(ModuleID.WINDA).add(event);
 		}
 	}
 	
