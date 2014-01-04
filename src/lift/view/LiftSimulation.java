@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -89,11 +90,14 @@ public class LiftSimulation extends JFrame {
       // Set up a panels for the buttons
       JPanel btnPanel = new JPanel(new FlowLayout());
       JPanel addResidentPanel = new JPanel(new FlowLayout());
+      JPanel setTimeIntervalPanel = new JPanel(new FlowLayout());
 
       // Set up buttons
       JButton startSimulation = new JButton("Start simulation");
       JButton stopSimulation = new JButton("Stop simulation");
       JButton addNewResident = new JButton("Add new Resident ");
+      JButton setTimeInterval = new JButton("Set time intervals");
+      
       JButton btnMoveManLeft = new JButton("Move Man Left ");
       JButton btnMoveManRight= new JButton("Move Man Right ");
       JButton btnMoveBoxUp = new JButton("Move Box Up");
@@ -105,14 +109,28 @@ public class LiftSimulation extends JFrame {
       final JLabel dstFloorJLabel = new JLabel("Destination Floor:");
       final JTextField dstJTextField = new JTextField(2);
       
+     
+      final JLabel minTimeLabel = new JLabel("Min Time Interval [s]:");
+      final JTextField minTimeTextField = new JTextField(4);
+      final JLabel maxTimeLabel = new JLabel("Max Time Interval [s]:");
+      final JTextField maxTimeField = new JTextField(4);
+      
       // Add buttons to Panels
       addResidentPanel.add(startSimulation);
       addResidentPanel.add(stopSimulation);
+      
       addResidentPanel.add(addNewResident);
       addResidentPanel.add(srcFloorJLabel);
       addResidentPanel.add(srcJTextField);
       addResidentPanel.add(dstFloorJLabel);
       addResidentPanel.add(dstJTextField);
+      
+
+      setTimeIntervalPanel.add(setTimeInterval);
+      setTimeIntervalPanel.add(minTimeLabel);
+      setTimeIntervalPanel.add(minTimeTextField);
+      setTimeIntervalPanel.add(maxTimeLabel);
+      setTimeIntervalPanel.add(maxTimeField);
       
       btnPanel.add(btnMoveManLeft);
       btnPanel.add(btnMoveManRight);
@@ -199,7 +217,7 @@ public class LiftSimulation extends JFrame {
       Container cp = getContentPane();
       cp.setLayout(new BorderLayout());
       cp.add(canvas, BorderLayout.CENTER);
-      cp.add(btnPanel, BorderLayout.SOUTH);
+      cp.add(setTimeIntervalPanel, BorderLayout.SOUTH);
       cp.add(addResidentPanel, BorderLayout.NORTH);
 
  
