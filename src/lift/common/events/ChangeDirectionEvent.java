@@ -4,8 +4,8 @@ import lift.common.Direction;
 
 /**
  * Zdarzenie przesylane, gdy winda zmienia kierunek ruchu.
- *
- *
+ * W tym przypadku juz nie jest dodatkowo przesylany LiftStopEvent
+ * zmiana kierunku ruchu nastepuje po zatrzymaniu
  */
 public class ChangeDirectionEvent extends LiftEvent
 {
