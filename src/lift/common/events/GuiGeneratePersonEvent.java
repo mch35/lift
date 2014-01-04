@@ -1,6 +1,6 @@
 package lift.common.events;
 
-public class GuiGeneratePersonEvent
+public class GuiGeneratePersonEvent extends LiftEvent
 {
 
 }
