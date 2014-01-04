@@ -74,6 +74,7 @@ class Worker implements Runnable
 		guiStrategy.addStrategy(SimulationStopEvent.class, new SimulationStopStrategy());
 		guiStrategy.addStrategy(SimulationStartEvent.class, new SimulationStartStrategy());
 		guiStrategy.addStrategy(StepSimulationEvent.class, new StepSimulationStrategy());
+		guiStrategy.addStrategy(GuiGeneratePersonEvent.class, new GuiGeneratePersonStrategy());
 		clientsStrategies.put(ModuleID.GUI, guiStrategy);
 	}
 	
@@ -128,6 +129,15 @@ class Worker implements Runnable
 	abstract class LiftEventStrategy
 	{
 		public abstract void execute(final LiftEvent event);
+	}
+	
+	class GuiGeneratePersonStrategy extends LiftEventStrategy
+	{
+		@Override
+		public void execute(final LiftEvent event)
+		{
+			channels.get(ModuleID.MIESZKANCY).add(event);
+		}
 	}
 	
 	class GetOffStrategy extends LiftEventStrategy
