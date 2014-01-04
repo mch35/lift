@@ -4,11 +4,11 @@ package lift.residents;
 import java.util.ArrayList;
 import java.util.Random;
 
-import lift.common.events.GuiGeneratePersonEvent;
-
 import lift.common.events.ChangeDirectionEvent;
+import lift.common.events.GuiGeneratePersonEvent;
 import lift.common.events.LiftEvent;
 import lift.common.events.LiftOnTheFloorEvent;
+import lift.common.events.SetTimeIntervalEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
@@ -25,10 +25,16 @@ public class ResidentsSimulation implements Runnable{
         private final Lift lift;        
         /** Polaczenie z serwerem */
         private final Connection connection;
+        private int minTimeAnticipating;
+        private int maxTimeAnticipating;
         
         public ResidentsSimulation(int N, final Server server) throws ConnectionExitsException, ServerSleepsExeption
         {
+        	
                 this.connection = server.connect(ModuleID.MIESZKANCY);
+                
+                minTimeAnticipating = 0;
+                maxTimeAnticipating = 2;
                 
                 numberOfFloors = N;
                 floorList = new ArrayList<Floor>(N);
@@ -107,8 +113,40 @@ public class ResidentsSimulation implements Runnable{
                 	GuiGeneratePersonEvent e = (GuiGeneratePersonEvent) event;
                 	generatePerson(e.getHomeFloor(),e.getDestinationFloor());
                 }
+                if(event.getClass() == SetTimeIntervalEvent.class)
+                {
+                	SetTimeIntervalEvent e = (SetTimeIntervalEvent) event;
+                	setTime(e.getMin(),e.getMax());
+                }
                 //TODO: ewentualnie inne eventy do wylapania
                         
+        }
+        
+        /**
+         * Funkcja odpowiedzialna za sprawdzanie czy uzytkownik nie podal jakis glupot
+         * w przedziale czasu pomiedzy kolejna generacja ludzi oraz za ewentualne ustawienie
+         * nowo obowiazujacego przedzialu czasu
+         */
+        private void setTime(int min, int max)
+        {
+        	//Jesli ktos podal wartosci mniejsze od zera, ustawiam wartosci defaultowe
+        	if(min < 0)
+        		min = 0;
+        	if(max > 0)
+        		max = 2;
+        	
+        	
+        	int tmp;
+        	
+        	if(min > max)
+        	{
+        		tmp = min;
+        		min = max;
+        		max = tmp;
+        	}
+        	
+        	minTimeAnticipating = min;
+        	maxTimeAnticipating = max;
         }
         
         
@@ -128,19 +166,23 @@ public class ResidentsSimulation implements Runnable{
         
         public void run()
         {
-                //nie za bardzo wiem co tu powinienem zawrzec.
+                Random generator = new Random();
                 while(true)
                 {
                         generatePerson();
+                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
+                        
+                        long anticipatingTime = (long)(100* randomValue);
                         
                         try
                         {
-                                Thread.sleep(1000);
+                                Thread.sleep(anticipatingTime);
                         } catch (InterruptedException e)
                         {
                                 e.printStackTrace();
                         }
                 }
+                
         
         }
         
