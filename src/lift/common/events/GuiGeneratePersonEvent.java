@@ -1,6 +1,10 @@
 package lift.common.events;
 
-
+/**
+ * Zdarzenie przesylane, gdy wcisnieto przycisk Add new Resident
+ * 
+ *
+ */
 public class GuiGeneratePersonEvent extends LiftEvent{
 	
 	private final int homeFloor;

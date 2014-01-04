@@ -1,11 +1,21 @@
 package lift.view;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import lift.common.events.GuiGeneratePersonEvent;
 import lift.common.events.SimulationStartEvent;
 import lift.common.events.SimulationStopEvent;
 import lift.server.Connection;
@@ -19,6 +29,7 @@ public class LiftSimulation extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 // Name-constants for the various dimensions
    public static final int CANVAS_WIDTH = 640;
    public static final int CANVAS_HEIGHT = 504;
@@ -77,31 +88,31 @@ public class LiftSimulation extends JFrame {
  
       // Set up a panels for the buttons
       JPanel btnPanel = new JPanel(new FlowLayout());
-      JPanel AddNewMenPanel = new JPanel(new FlowLayout());
+      JPanel addResidentPanel = new JPanel(new FlowLayout());
 
       // Set up buttons
       JButton startSimulation = new JButton("Start simulation");
       JButton stopSimulation = new JButton("Stop simulation");
-      JButton btnAddNewMan = new JButton("Add new Man ");
+      JButton addNewResident = new JButton("Add new Resident ");
       JButton btnMoveManLeft = new JButton("Move Man Left ");
       JButton btnMoveManRight= new JButton("Move Man Right ");
       JButton btnMoveBoxUp = new JButton("Move Box Up");
       JButton btnMoveBoxDown= new JButton("Move Box Down");
       
       // Set up TextFields and Labels
-      JLabel srcFloorJLabel = new JLabel("Source Floor:");
-      JTextField srcJTextField = new JTextField(2);
-      JLabel dstFloorJLabel = new JLabel("Destination Floor:");
-      JTextField dstJTextField = new JTextField(2);
+      final JLabel srcFloorJLabel = new JLabel("Source Floor:");
+      final JTextField srcJTextField = new JTextField(2);
+      final JLabel dstFloorJLabel = new JLabel("Destination Floor:");
+      final JTextField dstJTextField = new JTextField(2);
       
       // Add buttons to Panels
-      AddNewMenPanel.add(startSimulation);
-      AddNewMenPanel.add(stopSimulation);
-      AddNewMenPanel.add(btnAddNewMan);
-      AddNewMenPanel.add(srcFloorJLabel);
-      AddNewMenPanel.add(srcJTextField);
-      AddNewMenPanel.add(dstFloorJLabel);
-      AddNewMenPanel.add(dstJTextField);
+      addResidentPanel.add(startSimulation);
+      addResidentPanel.add(stopSimulation);
+      addResidentPanel.add(addNewResident);
+      addResidentPanel.add(srcFloorJLabel);
+      addResidentPanel.add(srcJTextField);
+      addResidentPanel.add(dstFloorJLabel);
+      addResidentPanel.add(dstJTextField);
       
       btnPanel.add(btnMoveManLeft);
       btnPanel.add(btnMoveManRight);
@@ -127,14 +138,15 @@ public class LiftSimulation extends JFrame {
       });
       
       // add Listeners to buttons
-      btnAddNewMan.addActionListener(new ActionListener() {
+      addNewResident.addActionListener(new ActionListener() {
   		
-  		@Override
-  		public void actionPerformed(ActionEvent arg0) {
-  			// TODO Auto-generated method stub
-  			createNewMan();
-              requestFocus(); // change the focus to JFrame to receive KeyEvent
-  			
+    	  @Override
+  		public void actionPerformed(ActionEvent arg0)
+  		{
+    		int homeFloor = Integer.parseInt(srcJTextField.getText());
+    		int destinationFloor = Integer.parseInt(dstJTextField.getText());
+    		
+  			connection.send(new GuiGeneratePersonEvent(homeFloor, destinationFloor));    			
   		}
   	});
       
@@ -188,18 +200,8 @@ public class LiftSimulation extends JFrame {
       cp.setLayout(new BorderLayout());
       cp.add(canvas, BorderLayout.CENTER);
       cp.add(btnPanel, BorderLayout.SOUTH);
-      cp.add(AddNewMenPanel, BorderLayout.NORTH);
- 
-      // "this" JFrame fires KeyEvent
-//      addKeyListener(new KeyAdapter() {
-//         @Override
-//         public void keyPressed(KeyEvent evt) {
-//            switch(evt.getKeyCode()) {
-//               case KeyEvent.VK_LEFT:  moveLeft();  break;
-//               case KeyEvent.VK_RIGHT: moveRight(); break;
-//            }
-//         }
-//      });
+      cp.add(addResidentPanel, BorderLayout.NORTH);
+
  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setTitle("Real Time Lift Simulator");
@@ -216,12 +218,7 @@ public class LiftSimulation extends JFrame {
    {
 	   
    }
-   
-   protected void createNewMan() {
-	// TODO Auto-generated method stub
-	   
-   }
-      
+
    public void openTheDoor() 
    {
 	   Thread animationThread = new Thread () {
