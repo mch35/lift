@@ -76,6 +76,11 @@ public class Floor {
 	 */
 	public void addPerson(Person person)
 	{
+		try {
+			eventQueue.put(new GeneratePersonEvent(person.getStartFloor(), person.getDirection()));
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		if(person.getDirection() == Direction.DOWN)
 		{
 			queueDown.addLast(person);
