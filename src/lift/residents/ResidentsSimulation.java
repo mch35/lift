@@ -1,9 +1,10 @@
 package lift.residents;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
-import common.events.GuiGeneratePersonEvent;
+import lift.common.events.GuiGeneratePersonEvent;
 
 import lift.common.events.ChangeDirectionEvent;
 import lift.common.events.LiftEvent;

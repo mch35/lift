@@ -1,8 +1,10 @@
 package lift.residents;
 
 import java.util.LinkedList;
+
 import lift.common.Direction;
 import lift.common.events.DownButtonEvent;
+import lift.common.events.GeneratePersonEvent;
 import lift.common.events.UpButtonEvent;
 import lift.server.Connection;
 
@@ -76,11 +78,7 @@ public class Floor {
 	 */
 	public void addPerson(Person person)
 	{
-		try {
-			eventQueue.put(new GeneratePersonEvent(person.getStartFloor(), person.getDirection()));
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		connection.send(new GeneratePersonEvent(person.getStartFloor(), person.getDirection()));
 		if(person.getDirection() == Direction.DOWN)
 		{
 			queueDown.addLast(person);
