@@ -1,7 +1,11 @@
 package lift.common.events;
 
-public class GetOnEvent extends LiftEvent{
-	
+/**
+ * Zdarzenie przesylane gdy wsiedli ludzie do windy.
+ *
+ */
+public class GetOnEvent extends LiftEvent
+{	
 	private final int numberInLift;
 	
 	public GetOnEvent(int number)
@@ -9,8 +13,8 @@ public class GetOnEvent extends LiftEvent{
 		numberInLift = number;
 	}
 
-	public int getNumberInLift() {
+	public int getNumberInLift()
+	{
 		return numberInLift;
 	}
-
 }

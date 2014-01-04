@@ -1,5 +1,10 @@
 package lift.common.events;
 
-public abstract class LiftEvent {
+/**
+ * Zdarzenie po ktorym musza dziedziczyc wszystkie zdarzenia.
+ *
+ */
+public abstract class LiftEvent
+{
 
 }

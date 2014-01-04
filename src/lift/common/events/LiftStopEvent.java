@@ -1,15 +1,23 @@
 package lift.common.events;
 
-public class LiftStopEvent extends LiftEvent {
+/**
+ * Zdarzenie przesylane gdy winda zatrzymala sie na danym pietrze.
+ *
+ */
+public class LiftStopEvent extends LiftEvent
+{
 	private final int floor;
-	public LiftStopEvent(final int floor) {
+
+	public LiftStopEvent(final int floor)
+	{
 		this.floor = floor;
 	}
+	
 	/**
 	 * @return the floor
 	 */
-	public int getFloor() {
+	public int getFloor()
+	{
 		return floor;
 	}
-
 }

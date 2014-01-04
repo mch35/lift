@@ -1,8 +1,8 @@
 package lift.common.events;
 
 /**
- * @author Micha³
- *
+ * Zdarzenie przesylane gdy wcisnieto przycisk symulacji krokowej.
+ * 
  */
 public class StepSimulationEvent extends LiftEvent
 {

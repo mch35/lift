@@ -1,4 +1,10 @@
 package lift.common.events;
 
-public class SimulationStopEvent extends LiftEvent {
+/**
+ * Zdarzenie przesylane gdy wcisnieto przycisk stop symulacji.
+ *
+ */
+public class SimulationStopEvent extends LiftEvent
+{
+	
 }

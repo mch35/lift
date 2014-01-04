@@ -2,8 +2,12 @@ package lift.common.events;
 
 import lift.common.Direction;
 
-public class GeneratePersonEvent extends LiftEvent{
-	
+/**
+ * Zdarzenie przesylane, gdy pojawil sie nowy czlowiek.
+ *
+ */
+public class GeneratePersonEvent extends LiftEvent
+{
 	private final int homeFloor;
 	private final Direction direction;
 	
@@ -13,12 +17,13 @@ public class GeneratePersonEvent extends LiftEvent{
 		homeFloor = startFloor;
 	}
 
-	public int getHomeFloor() {
+	public int getHomeFloor()
+	{
 		return homeFloor;
 	}
 
-	public Direction getDirection() {
+	public Direction getDirection()
+	{
 		return direction;
 	}
-
 }

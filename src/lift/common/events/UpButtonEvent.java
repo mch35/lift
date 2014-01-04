@@ -1,9 +1,15 @@
 package lift.common.events;
 
-public class UpButtonEvent extends LiftEvent{
+/**
+ * Zdarzenie przesylane gdy wcisnieto przycisk w gore na pietrze.
+ *
+ */
+public class UpButtonEvent extends LiftEvent
+{
 	private final int floor;
 	
-	public UpButtonEvent(final int floor){
+	public UpButtonEvent(final int floor)
+	{
 		super();
 		this.floor=floor;
 	}
@@ -11,8 +17,8 @@ public class UpButtonEvent extends LiftEvent{
 	/**
 	 * @return the floorNumber
 	 */
-	public int getFloor() {
+	public int getFloor()
+	{
 		return floor;
 	}
-	
 }

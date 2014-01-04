@@ -1,4 +1,10 @@
 package lift.common.events;
 
-public class SimulationStartEvent extends LiftEvent {
+/**
+ * Zdarzenie przesylane gdy wcisnieto przycisk start.
+ *
+ */
+public class SimulationStartEvent extends LiftEvent
+{
+	
 }
