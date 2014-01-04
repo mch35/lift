@@ -4,6 +4,7 @@ package lift.residents;
 import lift.common.Direction;
 import lift.common.events.GetOffEvent;
 import lift.common.events.GetOnEvent;
+import lift.common.events.InnerButtonEvent;
 import lift.common.events.LiftIsReadyEvent;
 import lift.server.Connection;
 
@@ -49,9 +50,9 @@ public class Lift {
 		for(int i =0; i < (maxNumberOfPeople - numberOfPeople); i++)
 		{
 			Person passager = floor.getPassager(direction);
-			System.out.println(passager);
 			if(passager == null)
 				return;
+			connection.send(new InnerButtonEvent(passager.getDestFloor()));
 			addPersonToLift(passager);
 		}
 		connection.send(new LiftIsReadyEvent(floorNumber));
