@@ -1,6 +1,7 @@
 package lift.view;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class LiftSimulation extends JFrame {
  
    private DrawCanvas canvas; // the custom drawing canvas (extends JPanel)
 
-   private Vector<Man> vectorOfMen;
+   private ArrayList<Man> residentsList;
    private Man man;
    private Man man2;
    private Building building;
@@ -64,9 +65,9 @@ public class LiftSimulation extends JFrame {
     	  throw e;
       }
       
-      vectorOfMen = new Vector<Man>();
-      vectorOfMen.add(man);
-      vectorOfMen.add(man2);
+      residentsList = new ArrayList<Man>();
+      residentsList.add(man);
+      residentsList.add(man2);
       
       
       // Set up the custom drawing canvas (JPanel)
@@ -342,7 +343,7 @@ public class LiftSimulation extends JFrame {
          super.paintComponent(g);
          setBackground(CANVAS_BG_COLOR);
 
-         for (Man person : vectorOfMen) {
+         for (Man person : residentsList) {
 			person.paint(g);
          }
          
