@@ -1,7 +1,7 @@
 package lift.common.events;
 
 /**
- * Zdarzenie przesylane gdy wsiedli ludzie do windy.
+ * Zdarzenie przesylane gdy wsiadl czlowiek do windy.
  *
  *
  */

@@ -1,7 +1,7 @@
 package lift.common.events;
 
 /**
- * Zdarzenie przesylane gdy winda jest gotowa ?do czego?.
+ * Zdarzenie przesylane gdy winda moze odjechac z pietra.
  *
  *
  */
