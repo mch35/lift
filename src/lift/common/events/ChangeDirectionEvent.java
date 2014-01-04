@@ -5,6 +5,7 @@ import lift.common.Direction;
 /**
  * Zdarzenie przesylane, gdy winda zmienia kierunek ruchu.
  *
+ *
  */
 public class ChangeDirectionEvent extends LiftEvent
 {

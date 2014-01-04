@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane, gdy nacisnieto przycisk w dol na pietrze.
  *
+ *
  */
 public class DownButtonEvent extends LiftEvent
 {

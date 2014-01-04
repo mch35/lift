@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane gdy winda zatrzymala sie na danym pietrze.
  *
+ *
  */
 public class LiftStopEvent extends LiftEvent
 {

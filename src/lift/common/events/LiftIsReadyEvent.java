@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane gdy winda jest gotowa ?do czego?.
  *
+ *
  */
 public class LiftIsReadyEvent extends LiftEvent
 {

@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane gdy wsiedli ludzie do windy.
  *
+ *
  */
 public class GetOnEvent extends LiftEvent
 {	

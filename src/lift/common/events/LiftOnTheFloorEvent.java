@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane gdy winda dojechala na dane pietro.
  *
+ *
  */
 public class LiftOnTheFloorEvent extends LiftEvent
 {

@@ -5,6 +5,7 @@ import lift.common.Direction;
 /**
  * Zdarzenie przesylane, gdy pojawil sie nowy czlowiek.
  *
+ *
  */
 public class GeneratePersonEvent extends LiftEvent
 {

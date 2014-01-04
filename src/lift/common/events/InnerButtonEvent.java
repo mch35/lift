@@ -3,6 +3,7 @@ package lift.common.events;
 /**
  * Zdarzenie przesylane gdy wcisnieto przycisk w windzie
  *
+ *
  */
 public class InnerButtonEvent extends LiftEvent
 {
