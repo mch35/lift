@@ -117,6 +117,8 @@ public class LiftSimulation extends JFrame implements Runnable
       JButton stopSimulation = new JButton("Stop simulation");
       JButton addNewResident = new JButton("Add new Resident ");
       JButton setTimeInterval = new JButton("Set time intervals");
+      JButton stepOrAutomatic = new JButton("Step/Automatic simulation");
+      JButton nextStep = new JButton("Next step");
       
       JButton btnMoveManLeft = new JButton("Move Man Left ");
       JButton btnMoveManRight= new JButton("Move Man Right ");
@@ -145,7 +147,8 @@ public class LiftSimulation extends JFrame implements Runnable
       addResidentPanel.add(dstFloorJLabel);
       addResidentPanel.add(dstJTextField);
       
-
+      setTimeIntervalPanel.add(stepOrAutomatic);
+      setTimeIntervalPanel.add(nextStep);
       setTimeIntervalPanel.add(setTimeInterval);
       setTimeIntervalPanel.add(minTimeLabel);
       setTimeIntervalPanel.add(minTimeTextField);
@@ -196,6 +199,24 @@ public class LiftSimulation extends JFrame implements Runnable
     		int maxTime = Integer.parseInt(maxTimeTextField.getText());
     		
   			connection.send(new SetTimeIntervalEvent(minTime, maxTime));    			
+  		}
+  	});
+      
+      stepOrAutomatic.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+      
+      nextStep.addActionListener(new ActionListener() {
+  		
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			// TODO Auto-generated method stub
+  			
   		}
   	});
       
