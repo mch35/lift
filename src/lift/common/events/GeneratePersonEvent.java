@@ -1,6 +1,5 @@
 package lift.common.events;
 
-import lift.common.Direction;
 
 /**
  * Zdarzenie przesylane, gdy pojawil sie nowy czlowiek.
