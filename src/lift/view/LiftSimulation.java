@@ -23,6 +23,7 @@ import lift.common.events.GetOnEvent;
 import lift.common.events.GuiGeneratePersonEvent;
 import lift.common.events.LiftEvent;
 import lift.common.events.LiftIsReadyEvent;
+import lift.common.events.LiftOnTheFloorEvent;
 import lift.common.events.LiftStopEvent;
 import lift.common.events.SetTimeIntervalEvent;
 import lift.common.events.SimulationStartEvent;
@@ -58,6 +59,7 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private int currentFloor;
    private Direction currentDirection;
+   private boolean readyToRide;
    
    private LogicLift lift;
    
@@ -80,6 +82,11 @@ public class LiftSimulation extends JFrame implements Runnable
       
       this.numberOfFloors = iloscPieter;
       floorList = new LogicFloor[numberOfFloors];
+      
+      currentDirection=Direction.STOP;
+      currentFloor=0;
+      readyToRide=false;
+      
       
       listOfPeople = new LinkedList<Resident>();
       
@@ -256,6 +263,8 @@ public class LiftSimulation extends JFrame implements Runnable
       pack();            // pack all the components in the JFrame
       setVisible(true);  // show it
       requestFocus();    // "this" JFrame requests focus to receive KeyEvent
+      
+      animateLiftMovement();
    }
    
    /**
@@ -266,7 +275,25 @@ public class LiftSimulation extends JFrame implements Runnable
    {
 	   
    }
-
+   public void animateLiftMovement(){
+	   Thread liftAnimationThread = new Thread(){
+		   @Override
+			   public void run(){
+				   while(true){
+					   if(readyToRide){
+						   if(currentDirection==Direction.UP){
+							   moveBoxUp();
+						   }
+						   else if(currentDirection==Direction.DOWN){
+							   moveBoxDown();
+						   }
+					   }
+				   }
+			   }
+	   };
+	   liftAnimationThread.start();
+   }
+   
    public void openTheDoor() 
    {
 	   Thread animationThread = new Thread () {
@@ -310,6 +337,8 @@ public class LiftSimulation extends JFrame implements Runnable
 	   };
 	   animationThread.start(); 
    }
+   
+   
    
 //   public void manWalkIntoLift()
 //   {
@@ -372,7 +401,10 @@ public class LiftSimulation extends JFrame implements Runnable
       // Save the current dimensions for repaint to erase the sprite
       int saved_y = box.y;
       // update sprite
-      box.y -= 5;  // coordinate system in Java is reversed!!
+      box.y -= 3;  // coordinate system in Java is reversed!!
+      if((box.y%126)==0){
+    	  connection.send(new LiftOnTheFloorEvent(box.y/126));
+      }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
       canvas.repaint(box.x, box.y, box.width, box.height); // Paint new location
@@ -383,7 +415,10 @@ public class LiftSimulation extends JFrame implements Runnable
       // Save the current dimensions for repaint to erase the sprite
       int saved_y = box.y;
       // update sprite
-      box.y += 5;	 // coordinate system in Java is reversed!!
+      box.y += 3;	 // coordinate system in Java is reversed!!
+      if((box.y%126)==0){
+    	  connection.send(new LiftOnTheFloorEvent(box.y/126));
+      }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
       canvas.repaint(box.x, box.y, box.width, box.height); // Paint new location
@@ -430,8 +465,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
 	   {
-
-		   //TODO: obsluga eventu
+		   readyToRide=true;
 	   }
 	   
 	   if(event.getClass() == GetOnEvent.class)
@@ -446,22 +480,23 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
+		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
-		   
-		   // gdy winda sie zatrzymala otwieramy drzwi
 		   openTheDoor();
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
+		   if(currentDirection==Direction.STOP){
+			   readyToRide=true;
+		   }
+		   else{
+			   readyToRide=false;
+		   }
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   lift.setCurrentDirection(e.getNewDirection());
-		   //wg mnie powinno tu jeszcze byc:		--Krzysiek
-		   //lift.serCurrentFloor(e.getFloor());
-		   //poniewaz przy zmianie kierunku rowniez nastepuje zatrzymanie windy
-		   //nie ma potrzeby przesylac drugiego eventu LiftStopEvent
-		   
-		   //wg mnie moze byc:		--Tomek
+		   lift.setCurrentFloor(e.getFloor());
+		   openTheDoor();
 	   }
 	   
    }
