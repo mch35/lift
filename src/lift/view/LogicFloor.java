@@ -39,16 +39,11 @@ public class LogicFloor
 	
 	
 	
-	/**
-	 * Funkcja wsadzajaca czlowieka z odpowiedniej kolejki do windy
-	 * @param direction
-	 * @param id
-	 * @param lift
-	 */
-	public void getOn(Direction direction, int id, LogicLift lift)
+	
+	public void getOn(Resident res)
 	{
 
-		
+		people.remove(res);
 	
 	}
 	

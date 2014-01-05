@@ -465,16 +465,31 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
    }
    
+   /**
+    * Wprowadza mieszkanca do windy
+    * @param id
+    */
    public void goToTheLift(final int id)
    {
 	   Resident newResident = findPerson(id);
+	   
+	   //Usuwam czlowieka z pietra
+	   floorList[lift.getCurrentFloor()].getOn(newResident);
+	   
 	   while(newResident.x < CANVAS_WIDTH - IMAGE_WIDTH)
 	   {
 		   newResident.x++;
 		   canvas.repaint();
+		   
+		   
 	   }
    }
    
+   /**
+    * Znajduje mieszkanca po zadanym id
+    * @param id
+    * @return
+    */
    public Resident findPerson(final int id)
    {
 	   Resident residentToFind = null;
