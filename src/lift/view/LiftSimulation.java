@@ -415,6 +415,7 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private void eventReceiver(LiftEvent event)
    {
+	   System.out.println("Cokolwiek doszlo");
 	   if(event.getClass() == GeneratePersonEvent.class)
 	   {
 		   GeneratePersonEvent e = (GeneratePersonEvent) event;
