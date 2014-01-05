@@ -7,9 +7,11 @@ public class Person
 	private final int startFloor;
 	private final int destFloor;
 	private final Direction direction;
-	private int numberInLift;							//numer rozrozniajacy czlowieka w windzie
+	private final int id;							//numer rozrozniajacy czlowieka w windzie
 	
-	public Person(int startFloor, int destFloor)
+	private int numberInLift;
+	
+	public Person(final int startFloor,final int destFloor, final int id)
 	{
 		this.startFloor = startFloor;
 		this.destFloor = destFloor;
@@ -17,6 +19,8 @@ public class Person
 			direction = Direction.DOWN;
 		else
 			direction = Direction.UP;
+		
+		this.id = id;
 		
 
 			
@@ -38,6 +42,10 @@ public class Person
 	public int getDestFloor()
 	{
 		return destFloor;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	
