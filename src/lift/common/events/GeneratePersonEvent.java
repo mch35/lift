@@ -11,9 +11,11 @@ public class GeneratePersonEvent extends LiftEvent
 {
 	private final int homeFloor;
 	private final Direction direction;
+	private final int id;
 	
-	public GeneratePersonEvent(final int startFloor,final Direction direction)
+	public GeneratePersonEvent(final int startFloor,final Direction direction, final int id)
 	{
+		this.id = id;
 		this.direction = direction;
 		homeFloor = startFloor;
 	}
@@ -31,4 +33,6 @@ public class GeneratePersonEvent extends LiftEvent
 	public int getId() {
 		return id;
 	}
+
+	
 }
