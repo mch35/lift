@@ -82,22 +82,24 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				UpButtonEvent event = (UpButtonEvent) e;
-				pushButtonUp(new Floor(event.getFloor()));
-				if (direction == Direction.STOP) {
-					if (event.getFloor() > actualFloor.getNumber()) {
-						connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
-						direction=Direction.UP;
+				if(directionButtonPanels[event.getFloor()][1]==LiftButton.NOT_ACTIVE){
+					pushButtonUp(new Floor(event.getFloor()));
+					if (direction == Direction.STOP) {
+						if (event.getFloor() > actualFloor.getNumber()) {
+							connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
+							direction=Direction.UP;
+						}
+						else if (event.getFloor() < actualFloor.getNumber()) {
+							connection.send(new ChangeDirectionEvent(Direction.DOWN,actualFloor.getNumber()));
+							direction=Direction.DOWN;
+						}
+						else {
+							connection.send(new ChangeDirectionEvent(Direction.UP,event.getFloor()));
+							direction=Direction.UP;
+							clearButtonUp(actualFloor);
+						}
+						readyToRide=true;
 					}
-					else if (event.getFloor() < actualFloor.getNumber()) {
-						connection.send(new ChangeDirectionEvent(Direction.DOWN,actualFloor.getNumber()));
-						direction=Direction.DOWN;
-					}
-					else {
-						connection.send(new ChangeDirectionEvent(Direction.UP,event.getFloor()));
-						direction=Direction.UP;
-						clearButtonUp(actualFloor);
-					}
-					readyToRide=true;
 				}
 			}
 		});
@@ -106,22 +108,24 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				DownButtonEvent event = (DownButtonEvent) e;
-				pushButtonDown(new Floor(event.getFloor()));
-				if (direction == Direction.STOP) {
-					if (event.getFloor() > actualFloor.getNumber()) {
-						connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
-						direction=Direction.UP;
+				if(directionButtonPanels[event.getFloor()][0]==LiftButton.NOT_ACTIVE){
+					pushButtonDown(new Floor(event.getFloor()));
+					if (direction == Direction.STOP) {
+						if (event.getFloor() > actualFloor.getNumber()) {
+							connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
+							direction=Direction.UP;
+						}
+						else if (event.getFloor() < actualFloor.getNumber()) {
+							connection.send(new ChangeDirectionEvent(Direction.DOWN,actualFloor.getNumber()));
+							direction=Direction.DOWN;
+						}
+						else {
+							connection.send(new ChangeDirectionEvent(Direction.DOWN,event.getFloor()));
+							direction=Direction.DOWN;
+							clearButtonDown(actualFloor);
+						}
+						readyToRide=true;
 					}
-					else if (event.getFloor() < actualFloor.getNumber()) {
-						connection.send(new ChangeDirectionEvent(Direction.DOWN,actualFloor.getNumber()));
-						direction=Direction.DOWN;
-					}
-					else {
-						connection.send(new ChangeDirectionEvent(Direction.DOWN,event.getFloor()));
-						direction=Direction.DOWN;
-						clearButtonDown(actualFloor);
-					}
-					readyToRide=true;
 				}
 			}
 		});
@@ -130,22 +134,24 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				InnerButtonEvent event = (InnerButtonEvent) e;
-				pushButton(new Floor(event.getFloor()));
-				if (direction == Direction.STOP) {
-					if (actualFloor.getNumber() == event.getFloor()) {
-						connection.send(new LiftStopEvent(event.getFloor()));
-						clearButton(actualFloor);
-					}
-					else {
-						if (event.getFloor() > actualFloor.getNumber()) {
-							connection.send(new ChangeDirectionEvent(Direction.UP, actualFloor.getNumber()));
-							direction=Direction.UP;
+				if(buttonPanel[event.getFloor()]==LiftButton.NOT_ACTIVE){
+					pushButton(new Floor(event.getFloor()));
+					if (direction == Direction.STOP) {
+						if (actualFloor.getNumber() == event.getFloor()) {
+							connection.send(new LiftStopEvent(event.getFloor()));
+							clearButton(actualFloor);
 						}
 						else {
-							connection.send(new ChangeDirectionEvent(Direction.DOWN, actualFloor.getNumber()));
-							direction=Direction.DOWN;
+							if (event.getFloor() > actualFloor.getNumber()) {
+								connection.send(new ChangeDirectionEvent(Direction.UP, actualFloor.getNumber()));
+								direction=Direction.UP;
+							}
+							else {
+								connection.send(new ChangeDirectionEvent(Direction.DOWN, actualFloor.getNumber()));
+								direction=Direction.DOWN;
+							}
+							readyToRide=true;
 						}
-						readyToRide=true;
 					}
 				}
 			}
