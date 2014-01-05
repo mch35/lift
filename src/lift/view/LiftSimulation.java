@@ -409,7 +409,6 @@ public class LiftSimulation extends JFrame implements Runnable
 		  GeneratePersonEvent e = (GeneratePersonEvent) event;
 		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
 		  canvas.repaint();	   
-		  openTheDoor();
 	   }
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
