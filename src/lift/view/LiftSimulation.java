@@ -78,7 +78,7 @@ public class LiftSimulation extends JFrame implements Runnable
 
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
-      box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
+      box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, CANVAS_HEIGHT-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
       this.numberOfFloors = iloscPieter;
       floorList = new LogicFloor[numberOfFloors];
@@ -401,9 +401,9 @@ public class LiftSimulation extends JFrame implements Runnable
       // Save the current dimensions for repaint to erase the sprite
       int saved_y = box.y;
       // update sprite
-      box.y -= 3;  // coordinate system in Java is reversed!!
-      if((box.y%126)==0){
-    	  connection.send(new LiftOnTheFloorEvent(box.y/126));
+      box.y -= 1;  // coordinate system in Java is reversed!!
+      if((box.y%IMAGE_HEIGHT)==0){
+    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-(box.y/IMAGE_HEIGHT)));
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
@@ -415,9 +415,9 @@ public class LiftSimulation extends JFrame implements Runnable
       // Save the current dimensions for repaint to erase the sprite
       int saved_y = box.y;
       // update sprite
-      box.y += 3;	 // coordinate system in Java is reversed!!
-      if((box.y%126)==0){
-    	  connection.send(new LiftOnTheFloorEvent(box.y/126));
+      box.y += 1;	 // coordinate system in Java is reversed!!
+      if((box.y%IMAGE_HEIGHT)==0){
+    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-(box.y/IMAGE_HEIGHT)));
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
