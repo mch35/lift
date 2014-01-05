@@ -104,7 +104,7 @@ public class ResidentsSimulation implements Runnable{
          * Metoda odpowiedzialna za odbieranie eventow od modulu posredniczacego
          * @param event
          */
-        public synchronized void send(LiftEvent event)
+        public synchronized void eventReciever(LiftEvent event)
         {
                 if(event.getClass() == LiftOnTheFloorEvent.class)
                 {
@@ -176,32 +176,49 @@ public class ResidentsSimulation implements Runnable{
                 return kaszanka;
         }
         
-        public void run()
+        /**
+         * Startuje generowanie mieszkancow.
+         * 
+         */
+        public void start()
         {
-                Random generator = new Random();
-                while(true)
-                {
-                        generatePerson();
-                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
-                        
-                        long anticipatingTime = (long)(10000* randomValue);
-                        
-                        try
-                        {
-                                Thread.sleep(anticipatingTime);
-                        } catch (InterruptedException e)
-                        {
-                        	System.out.println("Dziwny exception");
-                                e.printStackTrace();
-                        }
-                }
-                
-        
+        	new Thread(new Runnable()
+        	{				
+				@Override
+				public void run()
+				{
+					Random generator = new Random();
+	                while(true)
+	                {
+	                        generatePerson();
+	                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
+	                        
+	                        long anticipatingTime = (long)(10000* randomValue);
+	                        
+	                        try
+	                        {
+	                                Thread.sleep(anticipatingTime);
+	                        } catch (InterruptedException e)
+	                        {
+	                        	System.out.println("Dziwny exception");
+	                                e.printStackTrace();
+	                        }
+	                }	
+				}
+			}).start();
         }
         
-
-        
-        
-        
-
+        /**
+         * Obsluga przychodzacych eventow
+         * 
+         */
+        public void run()
+        {
+                while(true)
+                {
+                	LiftEvent event = connection.receive();
+                	
+                	eventReciever(event);
+                }
+        }
 }
