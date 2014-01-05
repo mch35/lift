@@ -56,7 +56,6 @@ class Worker implements Runnable
 	{
 		ClientStrategy liftStrategy = new ClientStrategy();
 		liftStrategy.addStrategy(ChangeDirectionEvent.class, new ChangeDirectionStrategy());
-		liftStrategy.addStrategy(LiftOnTheFloorEvent.class, new LiftOnTheFloorStrategy());
 		liftStrategy.addStrategy(LiftStopEvent.class, new LiftStopStrategy());
 		clientsStrategies.put(ModuleID.WINDA, liftStrategy);
 		
@@ -76,6 +75,7 @@ class Worker implements Runnable
 		guiStrategy.addStrategy(StepSimulationEvent.class, new StepSimulationStrategy());
 		guiStrategy.addStrategy(GuiGeneratePersonEvent.class, new GuiGeneratePersonStrategy());
 		guiStrategy.addStrategy(SetTimeIntervalEvent.class, new SetTimeIntervalStrategy());
+		guiStrategy.addStrategy(LiftOnTheFloorEvent.class, new LiftOnTheFloorStrategy());
 		clientsStrategies.put(ModuleID.GUI, guiStrategy);
 	}
 	
@@ -242,7 +242,7 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.MIESZKANCY).add(event);
+			channels.get(ModuleID.WINDA).add(event);
 			channels.get(ModuleID.GUI).add(event);
 		}
 	}
