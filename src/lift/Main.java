@@ -1,5 +1,4 @@
 package lift;
-import javax.swing.SwingUtilities;
 
 import lift.driver.LiftDriver;
 import lift.residents.ResidentsSimulation;
