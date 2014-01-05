@@ -76,7 +76,7 @@ public class LiftSimulation extends JFrame implements Runnable
     * @throws ConnectionExitsException
     *  
  	*/
-   public LiftSimulation(final Server server) throws ConnectionExitsException
+   public LiftSimulation(final int iloscPieter, final Server server) throws ConnectionExitsException
    {  
 	  // Set up elements of the Simulation
       man = new Man(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 4, 2);
@@ -85,7 +85,13 @@ public class LiftSimulation extends JFrame implements Runnable
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
-      floorList = new LogicFloor[4];
+      floorList = new LogicFloor[iloscPieter];
+      
+      for(int i = 0; i < floorList.length; ++i)
+      {
+    	  floorList[i] = new LogicFloor(i);
+      }
+      
       lift = new LogicLift();
       
       
@@ -408,7 +414,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   GeneratePersonEvent e = (GeneratePersonEvent) event;
 		   LogicPerson newPerson = new LogicPerson(e.getDirection(), e.getHomeFloor());
-		   
+
 		   //przekazuje obsluge nowego czlowieka pietru
 		   floorList[e.getHomeFloor()].addPerson(newPerson);
 	   }
@@ -445,7 +451,12 @@ public class LiftSimulation extends JFrame implements Runnable
    @Override
    public void run()
    {
-	   // TODO petla obslugi zdarzen
+	   while(true)
+		{
+			LiftEvent event = connection.receive();			
+
+			eventReceiver(event);
+		}
    }
    
    
