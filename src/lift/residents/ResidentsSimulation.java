@@ -27,6 +27,8 @@ public class ResidentsSimulation implements Runnable{
         private int minTimeAnticipating;
         private int maxTimeAnticipating;
         
+        private int id = 0;
+        
         public ResidentsSimulation(int N, final Server server) throws ConnectionExitsException
         {
         	
@@ -57,7 +59,7 @@ public class ResidentsSimulation implements Runnable{
                         homeFloor = 0;                                                                                        //zawsze najwiecej ludzi jest na zerowym
                 if(destFloor == homeFloor)
                         destFloor+=1%numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
-                Person nextPerson = new Person(homeFloor, destFloor);
+                Person nextPerson = new Person(homeFloor, destFloor, createId());
                 
                 //przekazuje czlowieka "pietru"
                 floorList.get(homeFloor).addPerson(nextPerson);
@@ -79,12 +81,23 @@ public class ResidentsSimulation implements Runnable{
                 	destFloor = 1;
                 if(destFloor == homeFloor)
                         destFloor+=1%numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
-                Person nextPerson = new Person(homeFloor, destFloor);
+                Person nextPerson = new Person(homeFloor, destFloor, createId());
                 
                 //przekazuje czlowieka "pietru"
                 floorList.get(homeFloor).addPerson(nextPerson);
                 System.out.println("Robie typa na " + homeFloor);
                                         
+        }
+        
+        /**
+         * Metoda odpowiedzialna za nadanie unikalnego id czlowiekowi aby byl rozroznialny
+         * @return
+         */
+        private synchronized int createId()
+        {
+        	//Zakladam ze wiecej ludzi niz 1 000 nie wejdzie do naszego budynku
+        	id+=1%1000;
+        	return id;
         }
         
         /**
