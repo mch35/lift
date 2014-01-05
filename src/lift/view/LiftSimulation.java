@@ -542,9 +542,9 @@ public class LiftSimulation extends JFrame implements Runnable
 	   //Usuwam czlowieka z pietra
 	   floorList[lift.getCurrentFloor()].getOn(newResident);
 	   
-	   while(newResident.x < CANVAS_WIDTH - IMAGE_WIDTH)
+	   while(newResident.tempX < CANVAS_WIDTH - IMAGE_WIDTH)
 	   {
-		   newResident.x++;
+		   newResident.tempX++;
 		   canvas.repaint();
 		   
 		   
