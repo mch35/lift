@@ -2,6 +2,7 @@ package lift.view;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -18,7 +19,8 @@ public class Resident {
    private final int width = 85;
    private final int height = 126; 
    
-   private String imgFileName = "images/man1.jpg"; // relative to project root (or bin)
+   private String imgFileName1 = "images/man1.jpg"; // relative to project root (or bin)
+   private String imgFileName2 = "images/man2.jpg"; // relative to project root (or bin)
    private Image img;  // a BufferedImage object
    
    private final int homeFloor;
@@ -45,10 +47,21 @@ public class Resident {
 
    private void loadImage() 
    {
-	   URL imgUrl = getClass().getClassLoader().getResource(imgFileName);
+	   URL imgUrl;
+	   Random r = new Random();
+	   int x = r.nextInt(2);
+	   if(x == 1)
+	   {
+		   imgUrl = getClass().getClassLoader().getResource(imgFileName1);
+	   }
+	   else
+	   {
+		   imgUrl = getClass().getClassLoader().getResource(imgFileName2);
+	   }
+	     
 	   if (imgUrl == null) 
 	   {
-		   System.err.println("Couldn't find file: " + imgFileName);
+		   System.err.println("Couldn't find file");
 	   } 
 	   else
 	   {
