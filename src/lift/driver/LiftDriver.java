@@ -292,6 +292,24 @@ public class LiftDriver implements Runnable {
 			}
 		});
 		
+		eventActionMap.put(SimulationStartEvent.class, new LiftAction() {
+			
+			@Override
+			public void execute(LiftEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		eventActionMap.put(SimulationStopEvent.class, new LiftAction() {
+			
+			@Override
+			public void execute(LiftEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 
 	/** Push up-button in proper floor 
