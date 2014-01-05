@@ -28,9 +28,9 @@ public class Building {
       //createFloors
       int y_position = 0;
       String string = "FLOOR ";
-		for(int i=0; i<floorNumber; ++i)
+		for(int i=0; i<=floorNumber; ++i)
 		{
-			g.drawRect(0, y_position, 640, 126);
+			g.drawRect(0, y_position, 900, 126);
 			g.drawString(string+(floorNumber-i), 10, y_position+12);
 			y_position += 126;
 		}

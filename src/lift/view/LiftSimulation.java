@@ -41,8 +41,8 @@ public class LiftSimulation extends JFrame implements Runnable
 	private static final long serialVersionUID = 1L;
 	
 // Name-constants for the various dimensions
-   public static final int CANVAS_WIDTH = 640;
-   public static final int CANVAS_HEIGHT = 504;
+   public static final int CANVAS_WIDTH = 900;
+   public static final int CANVAS_HEIGHT = 630;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
    public static final int IMAGE_WIDTH = 85;
    public static final int IMAGE_HEIGHT = 126;
