@@ -50,7 +50,7 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private final LinkedList<Resident> listOfPeople;
    
-   //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
+   /** Liczba pieter */
    private final int numberOfFloors;
    
    //Lista pieter do ktorych bede dodawac ludzi w kolejce
