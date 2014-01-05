@@ -444,6 +444,10 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   lift.setCurrentDirection(e.getNewDirection());
+		   //wg mnie powinno tu jeszcze byc:		--Krzysiek
+		   //lift.serCurrentFloor(e.getFloor());
+		   //poniewaz przy zmianie kierunku rowniez nastepuje zatrzymanie windy
+		   //nie ma potrzeby przesylac drugiego eventu LiftStopEvent
 	   }
 	   
    }
