@@ -53,7 +53,7 @@ public class ResidentsSimulation implements Runnable{
          */
         private void generatePerson()
         {
-                int homeFloor = rand.nextInt(numberOfFloors + 3);
+                int homeFloor = rand.nextInt(numberOfFloors + 1);
                 int destFloor = rand.nextInt(numberOfFloors);
                 if(homeFloor >= numberOfFloors)
                         homeFloor = 0;                                                                                        //zawsze najwiecej ludzi jest na zerowym
@@ -106,7 +106,6 @@ public class ResidentsSimulation implements Runnable{
          */
         public synchronized void send(LiftEvent event)
         {
-                System.out.println("Kaszanka");
                 if(event.getClass() == LiftOnTheFloorEvent.class)
                 {
                         LiftOnTheFloorEvent e = (LiftOnTheFloorEvent) event;
@@ -122,6 +121,7 @@ public class ResidentsSimulation implements Runnable{
                 
                 if(event.getClass() == GuiGeneratePersonEvent.class)
                 {
+                	System.out.println("GUI wygenerowalo czlowieka");
                 	GuiGeneratePersonEvent e = (GuiGeneratePersonEvent) event;
                 	generatePerson(e.getHomeFloor(),e.getDestinationFloor());
                 }
