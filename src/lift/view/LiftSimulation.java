@@ -51,7 +51,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private final LinkedList<Resident> listOfPeople;
    
    //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
-   private final int numberOfFloors = 4;
+   private final int numberOfFloors;
    
    //Lista pieter do ktorych bede dodawac ludzi w kolejce
    private LogicFloor[] floorList;
@@ -78,11 +78,12 @@ public class LiftSimulation extends JFrame implements Runnable
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
-      floorList = new LogicFloor[iloscPieter];
+      this.numberOfFloors = iloscPieter;
+      floorList = new LogicFloor[numberOfFloors];
       
       listOfPeople = new LinkedList<Resident>();
       
-      for(int i = 0; i < floorList.length; ++i)
+      for(int i = 0; i < numberOfFloors; ++i)
       {
     	  floorList[i] = new LogicFloor(i);
       }
