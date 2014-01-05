@@ -7,7 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,26 +34,21 @@ import lift.server.exception.ConnectionExitsException;
 
 public class LiftSimulation extends JFrame implements Runnable
 {
-   /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 	
-// Name-constants for the various dimensions
-   public static final int CANVAS_WIDTH = 640;
-   public static final int CANVAS_HEIGHT = 504;
+   // Name-constants for the various dimensions
+   public static final int CANVAS_WIDTH = 900;
+   public static final int CANVAS_HEIGHT = 630;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
    public static final int IMAGE_WIDTH = 85;
    public static final int IMAGE_HEIGHT = 126;
  
    private DrawCanvas canvas; // the custom drawing canvas (extends JPanel)
-
-   private ArrayList<Man> residentsList;
-   private Man man;
-   private Man man2;
    private Building building;
    private ElevatorShaft shaft;
    private ElevatorBox box;
+   
+   private final LinkedList<Resident> listOfPeople;
    
    //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
    private final int numberOfFloors = 4;
@@ -78,14 +73,14 @@ public class LiftSimulation extends JFrame implements Runnable
  	*/
    public LiftSimulation(final int iloscPieter, final Server server) throws ConnectionExitsException
    {  
-	  // Set up elements of the Simulation
-      man = new Man(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 4, 2);
-      man2 = new Man(0, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, 1, 3);
+
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
       floorList = new LogicFloor[iloscPieter];
+      
+      listOfPeople = new LinkedList<Resident>();
       
       for(int i = 0; i < floorList.length; ++i)
       {
@@ -104,10 +99,6 @@ public class LiftSimulation extends JFrame implements Runnable
     	  e.printStackTrace();
     	  throw e;
       }
-      
-      residentsList = new ArrayList<Man>();
-      residentsList.add(man);
-      residentsList.add(man2);
       
       
       // Set up the custom drawing canvas (JPanel)
@@ -212,7 +203,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			moveManLeft();
+		
 			openTheDoor();
             requestFocus(); // change the focus to JFrame to receive KeyEvent
 			
@@ -223,8 +214,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			moveManRight();
-			manWalkIntoLift();
+			
 			closeTheDoor();
             requestFocus(); // change the focus to JFrame to receive KeyEvent
 			
@@ -320,48 +310,60 @@ public class LiftSimulation extends JFrame implements Runnable
 	   animationThread.start(); 
    }
    
-   public void manWalkIntoLift()
-   {
-	   Thread animationThread = new Thread () {
-	         @Override
-		         public void run() {
-				   while(man.x < CANVAS_WIDTH-IMAGE_WIDTH)
-				   {
-					   man.x += 8;
-					   canvas.repaint();
-					   try {
-						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				   
-			       }
-	         	}
-		   };
-		   animationThread.start(); 
-   }
+//   public void manWalkIntoLift()
+//   {
+//	   Thread animationThread = new Thread () {
+//	         @Override
+//		         public void run() {
+//				   while(man.x < CANVAS_WIDTH-IMAGE_WIDTH)
+//				   {
+//					   man.x += 8;
+//					   canvas.repaint();
+//					   try {
+//						Thread.sleep(200);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				   
+//			       }
+//	         	}
+//		   };
+//		   animationThread.start(); 
+//   }
 
-/** Helper method to move the sprite left */
-   private void moveManLeft() {
-      // Save the current dimensions for repaint to erase the sprite
-      int savedX = man.x;
-      // update sprite
-      man.x -= 10;
-      // Repaint only the affected areas, not the entire JFrame, for efficiency
-      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
-   }
+
+//   private void moveManLeft() {
+//      // Save the current dimensions for repaint to erase the sprite
+//      int savedX = man.x;
+//      // update sprite
+//      man.x -= 10;
+//      // Repaint only the affected areas, not the entire JFrame, for efficiency
+//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
+//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
+//   }
    
-   /** Helper method to move the sprite left */
-   private void moveManRight() {
-      // Save the current dimensions for repaint to erase the sprite
-      int savedX = man.x;
-      // update sprite
-      man.x += 10;
-      // Repaint only the affected areas, not the entire JFrame, for efficiency
-      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
+
+   private void moveManRight(final Resident res) {
+      
+	   Thread animationThread = new Thread () {
+       @Override
+	         public void run() {
+			   while(res.tempX < res.x)
+			   {
+				   res.tempX += 8;
+				   canvas.repaint();
+				   try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+		       }
+       	}
+	   };
+	   animationThread.start();
    }
    
    /** Helper method to move the sprite left */
@@ -397,8 +399,10 @@ public class LiftSimulation extends JFrame implements Runnable
          super.paintComponent(g);
          setBackground(CANVAS_BG_COLOR);
 
-         for (Man person : residentsList) {
-			person.paint(g);
+         
+         for(Resident person: listOfPeople)
+         {
+        	 person.paint(g);
          }
          
          building.paint(g);
@@ -410,13 +414,17 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private void eventReceiver(LiftEvent event)
    {
+	   
 	   if(event.getClass() == GeneratePersonEvent.class)
 	   {
-		   GeneratePersonEvent e = (GeneratePersonEvent) event;
-		   LogicPerson newPerson = new LogicPerson(e.getDirection(), e.getHomeFloor());
-
-		   //przekazuje obsluge nowego czlowieka pietru
-		   floorList[e.getHomeFloor()].addPerson(newPerson);
+		  System.out.println("Cokolwiek doszlo");
+		  GeneratePersonEvent e = (GeneratePersonEvent) event;
+		  
+		  Resident newResident = floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor());
+		  moveManRight(newResident);
+		  listOfPeople.add(newResident);
+		  
+		  canvas.repaint();	   
 	   }
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
@@ -428,17 +436,20 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == GetOnEvent.class)
 	   {
 		   GetOnEvent e = (GetOnEvent) event;
-		   floorList[lift.getCurrentFloor()].getOn(lift.getCurrentDirection(), e.getNumberInLift(), lift);
+		   goToTheLift(e.getid());
 	   }
 	   if(event.getClass() == GetOffEvent.class)
 	   {
 		   	GetOffEvent e = (GetOffEvent) event;
-		   	lift.getOff(e.getNumberInLift());
+		   	lift.getOff(e.getid());
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
+		   
+		   // gdy winda sie zatrzymala otwieramy drzwi
+		   openTheDoor();
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
@@ -448,7 +459,59 @@ public class LiftSimulation extends JFrame implements Runnable
 		   //lift.serCurrentFloor(e.getFloor());
 		   //poniewaz przy zmianie kierunku rowniez nastepuje zatrzymanie windy
 		   //nie ma potrzeby przesylac drugiego eventu LiftStopEvent
+		   
+		   //wg mnie moze byc:		--Tomek
 	   }
+	   
+   }
+   
+   /**
+    * Wprowadza mieszkanca do windy
+    * @param id
+    */
+   public void goToTheLift(final int id)
+   {
+	   Resident newResident = findPerson(id);
+	   
+	   //Usuwam czlowieka z pietra
+	   floorList[lift.getCurrentFloor()].getOn(newResident);
+	   
+	   while(newResident.x < CANVAS_WIDTH - IMAGE_WIDTH)
+	   {
+		   newResident.x++;
+		   canvas.repaint();
+		   
+		   
+	   }
+   }
+   
+   /**
+    * Znajduje mieszkanca po zadanym id
+    * @param id
+    * @return
+    */
+   public Resident findPerson(final int id)
+   {
+	   Resident residentToFind = null;
+	   
+	   //To bedzie najczestrzy przypadek
+	   if(id == listOfPeople.get(id+1).getId())
+	   {
+		   residentToFind = listOfPeople.get(id+1);
+	   }
+	   else
+	   {
+		   for(Resident x: listOfPeople)
+		   {
+			   if(x.getId() == id)
+				   residentToFind = x;
+		   }
+	   }
+	   
+	   if(residentToFind == null)
+		   System.out.println("Problem jest w wsadzeniu typa do windy");
+	   
+	   return residentToFind;
 	   
    }
 

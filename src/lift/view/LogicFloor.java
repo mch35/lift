@@ -1,5 +1,6 @@
 package lift.view;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import lift.common.Direction;
@@ -10,14 +11,12 @@ public class LogicFloor
 {
 
 	private final int floorNumber;
-	private final LinkedList<LogicPerson> upQueue;
-	private final LinkedList<LogicPerson> downQueue;
+	private final ArrayList<Resident> people;
 	
 	public LogicFloor(final int floorNumber)
 	{
 		this.floorNumber = floorNumber;
-		this.upQueue = new LinkedList<>();
-		this.downQueue = new LinkedList<>();
+		people = new ArrayList<Resident>();
 	}
 
 	public int getFloorNumber()
@@ -25,49 +24,26 @@ public class LogicFloor
 		return floorNumber;
 	}
 	
-	public void addPerson(LogicPerson newPerson)
-	{
-		if(newPerson.getDirection() == Direction.UP)
-			upQueue.add(newPerson);
-		else
-			downQueue.add(newPerson);
-	}
-	
-	/*
-	 * Mam dwie koncepcje, albo narysowac po prostu tylu ludzikow ilu jest w obu kolejkach i jak przyjedzie winda, 
-	 * wsadzic odpowiednia ilosc z osob najblizej stojacych i oczywisicie odjac ludzi z odpowiedniej kolejki
-	 * albo rozrozniac od razu ludzi stojacych i rysowac kazdego czlowieka z osobna i jak przyjedzie winda
-	 * to juz tego konkretnego czlowieka przesuwac do windy
-	 */
-	public void drawFloor()
-	{
-		int i = 0;
-		for(LogicPerson x: upQueue)
-		{
-			//kazdy czlowiek w kolejce bedzie rysowany jeden za drugim w odleglosci, np , 5
-			x.drawPerson(i+=5);
-		}
-		for(LogicPerson x: downQueue)
-		{
-			//ludzie z tej kolejki beda rysowani za ludzmi z tamtej
-			x.drawPerson(i+=5);
-		}
-	}
-	
-	
 	/**
-	 * Funkcja wsadzajaca czlowieka z odpowiedniej kolejki do windy
-	 * @param direction
+	 * Funkcja dodajaca czlowieka pietru. Zakladam ludzkie podejscie do kolejnsci w kolejce, nie ma osoby
+	 * "zerowej" w kolejce - pierwsza osoba jest pierwsza w kolejce
 	 * @param id
-	 * @param lift
+	 * @param homeFloor
 	 */
-	public void getOn(Direction direction, int id, LogicLift lift)
+	public Resident addPerson(final int id, final int homeFloor)
 	{
-		if(direction==Direction.DOWN)
-			lift.addToTheLift(downQueue.removeFirst(),id);
-		else if(direction == Direction.UP)
-			lift.addToTheLift(upQueue.removeFirst(),id);
-		
+		Resident newResident = new Resident(id,homeFloor,people.size()+1);
+		people.add(newResident);
+		return newResident;
+	}
+	
+	
+	
+	
+	public void getOn(Resident res)
+	{
+
+		people.remove(res);
 	
 	}
 	
