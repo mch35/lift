@@ -435,7 +435,6 @@ public class LiftDriver implements Runnable {
 			}
 			else {
 				df = actualFloor.getNumber();
-				//skomplikowane
 			}
 			return new Floor(df);
 	}
