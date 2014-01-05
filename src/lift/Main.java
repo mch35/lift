@@ -5,6 +5,7 @@ import lift.residents.ResidentsSimulation;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
 import lift.view.LiftSimulation;
+import lift.view.Resident;
 
 
 /**
@@ -24,7 +25,16 @@ public class Main
 	/** The entry main() method */
 	public static void main(String[] args)
 	{
-		final Server server = new Server();	
+		final Server server = new Server();
+		ResidentsSimulation residents = null;
+		
+		try
+		{
+			residents = new ResidentsSimulation(5, server);
+		} catch (ConnectionExitsException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		// Start gui windy
 		try
@@ -47,19 +57,9 @@ public class Main
 		}
 		
 		// Start modulu mieszkancow
-		try
-		{
-			(new Thread(new ResidentsSimulation(5, server))).start();
-		}
-		catch (ConnectionExitsException e)
-		{		
-			e.printStackTrace();
-		}
+		(new Thread(residents)).start();
 
 		server.start();
-		
-		
-		
-		
+		residents.start();		
 	}
 }
