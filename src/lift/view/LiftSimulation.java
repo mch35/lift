@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -35,12 +34,9 @@ import lift.server.exception.ConnectionExitsException;
 
 public class LiftSimulation extends JFrame implements Runnable
 {
-   /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 	
-// Name-constants for the various dimensions
+   // Name-constants for the various dimensions
    public static final int CANVAS_WIDTH = 900;
    public static final int CANVAS_HEIGHT = 630;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
@@ -48,10 +44,6 @@ public class LiftSimulation extends JFrame implements Runnable
    public static final int IMAGE_HEIGHT = 126;
  
    private DrawCanvas canvas; // the custom drawing canvas (extends JPanel)
-
-   private ArrayList<Man> residentsList;
-   private Man man;
-   private Man man2;
    private Building building;
    private ElevatorShaft shaft;
    private ElevatorBox box;
@@ -81,9 +73,7 @@ public class LiftSimulation extends JFrame implements Runnable
  	*/
    public LiftSimulation(final int iloscPieter, final Server server) throws ConnectionExitsException
    {  
-	  // Set up elements of the Simulation
-      man = new Man(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 4, 2);
-      man2 = new Man(0, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, 1, 3);
+
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
@@ -109,10 +99,6 @@ public class LiftSimulation extends JFrame implements Runnable
     	  e.printStackTrace();
     	  throw e;
       }
-      
-      residentsList = new ArrayList<Man>();
-      residentsList.add(man);
-      residentsList.add(man2);
       
       
       // Set up the custom drawing canvas (JPanel)
@@ -217,7 +203,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			moveManLeft();
+		
 			openTheDoor();
             requestFocus(); // change the focus to JFrame to receive KeyEvent
 			
@@ -228,8 +214,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			moveManRight();
-			manWalkIntoLift();
+			
 			closeTheDoor();
             requestFocus(); // change the focus to JFrame to receive KeyEvent
 			
@@ -325,49 +310,49 @@ public class LiftSimulation extends JFrame implements Runnable
 	   animationThread.start(); 
    }
    
-   public void manWalkIntoLift()
-   {
-	   Thread animationThread = new Thread () {
-	         @Override
-		         public void run() {
-				   while(man.x < CANVAS_WIDTH-IMAGE_WIDTH)
-				   {
-					   man.x += 8;
-					   canvas.repaint();
-					   try {
-						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				   
-			       }
-	         	}
-		   };
-		   animationThread.start(); 
-   }
+//   public void manWalkIntoLift()
+//   {
+//	   Thread animationThread = new Thread () {
+//	         @Override
+//		         public void run() {
+//				   while(man.x < CANVAS_WIDTH-IMAGE_WIDTH)
+//				   {
+//					   man.x += 8;
+//					   canvas.repaint();
+//					   try {
+//						Thread.sleep(200);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				   
+//			       }
+//	         	}
+//		   };
+//		   animationThread.start(); 
+//   }
 
-/** Helper method to move the sprite left */
-   private void moveManLeft() {
-      // Save the current dimensions for repaint to erase the sprite
-      int savedX = man.x;
-      // update sprite
-      man.x -= 10;
-      // Repaint only the affected areas, not the entire JFrame, for efficiency
-      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
-   }
+
+//   private void moveManLeft() {
+//      // Save the current dimensions for repaint to erase the sprite
+//      int savedX = man.x;
+//      // update sprite
+//      man.x -= 10;
+//      // Repaint only the affected areas, not the entire JFrame, for efficiency
+//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
+//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
+//   }
    
-   /** Helper method to move the sprite left */
-   private void moveManRight() {
-      // Save the current dimensions for repaint to erase the sprite
-      int savedX = man.x;
-      // update sprite
-      man.x += 10;
-      // Repaint only the affected areas, not the entire JFrame, for efficiency
-      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
-   }
+
+//   private void moveManRight() {
+//      // Save the current dimensions for repaint to erase the sprite
+//      int savedX = man.x;
+//      // update sprite
+//      man.x += 10;
+//      // Repaint only the affected areas, not the entire JFrame, for efficiency
+//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
+//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
+//   }
    
    /** Helper method to move the sprite left */
    private void moveBoxUp() {
