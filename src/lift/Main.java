@@ -29,7 +29,7 @@ public class Main
 		// Start gui windy
 		try
 		{
-			(new Thread(new LiftSimulation(server))).start();
+			(new Thread(new LiftSimulation(5, server))).start();
 		}
 		catch (ConnectionExitsException e)
 		{		
