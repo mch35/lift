@@ -421,12 +421,12 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == GetOnEvent.class)
 	   {
 		   GetOnEvent e = (GetOnEvent) event;
-		   floorList[lift.getCurrentFloor()].getOn(lift.getCurrentDirection(), e.getNumberInLift(), lift);
+		   goToTheLift(e.getid());
 	   }
 	   if(event.getClass() == GetOffEvent.class)
 	   {
 		   	GetOffEvent e = (GetOffEvent) event;
-		   	lift.getOff(e.getNumberInLift());
+		   	lift.getOff(e.getid());
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
@@ -447,6 +447,41 @@ public class LiftSimulation extends JFrame implements Runnable
 		   
 		   //wg mnie moze byc:		--Tomek
 	   }
+	   
+   }
+   
+   public void goToTheLift(final int id)
+   {
+	   Resident newResident = findPerson(id);
+	   while(newResident.x < CANVAS_WIDTH - IMAGE_WIDTH)
+	   {
+		   newResident.x++;
+		   canvas.repaint();
+	   }
+   }
+   
+   public Resident findPerson(final int id)
+   {
+	   Resident residentToFind = null;
+	   
+	   //To bedzie najczestrzy przypadek
+	   if(id == listOfPeople.get(id+1).getId())
+	   {
+		   residentToFind = listOfPeople.get(id+1);
+	   }
+	   else
+	   {
+		   for(Resident x: listOfPeople)
+		   {
+			   if(x.getId() == id)
+				   residentToFind = x;
+		   }
+	   }
+	   
+	   if(residentToFind == null)
+		   System.out.println("Problem jest w wsadzeniu typa do windy");
+	   
+	   return residentToFind;
 	   
    }
 
