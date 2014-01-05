@@ -13,7 +13,6 @@ import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
-import lift.server.exception.ServerSleepsExeption;
 
 
 
@@ -28,7 +27,7 @@ public class ResidentsSimulation implements Runnable{
         private int minTimeAnticipating;
         private int maxTimeAnticipating;
         
-        public ResidentsSimulation(int N, final Server server) throws ConnectionExitsException, ServerSleepsExeption
+        public ResidentsSimulation(int N, final Server server) throws ConnectionExitsException
         {
         	
                 this.connection = server.connect(ModuleID.MIESZKANCY);

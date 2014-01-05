@@ -3,15 +3,12 @@ package lift.driver;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import lift.common.*;
 import lift.common.events.*;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
-import lift.server.exception.ServerSleepsExeption;
 
 public class LiftDriver implements Runnable {
 	private final Connection connection;
@@ -33,15 +30,16 @@ public class LiftDriver implements Runnable {
 	 * @return Lift class instance. 
 	 * @throws ServerSleepsExeption 
 	 * @throws ConnectionExitsException */
-	  public static synchronized LiftDriver getInstance(int numberOfFloors, final Server server) throws ConnectionExitsException, ServerSleepsExeption {
+	  public static synchronized LiftDriver getInstance(int numberOfFloors, final Server server) throws ConnectionExitsException
+	  {
 		    if(instance == null) instance = new LiftDriver(server, numberOfFloors);
 		    return instance;
-		  }
+	  }
 	
 	  
 	/** Lift class constructor 
-	 * @throws ServerSleepsExeption
-	 *  */
+	 * @throws ConnectionExitsException
+	 * */
 	private LiftDriver(final Server server, int numberOfFloors) throws ConnectionExitsException
 	{
 		this.numberOfFloors=numberOfFloors;

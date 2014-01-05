@@ -119,7 +119,7 @@ class Worker implements Runnable
 	}
 	
 	
-	
+	// TODO: Jezeli dwa moduly dostana zdarzenie to beda oba pracowaly na tym samym obiekcie (sekcja krytyczna)
 	/**
 	 * Strategia obslugi eventu
 	 * 
@@ -146,6 +146,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -155,6 +156,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -164,6 +166,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -173,6 +176,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -181,7 +185,7 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -209,6 +213,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -218,6 +223,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.WINDA).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
@@ -227,6 +233,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	

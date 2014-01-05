@@ -39,16 +39,18 @@ class Channel<MessageType>
 	 */
 	public MessageType get()
 	{
+		MessageType message = null;
+		
 		try
 		{
-			return channel.take();
+			message = channel.take();
 		}
 		catch (InterruptedException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		return null;
+		}		
+
+		return message;
 	}
 }

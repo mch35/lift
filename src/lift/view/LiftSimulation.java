@@ -31,9 +31,9 @@ import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
-import lift.server.exception.ServerSleepsExeption;
 
-public class LiftSimulation extends JFrame {
+public class LiftSimulation extends JFrame implements Runnable
+{
    /**
 	 * 
 	 */
@@ -74,10 +74,9 @@ public class LiftSimulation extends JFrame {
     * Constructor to set up the GUI
     * 
     * @throws ConnectionExitsException
-    * @throws ServerSleepsExeption
     *  
  	*/
-   public LiftSimulation(final Server server) throws Exception
+   public LiftSimulation(final Server server) throws ConnectionExitsException
    {  
 	  // Set up elements of the Simulation
       man = new Man(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 4, 2);
@@ -442,4 +441,12 @@ public class LiftSimulation extends JFrame {
 	   }
 	   
    }
+
+   @Override
+   public void run()
+   {
+	   // TODO petla obslugi zdarzen
+   }
+   
+   
 }

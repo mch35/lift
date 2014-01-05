@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import lift.common.events.LiftEvent;
 import lift.server.exception.ConnectionExitsException;
-import lift.server.exception.ServerSleepsExeption;
 
 /**
  * Jeden z modulow symulatora windy.
@@ -59,37 +58,31 @@ public class Server
 	 * @return Polaczenie, za pomoca ktorego beda przesylane wiadomosci.
 	 * 
 	 * @throws ConnectionExitsException zwracany gdy istnieje juz polaczenie z klientem o takim id
-	 * @throws ServerSleepsExeption zwracany gdy serwer nie pracuje
 	 */
-	public Connection connect(final ModuleID id) throws ConnectionExitsException, ServerSleepsExeption
+	public Connection connect(final ModuleID id) throws ConnectionExitsException
 	{
-		if(isRunning)
+		System.out.println("SERWER: LACZENIE...");
+		// kanaly do komunikacji
+		Channel<LiftEvent> forSending = new Channel<>();
+		Channel<LiftEvent> forListening = new Channel<>();
+		
+		// nowe polaczenie na podstawie kanalow wczesniej zrobionych
+		Connection connection = new Connection(forListening, forSending);
+		
+		// listener sluchajacy na kanale w ktorym klient wrzuca wiadomosci
+		Listener listener = new Listener(id, forListening, recieved);
+		
+		// dodaje do mapy jezeli nie ma jeszcze takiego klucza
+		if(listeners.putIfAbsent(id, listener) != null)
 		{
-			System.out.println("SERWER: LACZENIE...");
-			// kanaly do komunikacji
-			Channel<LiftEvent> forSending = new Channel<>();
-			Channel<LiftEvent> forListening = new Channel<>();
-			
-			// nowe polaczenie na podstawie kanalow wczesniej zrobionych
-			Connection connection = new Connection(forListening, forSending);
-			
-			// listener sluchajacy na kanale w ktorym klient wrzuca wiadomosci
-			Listener listener = new Listener(id, forListening, recieved);
-			
-			// dodaje do mapy jezeli nie ma jeszcze takiego klucza
-			if(listeners.putIfAbsent(id, listener) != null)
-			{
-				throw new ConnectionExitsException();
-			}
-			
-			worker.addChannel(id, forSending);
-			
-			(new Thread(listener)).start();
-	
-			System.out.println("SERWER: POLACZONO z " + id);
-			return connection;
+			throw new ConnectionExitsException();
 		}
 		
-		throw new ServerSleepsExeption();
+		worker.addChannel(id, forSending);
+		
+		(new Thread(listener)).start();
+
+		System.out.println("SERWER: POLACZONO z " + id);
+		return connection;
 	}
 }

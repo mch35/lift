@@ -5,7 +5,6 @@ import lift.driver.LiftDriver;
 import lift.residents.ResidentsSimulation;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
-import lift.server.exception.ServerSleepsExeption;
 import lift.view.LiftSimulation;
 
 
@@ -27,31 +26,23 @@ public class Main
 	public static void main(String[] args)
 	{
 		final Server server = new Server();	
-		server.start();
 		
-		SwingUtilities.invokeLater(new Runnable()
+		// Start gui windy
+		try
 		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					new LiftSimulation(server);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});	   
-		
+			(new Thread(new LiftSimulation(server))).start();
+		}
+		catch (ConnectionExitsException e)
+		{		
+			e.printStackTrace();
+		}
 		
 		// Start drivera windy
 		try
 		{
 			(new Thread(LiftDriver.getInstance(5, server))).start();
 		}
-		catch (ConnectionExitsException | ServerSleepsExeption e)
+		catch (ConnectionExitsException e)
 		{		
 			e.printStackTrace();
 		}
@@ -61,9 +52,11 @@ public class Main
 		{
 			(new Thread(new ResidentsSimulation(5, server))).start();
 		}
-		catch (ConnectionExitsException | ServerSleepsExeption e)
+		catch (ConnectionExitsException e)
 		{		
 			e.printStackTrace();
 		}
+
+		server.start();
 	}
 }
