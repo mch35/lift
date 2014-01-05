@@ -18,7 +18,7 @@ public class Man {
    private int id;
  
    /** Constructor to setup the GUI */
-   public Man(int x, int y, int width, int height, int sourceFloor, int destinationFloor) 
+   public Man(int x, int y, int width, int height, int sourceFloor,final int destinationFloor) 
    {
 	   	  this.x = x;
 	      this.y = y;
