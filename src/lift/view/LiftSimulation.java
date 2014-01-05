@@ -458,6 +458,4 @@ public class LiftSimulation extends JFrame implements Runnable
 			eventReceiver(event);
 		}
    }
-   
-   
 }
