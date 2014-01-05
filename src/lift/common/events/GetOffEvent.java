@@ -7,15 +7,15 @@ package lift.common.events;
  */
 public class GetOffEvent extends LiftEvent
 {	
-	private final int numberInLift;
+	private final int id;
 	
 	public GetOffEvent(int numerInLift)
 	{
-		this.numberInLift = numerInLift;
+		this.id = numerInLift;
 	}
 
-	public int getNumberInLift()
+	public int getid()
 	{
-		return numberInLift;
+		return id;
 	}
 }
