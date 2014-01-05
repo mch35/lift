@@ -1,5 +1,7 @@
 package lift.driver;
 
+/** Class which represents a Floor */
+
 public class Floor {
 int number;
 

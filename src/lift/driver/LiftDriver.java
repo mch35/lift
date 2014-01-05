@@ -10,6 +10,8 @@ import lift.server.ModuleID;
 import lift.server.Server;
 import lift.server.exception.ConnectionExitsException;
 
+/** Lift driver */
+
 public class LiftDriver implements Runnable {
 	private final Connection connection;
 	private final int numberOfFloors;
@@ -25,9 +27,9 @@ public class LiftDriver implements Runnable {
 	private final Map<Class<? extends LiftEvent>, LiftAction> eventActionMap;
 	/** Implementation of a Singleton pattern. */
 	private static LiftDriver instance = null;
-	 /** @param communication 
-	 * @param numberOfFloors 
-	 * @return Lift class instance. 
+	 /** @param numberOfFloors number of floors in building
+	 * @param server a reference to server
+	 * @return LiftDriver class instance. 
 	 * @throws ServerSleepsExeption 
 	 * @throws ConnectionExitsException */
 	  public static synchronized LiftDriver getInstance(int numberOfFloors, final Server server) throws ConnectionExitsException
@@ -37,7 +39,9 @@ public class LiftDriver implements Runnable {
 	  }
 	
 	  
-	/** Lift class constructor 
+	/** LiftDriver class constructor 
+	 * @param server a reference to server
+	 * @param numberOfFloors number of floors in building
 	 * @throws ConnectionExitsException
 	 * */
 	private LiftDriver(final Server server, int numberOfFloors) throws ConnectionExitsException
@@ -50,6 +54,7 @@ public class LiftDriver implements Runnable {
 		actualFloor=destinationFloor=new Floor(0);
 		direction=Direction.STOP;
 		
+		/** Creating button panels with no active buttons */
 		for(int i=0;i<numberOfFloors;i++){
 			buttonPanel[i]=LiftButton.NOT_ACTIVE;
 			directionButtonPanels[i][0]=directionButtonPanels[i][1]=LiftButton.NOT_ACTIVE;
@@ -59,7 +64,8 @@ public class LiftDriver implements Runnable {
 		fillEventActionMap();
 	}
 	
-	
+	/** Thread in which events are received
+	 *  and after that, from actionMap, proper action is chosen */
 	@Override
 	public void run() {
 		while(true){
@@ -75,7 +81,7 @@ public class LiftDriver implements Runnable {
 		}	
 	}
 	
-		
+	/** Method used once only in beginning, it fills eventActionMap with pairs <event,action> */	
 	private void fillEventActionMap() {
 		
 		eventActionMap.put(UpButtonEvent.class, new LiftAction() {
@@ -288,37 +294,58 @@ public class LiftDriver implements Runnable {
 		
 	}
 
-
+	/** Push up-button in proper floor 
+	 * @param floor floor in which up-button is pushed
+	 */
 	private void pushButtonUp(Floor floor)
 	{
 		directionButtonPanels[floor.getNumber()][1]=LiftButton.ACTIVE;
 	}
-	
+
+	/** Push down-button in proper floor 
+	 * @param floor floor in which down-button is pushed
+	 */
 	private void pushButtonDown(Floor floor)
 	{
 		directionButtonPanels[floor.getNumber()][0]=LiftButton.ACTIVE;
 	}
 	
+	/** Clear up-button in proper floor 
+	 * @param floor floor in which up-button is cleared
+	 */
 	private void clearButtonUp(Floor floor)
 	{
 			directionButtonPanels[floor.getNumber()][1]=LiftButton.NOT_ACTIVE;
 	}
 	
+	/** Clear down-button in proper floor 
+	 * @param floor floor in which down-button is cleared
+	 */
 	private void clearButtonDown(Floor floor)
 	{
 			directionButtonPanels[floor.getNumber()][0]=LiftButton.NOT_ACTIVE;
 	}
 	
+	/** Push proper button inside lift 
+	 * @param floor floor at which passenger wants to go
+	 */
 	private void pushButton(Floor floor)
 	{
 			buttonPanel[floor.getNumber()]=LiftButton.ACTIVE;
 	}
 	
+	/** Clear proper button inside lift 
+	 * @param floor floor at which lift arrived
+	 */
 	private void clearButton(Floor floor)
 	{
 			buttonPanel[floor.getNumber()]=LiftButton.NOT_ACTIVE;
 	}
 
+	/** Get the highest floor button pushed inside lift
+	 * @param bP button panel inside lift
+	 * @return the highest floor button pushed inside lift 
+	 */
 	private Floor getHighestButPan(LiftButton[] bP){
 		
 		int x=numberOfFloors-1;
@@ -329,6 +356,10 @@ public class LiftDriver implements Runnable {
 		return new Floor(0);
 	}
 	
+	/** Get the lowest floor button pushed inside lift
+	 * @param bP button panel inside lift
+	 * @return the lowest floor button pushed inside lift 
+	 */
 	private Floor getLowestButPan(LiftButton[] bP){
 		
 		int x=0;
@@ -339,6 +370,10 @@ public class LiftDriver implements Runnable {
 		return new Floor(numberOfFloors-1);
 	}
 	
+	/** Get the highest floor at which a direction button is pushed
+	 * @param dbp direction button panel outside lift
+	 * @return the highest floor at which a direction button is pushed
+	 */
 	private Floor getHighestDirBut(LiftButton[][] dbp) {
 		int x = numberOfFloors-1;
 		while(x>=0){
@@ -348,6 +383,10 @@ public class LiftDriver implements Runnable {
 		return new Floor(0);
 	}
 	
+	/** Get the lowest floor at which a direction button is pushed
+	 * @param dbp direction button panel outside lift
+	 * @return the lowest floor at which a direction button is pushed
+	 */
 	private Floor getLowestDirBut(LiftButton[][] dbp) {
 		int x = 0;
 		while(x<numberOfFloors){
@@ -357,6 +396,13 @@ public class LiftDriver implements Runnable {
 		return new Floor(numberOfFloors-1);
 	}
 	
+	/** Count destination floor for the lift
+	 * @param dbp direction button panel outside lift
+	 * @param bp button panel inside the lift
+	 * @param direction	current direction of lift movement 
+	 * @param actualFloor floor at which lift is now
+	 * @return	destination floor for the lift
+	 */
 	private Floor getDestinationFloor(LiftButton[][] dbp, LiftButton[] bp, Direction direction, Floor actualFloor) {
 		int df, x;
 			if (direction == Direction.DOWN) {
