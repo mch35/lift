@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,6 +56,8 @@ public class LiftSimulation extends JFrame implements Runnable
    private ElevatorShaft shaft;
    private ElevatorBox box;
    
+   private final LinkedList<Resident> listOfPeople; 
+   
    //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
    private final int numberOfFloors = 4;
    
@@ -86,6 +89,8 @@ public class LiftSimulation extends JFrame implements Runnable
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
       floorList = new LogicFloor[iloscPieter];
+      
+      listOfPeople = new LinkedList<Resident>();
       
       for(int i = 0; i < floorList.length; ++i)
       {
@@ -413,7 +418,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == GeneratePersonEvent.class)
 	   {
 		   GeneratePersonEvent e = (GeneratePersonEvent) event;
-		   floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor());
+		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
 		   
 	   }
 	   
