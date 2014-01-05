@@ -30,10 +30,11 @@ public class LogicFloor
 	 * @param id
 	 * @param homeFloor
 	 */
-	public void addPerson(final int id, final int homeFloor)
+	public Resident addPerson(final int id, final int homeFloor)
 	{
 		Resident newResident = new Resident(id,homeFloor,people.size()+1);
 		people.add(id, newResident);
+		return newResident;
 	}
 	
 	
