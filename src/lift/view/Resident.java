@@ -8,8 +8,11 @@ import javax.imageio.ImageIO;
 
 public class Resident {
    
-   /** Aktualne wspolrzedne mieszkanca */
+   /** Wspolrzedne mieszkanca stajacego w kolejce */
    int x, y;
+   
+   /** Aktualne wspolrzedne mieszkanca */
+   int tempX, tempY;
    
    /** Wymiary mieszkanca */
    private final int width = 85;
@@ -33,6 +36,9 @@ public class Resident {
 	      
 	      setXCoordinate(numerInQueue);
 	      this.x = getX();
+	      
+	      this.tempX = 5;
+	      this.tempY = getY();
 	      
 	      loadImage();
    }
@@ -60,8 +66,8 @@ public class Resident {
    /** Paint itself (given the Graphics context) */
    public void paint(Graphics g)
    {
-	   g.drawImage(img, x, y, null);
-	   g.drawString("ID: "+getId(), x+width-20, y+height-10);
+	   g.drawImage(img, tempX, tempY, null);
+	   g.drawString("ID: "+getId(), tempX+width-20, tempY+height-10);
    }
 
 	public int getId() {

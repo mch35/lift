@@ -344,15 +344,27 @@ public class LiftSimulation extends JFrame implements Runnable
 //   }
    
 
-//   private void moveManRight() {
-//      // Save the current dimensions for repaint to erase the sprite
-//      int savedX = man.x;
-//      // update sprite
-//      man.x += 10;
-//      // Repaint only the affected areas, not the entire JFrame, for efficiency
-//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
-//   }
+   private void moveManRight(final Resident res) {
+      
+	   Thread animationThread = new Thread () {
+       @Override
+	         public void run() {
+			   while(res.tempX < res.x)
+			   {
+				   res.tempX += 8;
+				   canvas.repaint();
+				   try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+		       }
+       	}
+	   };
+	   animationThread.start();
+   }
    
    /** Helper method to move the sprite left */
    private void moveBoxUp() {
@@ -407,7 +419,11 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		  System.out.println("Cokolwiek doszlo");
 		  GeneratePersonEvent e = (GeneratePersonEvent) event;
-		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
+		  
+		  Resident newResident = floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor());
+		  moveManRight(newResident);
+		  listOfPeople.add(newResident);
+		  
 		  canvas.repaint();	   
 	   }
 	   
