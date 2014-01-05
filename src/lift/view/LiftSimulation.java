@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,7 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import lift.common.Direction;
+import lift.common.events.ChangeDirectionEvent;
+import lift.common.events.GeneratePersonEvent;
+import lift.common.events.GetOffEvent;
+import lift.common.events.GetOnEvent;
 import lift.common.events.GuiGeneratePersonEvent;
+import lift.common.events.LiftEvent;
+import lift.common.events.LiftIsReadyEvent;
+import lift.common.events.LiftStopEvent;
 import lift.common.events.SetTimeIntervalEvent;
 import lift.common.events.SimulationStartEvent;
 import lift.common.events.SimulationStopEvent;
@@ -48,6 +55,17 @@ public class LiftSimulation extends JFrame {
    private ElevatorShaft shaft;
    private ElevatorBox box;
    
+   //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
+   private final int numberOfFloors = 4;
+   
+   //Lista pieter do ktorych bede dodawac ludzi w kolejce
+   private LogicFloor[] floorList;
+   
+   private int currentFloor;
+   private Direction currentDirection;
+   
+   private LogicLift lift;
+   
    /** Polaczenie z serwerem */
    private final Connection connection;
 
@@ -67,6 +85,10 @@ public class LiftSimulation extends JFrame {
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
+      
+      floorList = new LogicFloor[4];
+      lift = new LogicLift();
+      
       
       try
       {
@@ -379,5 +401,45 @@ public class LiftSimulation extends JFrame {
          box.paint(g);
          
       }
+   }
+   
+   private void eventReceiver(LiftEvent event)
+   {
+	   if(event.getClass() == GeneratePersonEvent.class)
+	   {
+		   GeneratePersonEvent e = (GeneratePersonEvent) event;
+		   LogicPerson newPerson = new LogicPerson(e.getDirection(), e.getHomeFloor());
+		   
+		   //przekazuje obsluge nowego czlowieka pietru
+		   floorList[e.getHomeFloor()].addPerson(newPerson);
+	   }
+	   
+	   if(event.getClass() == LiftIsReadyEvent.class)
+	   {
+
+		   //TODO: obsluga eventu
+	   }
+	   
+	   if(event.getClass() == GetOnEvent.class)
+	   {
+		   GetOnEvent e = (GetOnEvent) event;
+		   floorList[lift.getCurrentFloor()].getOn(lift.getCurrentDirection(), e.getNumberInLift(), lift);
+	   }
+	   if(event.getClass() == GetOffEvent.class)
+	   {
+		   	GetOffEvent e = (GetOffEvent) event;
+		   	lift.getOff(e.getNumberInLift());
+	   }
+	   if(event.getClass() == LiftStopEvent.class)
+	   {
+		   LiftStopEvent e = (LiftStopEvent) event;
+		   lift.setCurrentFloor( e.getFloor());
+	   }
+	   if(event.getClass() == ChangeDirectionEvent.class)
+	   {
+		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
+		   lift.setCurrentDirection(e.getNewDirection());
+	   }
+	   
    }
 }
