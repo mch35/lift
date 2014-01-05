@@ -402,8 +402,10 @@ public class LiftSimulation extends JFrame implements Runnable
          super.paintComponent(g);
          setBackground(CANVAS_BG_COLOR);
 
-         for (Man person : residentsList) {
-			person.paint(g);
+         
+         for(Resident person: listOfPeople)
+         {
+        	 person.paint(g);
          }
          
          building.paint(g);
