@@ -423,6 +423,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		   System.out.println("Cokolwiek doszlo");
 		   GeneratePersonEvent e = (GeneratePersonEvent) event;
 		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
+		  canvas.repaint();
 		   
 	   }
 	   
