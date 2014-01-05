@@ -205,6 +205,7 @@ class Worker implements Runnable
 		public void execute(final LiftEvent event)
 		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
+			channels.get(ModuleID.GUI).add(event);
 		}
 	}
 	
