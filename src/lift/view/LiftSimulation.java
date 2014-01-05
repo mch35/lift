@@ -94,7 +94,7 @@ public class LiftSimulation extends JFrame {
       {
 		this.connection = server.connect(ModuleID.GUI);
       }
-      catch (ConnectionExitsException | ServerSleepsExeption e)
+      catch (ConnectionExitsException e)
       {
     	  e.printStackTrace();
     	  throw e;
