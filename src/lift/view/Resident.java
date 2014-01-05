@@ -24,14 +24,16 @@ public class Resident {
    private Image img;  // a BufferedImage object
    
    private final int homeFloor;
+   private final int destFloor;
    private final int id;
    
  
    /** Konstruktor klasy {@link Resident} */
-   public Resident(final int id, final int homeFloor, final int numerInQueue) 
+   public Resident(final int id, final int homeFloor, final int numerInQueue, final int destFloor) 
    {
 	      this.id = id;
 	      this.homeFloor = homeFloor;
+              this.destFloor = destFloor;
 	      
 	      setYCoordinate(homeFloor);
 	      this.y = getY();
@@ -80,7 +82,7 @@ public class Resident {
    public void paint(Graphics g)
    {
 	   g.drawImage(img, tempX, tempY, null);
-	   g.drawString("ID: "+getId(), tempX+width-20, tempY+height-10);
+	   g.drawString("ID: "+getId()+" Dest: "+getDestFloor(), tempX+width-20, tempY+height-10);
    }
 
 	public int getId() {
@@ -105,6 +107,11 @@ public class Resident {
 	public int getY()
 	{
 		return y;
+	}
+        
+        public int getDestFloor()
+	{
+		return destFloor;
 	}
 
 }

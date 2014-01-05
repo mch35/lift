@@ -78,7 +78,7 @@ public class Floor {
 	 */
 	public void addPerson(Person person)
 	{
-		connection.send(new GeneratePersonEvent(person.getStartFloor(), person.getId()));
+		connection.send(new GeneratePersonEvent(person.getStartFloor(), person.getId(), person.getDestFloor()));
 		if(person.getDirection() == Direction.DOWN)
 		{
 			queueDown.addLast(person);
