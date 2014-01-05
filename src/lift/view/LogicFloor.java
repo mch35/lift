@@ -6,18 +6,22 @@ import lift.common.Direction;
 
 
 
-public class LogicFloor {
+public class LogicFloor
+{
 
 	private final int floorNumber;
-	private LinkedList<LogicPerson> upQueue;
-	private LinkedList<LogicPerson> downQueue;
+	private final LinkedList<LogicPerson> upQueue;
+	private final LinkedList<LogicPerson> downQueue;
 	
 	public LogicFloor(final int floorNumber)
 	{
 		this.floorNumber = floorNumber;
+		this.upQueue = new LinkedList<>();
+		this.downQueue = new LinkedList<>();
 	}
 
-	public int getFloorNumber() {
+	public int getFloorNumber()
+	{
 		return floorNumber;
 	}
 	
