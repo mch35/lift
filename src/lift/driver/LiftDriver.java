@@ -40,9 +40,9 @@ public class LiftDriver implements Runnable {
 	
 	  
 	/** Lift class constructor 
-	 * @throws ServerSleepsExeption 
-	 * @throws ConnectionExitsException */
-	private LiftDriver(final Server server, int numberOfFloors) throws ConnectionExitsException, ServerSleepsExeption
+	 * @throws ServerSleepsExeption
+	 *  */
+	private LiftDriver(final Server server, int numberOfFloors) throws ConnectionExitsException
 	{
 		this.numberOfFloors=numberOfFloors;
 		this.connection=server.connect(ModuleID.WINDA);
@@ -68,7 +68,7 @@ public class LiftDriver implements Runnable {
 			try {
 			LiftEvent event = connection.recieve();
 			LiftAction liftAction = eventActionMap.get(event.getClass());
-			
+
 			liftAction.execute(event);
 			} catch(Exception e) {
 		        e.printStackTrace();
