@@ -70,7 +70,7 @@ public class Resident {
 	
 	public void setXCoordinate(int number)
 	{
-		this.x = 640-number*width;
+		this.x = 640-(number+1)*width;
 	}
 	
 	public void setYCoordinate(int homeFloor)

@@ -56,7 +56,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private ElevatorShaft shaft;
    private ElevatorBox box;
    
-   private final LinkedList<Resident> listOfPeople; 
+   private final LinkedList<Resident> listOfPeople;
    
    //TODO: To chyba bedzie trzeba zmienic ale gdzies w kodzie widzialem ze tez jest na sztywno przypisywane
    private final int numberOfFloors = 4;
