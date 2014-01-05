@@ -16,7 +16,7 @@ public class LogicFloor
 	public LogicFloor(final int floorNumber)
 	{
 		this.floorNumber = floorNumber;
-		people = new ArrayList<>();
+		people = new ArrayList<Resident>();
 	}
 
 	public int getFloorNumber()
@@ -33,7 +33,7 @@ public class LogicFloor
 	public Resident addPerson(final int id, final int homeFloor)
 	{
 		Resident newResident = new Resident(id,homeFloor,people.size()+1);
-		people.add(id, newResident);
+		people.add(newResident);
 		return newResident;
 	}
 	

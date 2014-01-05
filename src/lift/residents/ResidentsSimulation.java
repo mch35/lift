@@ -191,6 +191,7 @@ public class ResidentsSimulation implements Runnable{
                                 Thread.sleep(anticipatingTime);
                         } catch (InterruptedException e)
                         {
+                        	System.out.println("Dziwny exception");
                                 e.printStackTrace();
                         }
                 }

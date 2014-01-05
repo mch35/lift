@@ -417,9 +417,10 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private void eventReceiver(LiftEvent event)
    {
-	   System.out.println("Cokolwiek doszlo");
+	   
 	   if(event.getClass() == GeneratePersonEvent.class)
 	   {
+		   System.out.println("Cokolwiek doszlo");
 		   GeneratePersonEvent e = (GeneratePersonEvent) event;
 		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
 		   
@@ -454,6 +455,8 @@ public class LiftSimulation extends JFrame implements Runnable
 		   //lift.serCurrentFloor(e.getFloor());
 		   //poniewaz przy zmianie kierunku rowniez nastepuje zatrzymanie windy
 		   //nie ma potrzeby przesylac drugiego eventu LiftStopEvent
+		   
+		   //wg mnie moze byc:		--Tomek
 	   }
 	   
    }
