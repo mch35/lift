@@ -50,7 +50,7 @@ public class Connection
 	 * 
 	 * @return Wiadomosc od serwera.
 	 */
-	public final LiftEvent recieve()
+	public final LiftEvent receive()
 	{
 		return serverToClient.get();
 	}

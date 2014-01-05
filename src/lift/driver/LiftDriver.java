@@ -64,7 +64,7 @@ public class LiftDriver implements Runnable {
 	public void run() {
 		while(true){
 			try {
-			LiftEvent event = connection.recieve();
+			LiftEvent event = connection.receive();
 			LiftAction liftAction = eventActionMap.get(event.getClass());
 
 			liftAction.execute(event);
