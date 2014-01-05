@@ -486,6 +486,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
 	   {
+		   System.out.println("gotowa do jazdy z gui");
 		   readyToRide=true;
 	   }
 	   
@@ -501,6 +502,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
+		   System.out.println("stop");
 		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
@@ -508,6 +510,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
+		   System.out.println("zmiana kierunku");
 		   if(currentDirection==Direction.STOP){
 			   readyToRide=true;
 		   }

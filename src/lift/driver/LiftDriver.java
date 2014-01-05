@@ -87,11 +87,13 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(UpButtonEvent.class, new LiftAction() {
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("wciska gora");
 				UpButtonEvent event = (UpButtonEvent) e;
 				if(directionButtonPanels[event.getFloor()][1]==LiftButton.NOT_ACTIVE){
 					pushButtonUp(new Floor(event.getFloor()));
 					if (direction == Direction.STOP) {
 						if (event.getFloor() > actualFloor.getNumber()) {
+							System.out.println("ma jechac");
 							connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
 							direction=Direction.UP;
 						}
@@ -113,11 +115,13 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(DownButtonEvent.class, new LiftAction() {
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("wciska dol");
 				DownButtonEvent event = (DownButtonEvent) e;
 				if(directionButtonPanels[event.getFloor()][0]==LiftButton.NOT_ACTIVE){
 					pushButtonDown(new Floor(event.getFloor()));
 					if (direction == Direction.STOP) {
 						if (event.getFloor() > actualFloor.getNumber()) {
+							System.out.println("ma jechac");
 							connection.send(new ChangeDirectionEvent(Direction.UP,actualFloor.getNumber()));
 							direction=Direction.UP;
 						}
@@ -139,6 +143,7 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(InnerButtonEvent.class, new LiftAction() {	
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("wciska srodek");
 				InnerButtonEvent event = (InnerButtonEvent) e;
 				if(buttonPanel[event.getFloor()]==LiftButton.NOT_ACTIVE){
 					pushButton(new Floor(event.getFloor()));
@@ -166,6 +171,7 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(LiftIsReadyEvent.class, new LiftAction() {
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("gotowa do jazdy");
 				readyToRide=true;	//kierunek
 			}
 		});
@@ -173,6 +179,7 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(LiftOnTheFloorEvent.class, new LiftAction(){
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("na pietrze");
 				LiftOnTheFloorEvent event = (LiftOnTheFloorEvent) e;
 				
 				actualFloor = new Floor(event.getFloor());
