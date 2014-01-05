@@ -405,11 +405,11 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   if(event.getClass() == GeneratePersonEvent.class)
 	   {
-		   System.out.println("Cokolwiek doszlo");
-		   GeneratePersonEvent e = (GeneratePersonEvent) event;
+		  System.out.println("Cokolwiek doszlo");
+		  GeneratePersonEvent e = (GeneratePersonEvent) event;
 		  listOfPeople.add( floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor()));
-		  canvas.repaint();
-		   
+		  canvas.repaint();	   
+		  openTheDoor();
 	   }
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
@@ -432,6 +432,9 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
+		   
+		   // gdy winda sie zatrzymala otwieramy drzwi
+		   openTheDoor();
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
