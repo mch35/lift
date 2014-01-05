@@ -10,10 +10,13 @@ public class LogicPerson {
 	//id odrozniajace czlowieka w obrebie windy, jesli czlowiek nie jest w windzie, dostaje id = -1;
 	private int idInLift;
 	
-	public LogicPerson(final Direction direction,final int homeFloor)
+	//id odrozniajace poszczegolnych ludzi
+	private final int id;
+	
+	public LogicPerson(final Direction direction,final int homeFloor, final int id)
 	{
 		setIdInLift(-1);
-		
+		this.id = id;
 		
 		this.homeFloor = homeFloor;
 		this.direction = direction;
