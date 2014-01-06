@@ -474,10 +474,6 @@ public class LiftSimulation extends JFrame implements Runnable
          setBackground(CANVAS_BG_COLOR);
 
          
-         for(Resident person: listOfPeople)
-         {
-        	 person.paint(g);
-         }
          for(int i = 0; i < numberOfFloors; i++)
          {
              floorList[i].paint(g);
@@ -589,7 +585,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   //Wsadzam czlowieka do windy
            lift.addToTheLift(newResident);
            
-	   while(newResident.tempX < CANVAS_WIDTH - 50 - IMAGE_WIDTH)
+	   while(newResident.tempX < CANVAS_WIDTH - IMAGE_WIDTH)
 	   {
 		   newResident.tempX++;
 		   canvas.repaint();
