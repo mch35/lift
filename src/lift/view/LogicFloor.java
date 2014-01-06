@@ -13,6 +13,10 @@ public class LogicFloor
 
 	private final int floorNumber;
 	private final ArrayList<Resident> people;
+
+        public ArrayList<Resident> getPeople() {
+            return people;
+        }
         boolean up, down;
 	
 	public LogicFloor(final int floorNumber)
@@ -34,8 +38,8 @@ public class LogicFloor
 	 * @param homeFloor
 	 */
 	public Resident addPerson(final int id, final int homeFloor, final int destFloor)
-	{
-		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor, this.floorNumber);
+	{ // TODO: na sztywno jest ilosc pieter wpisana !!!
+		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor, 4);
 		people.add(newResident);
 		return newResident;
 	}

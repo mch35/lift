@@ -78,7 +78,7 @@ public class Lift {
 		{
 			if(inLift[i] == null)
 			{
-				connection.send(new GetOnEvent(i));
+				connection.send(new GetOnEvent(passager.getId()));
 				passager.setNumberInLift(i);						//wprowadzam rozroznienia pomiedzy ludzmi w windzie
 				inLift[i] = passager;
 				numberOfPeople++;
@@ -98,7 +98,7 @@ public class Lift {
 		{
 			if(inLift[i] != null && inLift[i].getDestFloor() == currentFloor)
 			{
-				connection.send(new GetOffEvent(i));
+				connection.send(new GetOffEvent(inLift[i].getId()));
 				inLift[i] = null;
 				numberOfPeople--;
 			}

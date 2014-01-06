@@ -312,11 +312,9 @@ public class LiftSimulation extends JFrame implements Runnable
 					   if(readyToRide==true){
 						   if(currentDirection==Direction.UP){
 							   moveBoxUp();
-                                                           moveManUp();
 						   }
 						   else if(currentDirection==Direction.DOWN){
 							   moveBoxDown();
-                                                           moveManDown();
 						   }
 					   }
 				   }
@@ -457,21 +455,6 @@ public class LiftSimulation extends JFrame implements Runnable
       canvas.repaint(box.x, box.y, box.width, box.height); // Paint new location
    }
    
-   private void moveManUp() {
-      for(Resident person: box.getPeople())
-      {
-                person.tempY -= 1;
-      }
-      canvas.repaint();
-   }
-   
-   private void moveManDown() {
-      for(Resident person: box.getPeople())
-      {
-                person.tempY += 1;
-      }
-      canvas.repaint();
-   }
  
    /** DrawCanvas (inner class) is a JPanel used for custom drawing */
    class DrawCanvas extends JPanel {
@@ -488,7 +471,14 @@ public class LiftSimulation extends JFrame implements Runnable
          {
         	 person.paint(g);
          }
-         for(int i = 0; i < numberOfFloors; i++) floorList[i].paint(g);
+         for(int i = 0; i < numberOfFloors; i++)
+         {
+             floorList[i].paint(g);
+             for(Resident person: floorList[i].getPeople())
+             {
+                 person.paint(g);
+             }
+         }
          building.paint(g);
          shaft.paint(g);
          box.paint(g);
@@ -577,7 +567,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   floorList[lift.getCurrentFloor()].getOn(newResident);
            
 	   //Wsadzam czlowieka do windy
-           box.addPerson(newResident.getId(), 0, newResident.getDestFloor());
+           lift.addToTheLift(newResident);
            
 	   while(newResident.tempX < CANVAS_WIDTH - IMAGE_WIDTH)
 	   {

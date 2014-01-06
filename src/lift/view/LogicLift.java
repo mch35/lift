@@ -1,5 +1,6 @@
 package lift.view;
 
+import java.util.LinkedList;
 import lift.common.Direction;
 
 public class LogicLift {
@@ -7,12 +8,13 @@ public class LogicLift {
 	private LogicPerson[] people = new LogicPerson[8];
 	private int currentFloor;
 	private Direction currentDirection;
-	
+	private final LinkedList<Resident> people2;
 	
 	LogicLift()
 	{
 		for(int i =0;i<8;i++)
 			people[i] = null;
+                people2 = new LinkedList<Resident>();
 	}
 
 /**
@@ -20,12 +22,13 @@ public class LogicLift {
  * @param person
  * @param id
  */
-	void addToTheLift(LogicPerson person, int id)
+	void addToTheLift(Resident person)
 	{
-		if(people[id] != null)
-			System.out.println("Jeden z ludzi wypadl z windy podczas jazdy");
-		people[id] = person;
-		person.setIdInLift(id);
+	//	if(people[id] != null)
+	//		System.out.println("Jeden z ludzi wypadl z windy podczas jazdy");
+	//	people[id] = person;
+	//	person.setIdInLift(id);
+                people2.add(person);
 	}
 	
 	void getOff(int id)
