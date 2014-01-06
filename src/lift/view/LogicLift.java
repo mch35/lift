@@ -21,11 +21,10 @@ public class LogicLift {
                 people2 = new LinkedList<Resident>();
 	}
 
-/**
- * Funkcja dodaje czlowieka do wirtualnej windy nadajac Mu unikalne id (unikalne wewnatrz windy)
- * @param person
- * @param id
- */
+	/**
+	 * Funkcja dodaje czlowieka do wirtualnej windy
+	 * @param person
+	 */
 	void addToTheLift(Resident person)
 	{
 	//	if(people[id] != null)
@@ -35,9 +34,19 @@ public class LogicLift {
                 people2.add(person);
 	}
 	
+	/**
+	 * Funkcja usuwa czlowieka z wirtualnej windy
+	 * @param person
+	 */
+	void removeFromTheLift(Resident person)
+	{
+		people2.remove(person);
+	}
+	
 	void getOff(int id)
 	{
 		//TODO: Metoda rysujaca wysiadanie z windy, ewentualnie znikanie danej osoby
+		
 		people[id] = null;
 	}
 
