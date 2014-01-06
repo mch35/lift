@@ -498,7 +498,6 @@ public class LiftSimulation extends JFrame implements Runnable
 		  Resident newResident = floorList[e.getHomeFloor()].addPerson(e.getId(), e.getHomeFloor(), e.getDestFloor());
 		  moveManRight(newResident);
 		  listOfPeople.add(newResident);
-		  
 		  canvas.repaint();	   
 	   }
 	   
@@ -577,6 +576,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		   
 		   
 	   }
+           liftInsideSimulation.pole.repaint();
    }
    
    /**

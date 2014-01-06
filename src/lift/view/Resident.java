@@ -86,7 +86,8 @@ public class Resident {
    /** Paint itself (given the Graphics context) */
    public void paint(Graphics g)
    {
-	   g.drawImage(img, tempX, tempY, null);
+	   g.setColor(Color.BLACK);
+           g.drawImage(img, tempX, tempY, null);
 	   g.drawString("ID: "+getId()+" Dest: "+getDestFloor(), tempX+width-20, tempY+height-10);
    }
 

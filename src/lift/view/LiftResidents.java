@@ -16,13 +16,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- *
+ * klasa rysujaca mieszkañców w windzie
  * @author Pawel
  */
 public class LiftResidents extends JPanel{
     private final LinkedList<Resident> people;
-    public static int IMAGE_WIDTH = 85;
-    public static int IMAGE_HEIGHT = 126;
+    public static int IMAGE_WIDTH;
+    public static int IMAGE_HEIGHT;
     private String imgFileName1 = "images/man1.jpg"; // relative to project root (or bin)
     private String imgFileName2 = "images/man2.jpg"; // relative to project root (or bin)
     private Image img;  // a BufferedImage object
@@ -71,11 +71,19 @@ public class LiftResidents extends JPanel{
         int tempX, tempY;
         for(int i = 0; i < people.size(); i++)
         {
-            if(i%2 == 0) tempX = 5;
-            else tempX = IMAGE_WIDTH + 5;
-            tempY = (IMAGE_HEIGHT + 15) * i/2;
+            if(i%2 == 0)
+            {
+                tempX = 5;
+                tempY = (IMAGE_HEIGHT + 15) * i/2;
+            }
+            else
+            {
+                tempX = IMAGE_WIDTH + 5;
+                tempY = (IMAGE_HEIGHT + 15) * (i - 1)/2;
+            }
+            
             g.drawImage(img, tempX, tempY, null);
-            g.drawString("ID: "+ people.get(i).getId()+" Dest: "+people.get(i).getDestFloor(), tempX+IMAGE_WIDTH-20, tempY+IMAGE_HEIGHT-10);
+            g.drawString("ID: "+ people.get(i).getId()+" Dest: "+people.get(i).getDestFloor(), tempX+10, tempY+IMAGE_HEIGHT + 10);
         }
     }
     

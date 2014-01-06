@@ -10,13 +10,13 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 /**
- *
+ * symulacja okna z mieszkañcami znajdujacymi sie w windzie
  * @author Pawel
  */
-public class LiftInsideSimulation extends JFrame implements Runnable
+public class LiftInsideSimulation
 {
-   public static int IMAGE_WIDTH = 85;
-   public static int IMAGE_HEIGHT = 126;
+   public static int IMAGE_WIDTH;
+   public static int IMAGE_HEIGHT;
    private LogicLift lift;
    JFrame pole;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
@@ -28,20 +28,16 @@ public class LiftInsideSimulation extends JFrame implements Runnable
        IMAGE_HEIGHT = imageY;
        lift = li;
        liftResidents = new LiftResidents(lift.getPeople2(), IMAGE_WIDTH, IMAGE_HEIGHT);
-       pole = new JFrame("");
+       pole = new JFrame("Inside");
        pole.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        pole.add(liftResidents);
        pole.pack();
-       pole.setSize(IMAGE_WIDTH*2+10, (IMAGE_HEIGHT+30)*4+10);
+       pole.setSize(IMAGE_WIDTH*2+15, (IMAGE_HEIGHT+30)*4+10);
        pole.setBackground(CANVAS_BG_COLOR);
        pole.setResizable(false);
        pole.setVisible(true);
    }
-
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
+    
 
 }
