@@ -7,7 +7,7 @@ import java.util.Random;
 import lift.common.events.ChangeDirectionEvent;
 import lift.common.events.GuiGeneratePersonEvent;
 import lift.common.events.LiftEvent;
-import lift.common.events.LiftOnTheFloorEvent;
+import lift.common.events.LiftStopEvent;
 import lift.common.events.SetTimeIntervalEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
@@ -106,9 +106,9 @@ public class ResidentsSimulation implements Runnable{
          */
         public synchronized void eventReciever(LiftEvent event)
         {
-                if(event.getClass() == LiftOnTheFloorEvent.class)
+                if(event.getClass() == LiftStopEvent.class)
                 {
-                        LiftOnTheFloorEvent e = (LiftOnTheFloorEvent) event;
+                        LiftStopEvent e = (LiftStopEvent) event;
                         int floor = e.getFloor();
                         lift.liftOnTheFloor(floor,floorList.get(floor));
                 }

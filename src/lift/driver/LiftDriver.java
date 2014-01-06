@@ -166,6 +166,7 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(LiftIsReadyEvent.class, new LiftAction() {
 			@Override
 			public void execute(LiftEvent e) {
+				System.out.println("lift ready");
 				readyToRide=true;	
 			}
 		});
