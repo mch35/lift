@@ -64,6 +64,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private boolean readyToRide;
    
    private LogicLift lift;
+   private LiftInsideSimulation liftInsideSimulation;
    
    /** Polaczenie z serwerem */
    private final Connection connection;
@@ -98,7 +99,7 @@ public class LiftSimulation extends JFrame implements Runnable
       }
       
       lift = new LogicLift();
-      
+      liftInsideSimulation = new LiftInsideSimulation(IMAGE_WIDTH, IMAGE_HEIGHT, lift);
       
       try
       {

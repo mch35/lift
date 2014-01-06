@@ -9,6 +9,10 @@ public class LogicLift {
 	private int currentFloor;
 	private Direction currentDirection;
 	private final LinkedList<Resident> people2;
+
+    public LinkedList<Resident> getPeople2() {
+        return people2;
+    }
 	
 	LogicLift()
 	{
