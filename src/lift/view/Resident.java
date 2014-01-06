@@ -19,6 +19,9 @@ public class Resident {
    private final int width = 85;
    private final int height = 126; 
    
+   /** Ilosc pieter w budynku */
+   private final int floorNumber;
+   
    private String imgFileName1 = "images/man1.jpg"; // relative to project root (or bin)
    private String imgFileName2 = "images/man2.jpg"; // relative to project root (or bin)
    private Image img;  // a BufferedImage object
@@ -29,11 +32,13 @@ public class Resident {
    
  
    /** Konstruktor klasy {@link Resident} */
-   public Resident(final int id, final int homeFloor, final int numerInQueue, final int destFloor) 
+   public Resident(final int id, final int homeFloor, final int numerInQueue, 
+		   final int destFloor, final int floorNumber) 
    {
 	      this.id = id;
 	      this.homeFloor = homeFloor;
-              this.destFloor = destFloor;
+          this.destFloor = destFloor;
+          this.floorNumber = floorNumber;
 	      
 	      setYCoordinate(homeFloor);
 	      this.y = getY();
@@ -89,14 +94,16 @@ public class Resident {
 		return this.id;
 	}
 	
+	/** Ustawia wspolrzedna x polozenia mieszkanca stojacego w kolejce */
 	public void setXCoordinate(int number)
 	{
 		this.x = 900-(number+1)*width;
 	}
 	
+	/** Ustawia wspolrzedna y polozenia mieszkanca stojacego w kolejce */
 	public void setYCoordinate(int homeFloor)
 	{
-		this.y = (4-homeFloor)*height;
+		this.y = (this.floorNumber-homeFloor)*height;
 	}
 	
 	public int getX()

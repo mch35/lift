@@ -32,7 +32,7 @@ public class LogicFloor
 	 */
 	public Resident addPerson(final int id, final int homeFloor, final int destFloor)
 	{
-		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor);
+		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor, this.floorNumber);
 		people.add(newResident);
 		return newResident;
 	}
