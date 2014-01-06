@@ -155,7 +155,7 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.WINDA).add(event);
+			//channels.get(ModuleID.WINDA).add(event);	-Krzysiek tego nie powinien dostawac
 			channels.get(ModuleID.GUI).add(event);
 		}
 	}
@@ -165,7 +165,7 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.WINDA).add(event);
+			//channels.get(ModuleID.WINDA).add(event);	-Krzysiek j.w.
 			channels.get(ModuleID.GUI).add(event);
 		}
 	}

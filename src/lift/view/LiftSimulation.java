@@ -302,7 +302,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   public void run(){
 				   while(true){
 					   try {
-						Thread.sleep(50);
+						Thread.sleep(25);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -310,13 +310,10 @@ public class LiftSimulation extends JFrame implements Runnable
 					   if(readyToRide==true){
 						   if(currentDirection==Direction.UP){
 							   moveBoxUp();
-							   System.out.println("w gore");
 						   }
 						   else if(currentDirection==Direction.DOWN){
 							   moveBoxDown();
-							   System.out.println("w dol");
 						   }
-						   else System.out.println("why?");
 					   }
 				   }
 			   }
@@ -433,7 +430,8 @@ public class LiftSimulation extends JFrame implements Runnable
       // update sprite
       box.y -= 1;  // coordinate system in Java is reversed!!
       if((box.y%IMAGE_HEIGHT)==0){
-    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-(box.y/IMAGE_HEIGHT)));
+       	  System.out.println("pietro"+(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
+    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
@@ -447,7 +445,8 @@ public class LiftSimulation extends JFrame implements Runnable
       // update sprite
       box.y += 1;	 // coordinate system in Java is reversed!!
       if((box.y%IMAGE_HEIGHT)==0){
-    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-(box.y/IMAGE_HEIGHT)));
+    	  System.out.println("pietro"+(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
+    	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
@@ -495,7 +494,6 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
 	   {
-		   System.out.println("gotowa do jazdy z gui");
 		   readyToRide=true;
 	   }
 	   
@@ -511,7 +509,6 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
-		   System.out.println("stop");
 		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
@@ -519,20 +516,16 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
-		   System.out.println("zmiana kierunku");
 		   if(currentDirection==Direction.STOP){
-			   System.out.println("tu?");
 			   readyToRide=true;
 		   }
 		   else{
-			   System.out.println("a tu?");
 			   readyToRide=false;
 			   openTheDoor();
 		   }
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   lift.setCurrentDirection(e.getNewDirection());
 		   currentDirection=e.getNewDirection();
-		   if(currentDirection==Direction.STOP)System.out.println("dir stop");
 		   lift.setCurrentFloor(e.getFloor());
 	   }
 	   
