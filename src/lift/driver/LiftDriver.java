@@ -104,7 +104,7 @@ public class LiftDriver implements Runnable {
 							direction=Direction.UP;
 							clearButtonUp(actualFloor);
 						}
-						readyToRide=true;
+						//readyToRide=true;
 					}
 				}
 			}
@@ -130,7 +130,7 @@ public class LiftDriver implements Runnable {
 							direction=Direction.DOWN;
 							clearButtonDown(actualFloor);
 						}
-						readyToRide=true;
+						//readyToRide=true;
 					}
 				}
 			}
@@ -148,6 +148,7 @@ public class LiftDriver implements Runnable {
 							clearButton(actualFloor);
 						}
 						else {
+							System.out.println("Chyba tu nie powinno byc. driver linijka 150");
 							if (event.getFloor() > actualFloor.getNumber()) {
 								connection.send(new ChangeDirectionEvent(Direction.UP, actualFloor.getNumber()));
 								direction=Direction.UP;
@@ -156,7 +157,7 @@ public class LiftDriver implements Runnable {
 								connection.send(new ChangeDirectionEvent(Direction.DOWN, actualFloor.getNumber()));
 								direction=Direction.DOWN;
 							}
-							readyToRide=true;
+							//readyToRide=true;
 						}
 					}
 				}
