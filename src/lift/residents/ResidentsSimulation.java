@@ -116,9 +116,8 @@ public class ResidentsSimulation implements Runnable{
                 {
                         ChangeDirectionEvent e = (ChangeDirectionEvent) event;
                         int floor = e.getFloor();
-                        lift.liftOnTheFloor(floor,floorList.get(floor));
                         lift.setDirection(e.getNewDirection());
-                        
+                        lift.liftOnTheFloor(floor,floorList.get(floor));        
                 }
                 
                 if(event.getClass() == GuiGeneratePersonEvent.class)
