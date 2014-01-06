@@ -10,35 +10,29 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 /**
- * symulacja okna z mieszkañcami znajdujacymi sie w windzie
+ *
  * @author Pawel
  */
-public class LiftInsideSimulation
+public class ButtonPanel
 {
-   public static int IMAGE_WIDTH;
-   public static int IMAGE_HEIGHT;
    private LogicLift lift;
    JFrame pole;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
-   private LiftResidents liftResidents;
+   private ButtonPanelView buttonPanelView;
    
-   public LiftInsideSimulation(final int imageX, int imageY, LogicLift li)
+   public ButtonPanel(LogicLift li, int numberOfFloors)
    {
-       IMAGE_WIDTH = imageX;
-       IMAGE_HEIGHT = imageY;
        lift = li;
-       liftResidents = new LiftResidents(lift.getPeople2(), IMAGE_WIDTH, IMAGE_HEIGHT);
-       pole = new JFrame("Inside");
+       buttonPanelView = new ButtonPanelView( lift.getPeople2(), numberOfFloors);
+       pole = new JFrame("Panel");
        pole.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       pole.add(liftResidents);
+       pole.add(buttonPanelView);
        pole.pack();
-       pole.setSize(IMAGE_WIDTH*2+15, (IMAGE_HEIGHT+30)*4+10);
+       pole.setSize(150, numberOfFloors * 37);
        pole.setBackground(CANVAS_BG_COLOR);
-       pole.setLocation(1000, 10);
+       pole.setLocation(1250, 10);
        pole.setResizable(false);
        pole.setVisible(true);
    }
-   
-    
 
 }

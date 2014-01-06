@@ -65,6 +65,7 @@ public class LiftSimulation extends JFrame implements Runnable
    
    private LogicLift lift;
    private LiftInsideSimulation liftInsideSimulation;
+   private ButtonPanel buttonPanel;
    
    /** Polaczenie z serwerem */
    private final Connection connection;
@@ -100,6 +101,7 @@ public class LiftSimulation extends JFrame implements Runnable
       
       lift = new LogicLift();
       liftInsideSimulation = new LiftInsideSimulation(IMAGE_WIDTH, IMAGE_HEIGHT, lift);
+      buttonPanel = new ButtonPanel(lift,numberOfFloors);
       
       try
       {
@@ -577,6 +579,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		   
 	   }
            liftInsideSimulation.pole.repaint();
+           buttonPanel.pole.repaint();
    }
    
    /**
