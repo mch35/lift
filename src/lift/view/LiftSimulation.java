@@ -600,6 +600,19 @@ public class LiftSimulation extends JFrame implements Runnable
            buttonPanel.pole.repaint();
    }
    
+   public void goOutOfLift(final int id)
+   {
+	   Resident newResident = findPerson(id);
+	   
+	   lift.removeFromTheLift(newResident);
+	   // tu mozna zadbac o jakas animacje wysiadania typa z windy
+	   
+	   // to nie jestem pewny czy trzeba wstawic
+	   liftInsideSimulation.pole.repaint();
+       buttonPanel.pole.repaint();
+	   
+   }
+   
    /**
     * Znajduje mieszkanca po zadanym id
     * @param id
