@@ -3,9 +3,9 @@ import java.awt.*;
 
 
 public class ElevatorShaft {
-   // Variables (package access)
-   int x, y, width, height; // rectangle (for illustration)
-   Color color = Color.BLACK; // color of the object
+  
+   int x, y, width, height; 
+   Color color;
  
    /** Constructor to setup the GUI */
    public ElevatorShaft(int x, int y, int width, int height, Color color) {

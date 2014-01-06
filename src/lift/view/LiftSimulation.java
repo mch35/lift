@@ -39,7 +39,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	
    // Name-constants for the various dimensions
    public static final int CANVAS_WIDTH = 900;
-   public static final int CANVAS_HEIGHT = 630;
+   public final int CANVAS_HEIGHT;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
    public static final int IMAGE_WIDTH = 85;
    public static final int IMAGE_HEIGHT = 126;
@@ -75,7 +75,7 @@ public class LiftSimulation extends JFrame implements Runnable
  	*/
    public LiftSimulation(final int iloscPieter, final Server server) throws ConnectionExitsException
    {  
-
+	  CANVAS_HEIGHT = iloscPieter * IMAGE_HEIGHT;
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK, iloscPieter);
       shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
       box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, CANVAS_HEIGHT-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
