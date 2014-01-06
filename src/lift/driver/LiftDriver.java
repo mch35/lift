@@ -88,6 +88,7 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				UpButtonEvent event = (UpButtonEvent) e;
+				System.out.println("up "+event.getFloor());
 				if(directionButtonPanels[event.getFloor()][1]==LiftButton.NOT_ACTIVE){
 					pushButtonUp(new Floor(event.getFloor()));
 					if (direction == Direction.STOP) {
@@ -114,6 +115,7 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				DownButtonEvent event = (DownButtonEvent) e;
+				System.out.println("down "+event.getFloor());
 				if(directionButtonPanels[event.getFloor()][0]==LiftButton.NOT_ACTIVE){
 					pushButtonDown(new Floor(event.getFloor()));
 					if (direction == Direction.STOP) {
@@ -140,6 +142,7 @@ public class LiftDriver implements Runnable {
 			@Override
 			public void execute(LiftEvent e) {
 				InnerButtonEvent event = (InnerButtonEvent) e;
+				System.out.println("Inner "+event.getFloor());
 				if(buttonPanel[event.getFloor()]==LiftButton.NOT_ACTIVE){
 					pushButton(new Floor(event.getFloor()));
 					if (direction == Direction.STOP) {
@@ -167,7 +170,7 @@ public class LiftDriver implements Runnable {
 		eventActionMap.put(LiftIsReadyEvent.class, new LiftAction() {
 			@Override
 			public void execute(LiftEvent e) {
-				System.out.println("lift ready");
+				System.out.println("lift ready in driver");
 				readyToRide=true;	
 			}
 		});
