@@ -589,7 +589,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   //Wsadzam czlowieka do windy
            lift.addToTheLift(newResident);
            
-	   while(newResident.tempX < CANVAS_WIDTH - IMAGE_WIDTH)
+	   while(newResident.tempX < CANVAS_WIDTH - 50 - IMAGE_WIDTH)
 	   {
 		   newResident.tempX++;
 		   canvas.repaint();
