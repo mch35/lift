@@ -522,7 +522,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == GetOffEvent.class)
 	   {
 		   	GetOffEvent e = (GetOffEvent) event;
-		   	lift.getOff(e.getid());
+		   	goOutOfLift(e.getid());
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
