@@ -610,18 +610,18 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Resident residentToFind = null;
 	   
 	   //To bedzie najczestszy przypadek
-	   if(id == listOfPeople.get(id).getId())
+	   /*if(id == listOfPeople..get(id).getId()) :: linkedlist.get(index) pobiera po indeksie a id nie musi byc < size()
 	   {
 		   residentToFind = listOfPeople.get(id);
 	   }
 	   else
-	   {
+	   {*/
 		   for(Resident x: listOfPeople)
 		   {
 			   if(x.getId() == id)
 				   residentToFind = x;
 		   }
-	   }
+	   //}
 	   
 	   if(residentToFind == null)
 		   System.out.println("Problem jest w wsadzeniu typa do windy");
