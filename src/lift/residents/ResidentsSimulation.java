@@ -54,7 +54,7 @@ public class ResidentsSimulation implements Runnable{
         private void generatePerson()
         {
                 int homeFloor = rand.nextInt(numberOfFloors + 1);
-                int destFloor = rand.nextInt(numberOfFloors);
+                int destFloor = rand.nextInt(numberOfFloors-1);
                 if(homeFloor >= numberOfFloors)
                         homeFloor = 0;                                                                                        //zawsze najwiecej ludzi jest na zerowym
                 if(destFloor == homeFloor)

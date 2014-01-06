@@ -560,7 +560,7 @@ public class LiftSimulation extends JFrame implements Runnable
    {
 	   Resident residentToFind = null;
 	   
-	   //To bedzie najczestrzy przypadek
+	   //To bedzie najczestszy przypadek
 	   if(id == listOfPeople.get(id+1).getId())
 	   {
 		   residentToFind = listOfPeople.get(id+1);
