@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import lift.common.Direction;
 import lift.common.events.ChangeDirectionEvent;
+import lift.common.events.DownButtonEvent;
 import lift.common.events.GeneratePersonEvent;
 import lift.common.events.GetOffEvent;
 import lift.common.events.GetOnEvent;
@@ -28,6 +29,7 @@ import lift.common.events.LiftStopEvent;
 import lift.common.events.SetTimeIntervalEvent;
 import lift.common.events.SimulationStartEvent;
 import lift.common.events.SimulationStopEvent;
+import lift.common.events.UpButtonEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
@@ -38,7 +40,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private static final long serialVersionUID = 1L;
 	
    // Name-constants for the various dimensions
-   public static final int CANVAS_WIDTH = 900;
+   public static final int CANVAS_WIDTH = 950;
    public final int CANVAS_HEIGHT;
    public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
    public static final int IMAGE_WIDTH = 85;
@@ -77,8 +79,8 @@ public class LiftSimulation extends JFrame implements Runnable
    {  
 	  CANVAS_HEIGHT = iloscPieter * IMAGE_HEIGHT;
       building = new Building(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK, iloscPieter);
-      shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
-      box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH, CANVAS_HEIGHT-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
+      shaft = new ElevatorShaft(CANVAS_WIDTH-IMAGE_WIDTH-50, 0, IMAGE_WIDTH, CANVAS_HEIGHT, Color.YELLOW);
+      box = new ElevatorBox(CANVAS_WIDTH-IMAGE_WIDTH-50, CANVAS_HEIGHT-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, Color.DARK_GRAY);
       
       this.numberOfFloors = iloscPieter;
       floorList = new LogicFloor[numberOfFloors];
@@ -469,7 +471,7 @@ public class LiftSimulation extends JFrame implements Runnable
          {
         	 person.paint(g);
          }
-         
+         for(int i = 0; i < numberOfFloors; i++) floorList[i].paint(g);
          building.paint(g);
          shaft.paint(g);
          box.paint(g);
@@ -528,6 +530,21 @@ public class LiftSimulation extends JFrame implements Runnable
 		   currentDirection=e.getNewDirection();
 		   lift.setCurrentFloor(e.getFloor());
 	   }
+	   
+       if(event.getClass() == DownButtonEvent.class)
+   	   {
+   		  DownButtonEvent e = (DownButtonEvent) event;
+   		  floorList[numberOfFloors-e.getFloor()-1].setDown(true);
+   		  canvas.repaint();	   
+   	   }
+       
+       if(event.getClass() == UpButtonEvent.class)
+   	   {
+   		  UpButtonEvent e = (UpButtonEvent) event;
+   		  floorList[numberOfFloors-e.getFloor()-1].setUp(true);
+   		  canvas.repaint();	   
+   	   }
+
 	   
    }
    
