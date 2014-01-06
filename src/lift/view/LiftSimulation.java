@@ -22,6 +22,7 @@ import lift.common.events.GeneratePersonEvent;
 import lift.common.events.GetOffEvent;
 import lift.common.events.GetOnEvent;
 import lift.common.events.GuiGeneratePersonEvent;
+import lift.common.events.InnerButtonEvent;
 import lift.common.events.LiftEvent;
 import lift.common.events.LiftIsReadyEvent;
 import lift.common.events.LiftOnTheFloorEvent;
@@ -62,6 +63,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private int currentFloor;
    private Direction currentDirection;
    private boolean readyToRide;
+   private boolean allIn;
    
    private LogicLift lift;
    private LiftInsideSimulation liftInsideSimulation;
@@ -89,6 +91,7 @@ public class LiftSimulation extends JFrame implements Runnable
       currentDirection=Direction.STOP;
       currentFloor=0;
       readyToRide=false;
+      allIn=false;
       
       
       listOfPeople = new LinkedList<Resident>();
@@ -363,6 +366,7 @@ public class LiftSimulation extends JFrame implements Runnable
 				}
 			   
 		       }
+			   readyToRide=true;
          	}
 	   };
 	   animationThread.start(); 
@@ -503,7 +507,9 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   if(event.getClass() == LiftIsReadyEvent.class)
 	   {
-		   readyToRide=true;
+		   System.out.println("Lift Ready");
+		   //readyToRide=true;
+		   closeTheDoor();
 	   }
 	   
 	   if(event.getClass() == GetOnEvent.class)
@@ -518,6 +524,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
+		   System.out.println("Lift Stop");
 		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   lift.setCurrentFloor( e.getFloor());
@@ -525,6 +532,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
+		   System.out.println("Change Direction");
 		   if(currentDirection==Direction.STOP){
 			   readyToRide=true;
 		   }
@@ -540,6 +548,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
        if(event.getClass() == DownButtonEvent.class)
    	   {
+    	  System.out.println("Down Button");
    		  DownButtonEvent e = (DownButtonEvent) event;
    		  floorList[numberOfFloors-e.getFloor()-1].setDown(true);
    		  canvas.repaint();	   
@@ -547,9 +556,18 @@ public class LiftSimulation extends JFrame implements Runnable
        
        if(event.getClass() == UpButtonEvent.class)
    	   {
-   		  UpButtonEvent e = (UpButtonEvent) event;
+   		  System.out.println("Up Button");
+    	   UpButtonEvent e = (UpButtonEvent) event;
    		  floorList[numberOfFloors-e.getFloor()-1].setUp(true);
    		  canvas.repaint();	   
+   	   }
+       
+       if(event.getClass() == InnerButtonEvent.class)
+   	   {
+   		  System.out.println("Inner Button");
+    	   //InnerButtonEvent e = (InnerButtonEvent) event;
+   		  //floorList[numberOfFloors-e.getFloor()-1].setUp(true);
+   		  //canvas.repaint();	   
    	   }
 
 	   
@@ -589,9 +607,9 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Resident residentToFind = null;
 	   
 	   //To bedzie najczestszy przypadek
-	   if(id == listOfPeople.get(id+1).getId())
+	   if(id == listOfPeople.get(id).getId())
 	   {
-		   residentToFind = listOfPeople.get(id+1);
+		   residentToFind = listOfPeople.get(id);
 	   }
 	   else
 	   {
