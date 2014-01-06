@@ -301,13 +301,22 @@ public class LiftSimulation extends JFrame implements Runnable
 		   @Override
 			   public void run(){
 				   while(true){
-					   if(readyToRide){
+					   try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					   if(readyToRide==true){
 						   if(currentDirection==Direction.UP){
 							   moveBoxUp();
+							   System.out.println("w gore");
 						   }
 						   else if(currentDirection==Direction.DOWN){
 							   moveBoxDown();
+							   System.out.println("w dol");
 						   }
+						   else System.out.println("why?");
 					   }
 				   }
 			   }
@@ -512,15 +521,19 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   System.out.println("zmiana kierunku");
 		   if(currentDirection==Direction.STOP){
+			   System.out.println("tu?");
 			   readyToRide=true;
 		   }
 		   else{
+			   System.out.println("a tu?");
 			   readyToRide=false;
+			   openTheDoor();
 		   }
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   lift.setCurrentDirection(e.getNewDirection());
+		   currentDirection=e.getNewDirection();
+		   if(currentDirection==Direction.STOP)System.out.println("dir stop");
 		   lift.setCurrentFloor(e.getFloor());
-		   openTheDoor();
 	   }
 	   
    }
