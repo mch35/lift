@@ -235,50 +235,6 @@ public class LiftSimulation extends JFrame implements Runnable
   			
   		}
   	});
-      
-      btnMoveManLeft.addActionListener(new ActionListener()
-      {		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-		
-			openTheDoor();
-            requestFocus(); // change the focus to JFrame to receive KeyEvent
-			
-		}
-	});
-      btnMoveManRight.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
-			closeTheDoor();
-            requestFocus(); // change the focus to JFrame to receive KeyEvent
-			
-		}
-	});
-      
-      btnMoveBoxUp.addActionListener(new ActionListener() {
-  		
-  		@Override
-  		public void actionPerformed(ActionEvent arg0) {
-  			// TODO Auto-generated method stub
-  			moveBoxUp();
-              requestFocus(); // change the focus to JFrame to receive KeyEvent
-  			
-  		}
-  	});
-        btnMoveBoxDown.addActionListener(new ActionListener() {
-  		
-  		@Override
-  		public void actionPerformed(ActionEvent arg0) {
-  			// TODO Auto-generated method stub
-  			moveBoxDown();
-              requestFocus(); // change the focus to JFrame to receive KeyEvent
-  			
-  		}
-  	});
  
       // Add both panels to this JFrame
       
@@ -411,17 +367,6 @@ public class LiftSimulation extends JFrame implements Runnable
 //	         	}
 //		   };
 //		   animationThread.start(); 
-//   }
-
-
-//   private void moveManLeft() {
-//      // Save the current dimensions for repaint to erase the sprite
-//      int savedX = man.x;
-//      // update sprite
-//      man.x -= 10;
-//      // Repaint only the affected areas, not the entire JFrame, for efficiency
-//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
 //   }
    
 

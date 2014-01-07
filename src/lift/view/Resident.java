@@ -31,7 +31,7 @@ public class Resident {
    private final int homeFloor;
    private final int destFloor;
    private final int id;
-   
+     
  
    /** Konstruktor klasy {@link Resident} */
    public Resident(final int id, final int homeFloor, final int numerInQueue, 
