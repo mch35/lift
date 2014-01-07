@@ -24,8 +24,8 @@ public class Resident {
    /** Ilosc pieter w budynku */
    private final int floorNumber;
    
-   private String imgFileName1 = "images/man1.jpg"; // relative to project root (or bin)
-   private String imgFileName2 = "images/man2.jpg"; // relative to project root (or bin)
+   private String imgFileName1 = "images/man1.png"; // relative to project root (or bin)
+   private String imgFileName2 = "images/man2.png"; // relative to project root (or bin)
    private Image img;  // a BufferedImage object
    
    private final int homeFloor;
