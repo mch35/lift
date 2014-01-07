@@ -17,7 +17,7 @@ public class ButtonPanel
 {
    private LogicLift lift;
    JFrame pole;
-   public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
+   public static final Color CANVAS_BG_COLOR = Color.LIGHT_GRAY;
    private ButtonPanelView buttonPanelView;
    
    public ButtonPanel(LogicLift li, int numberOfFloors)
@@ -33,6 +33,8 @@ public class ButtonPanel
        pole.setLocation(1250, 10);
        pole.setResizable(false);
        pole.setVisible(true);
+       pole.setUndecorated(true);
+  
    }
 
 }

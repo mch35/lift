@@ -19,7 +19,7 @@ public class LiftInsideSimulation
    public static int IMAGE_HEIGHT;
    private LogicLift lift;
    JFrame pole;
-   public static final Color CANVAS_BG_COLOR = new Color(183, 221, 230);
+   public static final Color CANVAS_BG_COLOR = Color.LIGHT_GRAY;
    private LiftResidents liftResidents;
    
    public LiftInsideSimulation(final int imageX, int imageY, LogicLift li)
