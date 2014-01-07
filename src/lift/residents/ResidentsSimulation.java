@@ -24,8 +24,8 @@ public class ResidentsSimulation implements Runnable{
         private final Lift lift;        
         /** Polaczenie z serwerem */
         private final Connection connection;
-        private int minTimeAnticipating = 5;
-        private int maxTimeAnticipating = 10;
+        private int minTimeAnticipating;
+        private int maxTimeAnticipating;
         
         private int id = 0;
         
@@ -34,8 +34,8 @@ public class ResidentsSimulation implements Runnable{
         	
                 this.connection = server.connect(ModuleID.MIESZKANCY);
                 
-                minTimeAnticipating = 0;
-                maxTimeAnticipating = 2;
+                minTimeAnticipating = 5;
+                maxTimeAnticipating = 10;
                 
                 numberOfFloors = N;
                 floorList = new ArrayList<Floor>(N);
