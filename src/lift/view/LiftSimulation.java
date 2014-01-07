@@ -592,6 +592,31 @@ public class LiftSimulation extends JFrame implements Runnable
 		   	GetOffEvent e = (GetOffEvent) event;
 		   	goOutOfLift(e.getid());
 	   }
+	   
+       if(event.getClass() == DownButtonEvent.class)
+   	   {
+    	  System.out.println("Down Button");
+   		  DownButtonEvent e = (DownButtonEvent) event;
+   		  floorList[numberOfFloors-e.getFloor()-1].setDown(true);
+   		  canvas.repaint();	   
+   	   }
+       
+       if(event.getClass() == UpButtonEvent.class)
+   	   {
+   		  System.out.println("Up Button");
+    	   UpButtonEvent e = (UpButtonEvent) event;
+   		  floorList[numberOfFloors-e.getFloor()-1].setUp(true);
+   		  canvas.repaint();	   
+   	   }
+       
+       if(event.getClass() == InnerButtonEvent.class)
+   	   {
+   		  System.out.println("Inner Button");
+    	   //InnerButtonEvent e = (InnerButtonEvent) event;
+   		  //floorList[numberOfFloors-e.getFloor()-1].setUp(true);
+   		  //canvas.repaint();	   
+   	   }
+	   
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
 		   LiftStopEvent e = (LiftStopEvent) event;
@@ -621,12 +646,27 @@ public class LiftSimulation extends JFrame implements Runnable
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   if(e.getNewDirection()==Direction.DOWN){
 			   floorList[numberOfFloors-e.getFloor()-1].setLightDown(true);
+			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
+			   canvas.repaint();
 		   }
 		   else if(e.getNewDirection()==Direction.UP){
 			   floorList[numberOfFloors-e.getFloor()-1].setLightUp(true);
+			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
+			   canvas.repaint();
 		   }
 		   if(currentDirection!=Direction.STOP){
 			   readyToRide=false;
+			   openTheDoor();
+			   try {
+					liftAnimationThread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		   }
+		   else if((floorList[numberOfFloors-1-e.getFloor()].lightDown==true && e.getNewDirection()==Direction.DOWN) || (floorList[numberOfFloors-1-e.getFloor()].lightUp==true && e.getNewDirection()==Direction.UP)){
+			   readyToRide=false;
+			   System.out.println("TUUUUUUUUUUUUUU");
 			   openTheDoor();
 			   try {
 					liftAnimationThread.sleep(2000);
@@ -639,15 +679,7 @@ public class LiftSimulation extends JFrame implements Runnable
 		   lift.setCurrentDirection(e.getNewDirection());
 		   currentDirection=e.getNewDirection();
 		   lift.setCurrentFloor(e.getFloor());
-		   if(currentDirection==Direction.UP){
-			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
-			   canvas.repaint();
-		   }
-		   else if(currentDirection==Direction.DOWN){
-			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
-			   canvas.repaint();
-		   }
-		   else{
+		   if(currentDirection==Direction.STOP){
 
 			   closeTheDoor();
 			   try {
@@ -659,31 +691,6 @@ public class LiftSimulation extends JFrame implements Runnable
 		   }
 
 	   }
-	   
-       if(event.getClass() == DownButtonEvent.class)
-   	   {
-    	  System.out.println("Down Button");
-   		  DownButtonEvent e = (DownButtonEvent) event;
-   		  floorList[numberOfFloors-e.getFloor()-1].setDown(true);
-   		  canvas.repaint();	   
-   	   }
-       
-       if(event.getClass() == UpButtonEvent.class)
-   	   {
-   		  System.out.println("Up Button");
-    	   UpButtonEvent e = (UpButtonEvent) event;
-   		  floorList[numberOfFloors-e.getFloor()-1].setUp(true);
-   		  canvas.repaint();	   
-   	   }
-       
-       if(event.getClass() == InnerButtonEvent.class)
-   	   {
-   		  System.out.println("Inner Button");
-    	   //InnerButtonEvent e = (InnerButtonEvent) event;
-   		  //floorList[numberOfFloors-e.getFloor()-1].setUp(true);
-   		  //canvas.repaint();	   
-   	   }
-
 	   
    }
    
