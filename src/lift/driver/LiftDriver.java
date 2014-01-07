@@ -186,6 +186,7 @@ public class LiftDriver implements Runnable {
 				
 				
 				if (buttonPanel[event.getFloor()] == LiftButton.ACTIVE) {
+					clearButton(actualFloor);
 					if (direction == Direction.DOWN) {
 						if (directionButtonPanels[event.getFloor()][0] == LiftButton.ACTIVE) {
 							connection.send(new LiftStopEvent(event.getFloor()));
@@ -248,11 +249,13 @@ public class LiftDriver implements Runnable {
 									else {
 										connection.send(new ChangeDirectionEvent(Direction.DOWN, event.getFloor()));
 										direction=Direction.DOWN;
+										System.out.println("22222222"); 
 									}
 								}
 								else {
 									connection.send(new ChangeDirectionEvent(Direction.DOWN, event.getFloor()));
 									direction=Direction.DOWN;
+									System.out.println("1111111111");
 								}
 							}
 							else {
@@ -260,7 +263,7 @@ public class LiftDriver implements Runnable {
 							}
 						}
 					}
-					clearButton(actualFloor);
+					//clearButton(actualFloor);
 					readyToRide = false;
 				}
 				else {
