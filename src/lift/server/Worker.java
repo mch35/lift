@@ -255,9 +255,6 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.MIESZKANCY).add(event);
-			channels.get(ModuleID.WINDA).add(event);
-			
 			timer.stop();
 		}
 	}
@@ -266,10 +263,7 @@ class Worker implements Runnable
 	{
 		@Override
 		public void execute(final LiftEvent event)
-		{
-			channels.get(ModuleID.MIESZKANCY).add(event);
-			channels.get(ModuleID.WINDA).add(event);
-			
+		{			
 			timer.start();
 		}
 	}
