@@ -193,6 +193,9 @@ public class ResidentsSimulation implements Runnable{
 				@Override
 				public void run()
 				{
+					//"dobre" wartosci poczatkowe
+					minTimeAnticipating = 5;
+					maxTimeAnticipating = 10;
 					Random generator = new Random();
 	                while(true)
 	                {
