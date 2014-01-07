@@ -102,7 +102,8 @@ public class Resident {
 	/** Ustawia wspolrzedna x polozenia mieszkanca stojacego w kolejce */
 	public void setXCoordinate(int number)
 	{
-		this.x = 900-(number+1)*width;
+		//Ewentualnie zmienic na 900 jesli maja sie ustawiac przy samej windzie
+		this.x = 855-(number+1)*width;
 	}
 	
 	/** Ustawia wspolrzedna y polozenia mieszkanca stojacego w kolejce */
