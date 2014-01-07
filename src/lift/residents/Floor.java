@@ -31,7 +31,9 @@ public class Floor {
 		this.number = floorNumber;
 	}
 	
-	
+	/**
+	 * Sprawdza czy trzeba wcisnac przycisk przywolujacy winde jadaca w gore i ewentualnie "wciska" go
+	 */
 	public void refreshButtonUp()
 	{
 		if(!queueUp.isEmpty())
@@ -39,13 +41,16 @@ public class Floor {
 			
 	}
 	
+	/**
+	 * Sprawdza czy trzeba wcisnac przycisk przywolujacy winde jadaca w dol i ewentualnie "wciska" go
+	 */
 	public void refreshButtonDown()
 	{
 		if(!queueDown.isEmpty())
 			connection.send( new DownButtonEvent(number));
 	}
 	/**
-	 * 
+	 * Funkcja zwracajaca czlowieka z kolejki ludzi jadacych w odpowiednim kierunku
 	 * @param direction - kierunek jazdy winda
 	 * @return Pasazer ktory czeka w odpowiedniej kolejce
 	 */
@@ -106,6 +111,10 @@ public class Floor {
 		return upButton;
 	}
 	
+	/**
+	 * Ustawia przycisk przywolania windy jadacej w gore na odpowiednia wartosc (bool)
+	 * @param upButton
+	 */
 	private void setUpButton(Boolean upButton) {
 		this.upButton = upButton;
 	}
@@ -117,9 +126,18 @@ public class Floor {
 		return downButton;
 	}
 
+	/**
+	 * Ustawia przycisk przywolania windy jadacej w dol na odpowiednia wartosc (bool)
+	 * @param downButton
+	 */
 	private void setDownButton(Boolean downButton) {
 		this.downButton = downButton;
 	}
+	
+	/**
+	 * 
+	 * @return numer aktualnego pietra
+	 */
 	public int getFloorNumber()
 	{
 		return number;

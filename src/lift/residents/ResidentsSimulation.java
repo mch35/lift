@@ -67,6 +67,11 @@ public class ResidentsSimulation implements Runnable{
                                         
         }
         
+        /**
+         * Funkcja tworzaca czlowieka zleconego przez uzytkownika z podanymi parametrami
+         * @param hf - home floor
+         * @param df - destination floor
+         */
         private void generatePerson(final int hf, final int df)
         {
                 int homeFloor = hf;

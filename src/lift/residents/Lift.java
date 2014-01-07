@@ -43,9 +43,7 @@ public class Lift {
 	public void liftOnTheFloor(int floorNumber, Floor floor)
 	{
 		removePeopleFromLift(floorNumber);
-		System.out.println("Winda jest na pietrze: " + floorNumber);
 		System.out.println("Winda ma w sobie " + numberOfPeople + " ludzi");
-		System.out.println("maxNumberOfPeople - numberOfPeople = " + (maxNumberOfPeople - numberOfPeople));
 		
 		for(int i =0; i < (maxNumberOfPeople - numberOfPeople); i++)
 		{
@@ -60,6 +58,10 @@ public class Lift {
 		
 	}
 	
+	/**
+	 * Funkcje sprawdzajace czy ponownie nie zostal wcisniety przycisk przywolania windy
+	 * @param floor
+	 */
 	private void refreshQueue(Floor floor)
 	{
 		if(direction == Direction.DOWN)
@@ -69,7 +71,7 @@ public class Lift {
 	}
 
 	/**
-	 * Funkcja dodaje czlowieka do windy od razu przypisujac mu numer ktory bedzie go odroznial.
+	 * Funkcja dodaje czlowieka do windy
 	 * @param passager
 	 */
 	private void addPersonToLift(Person passager)
@@ -79,7 +81,6 @@ public class Lift {
 			if(inLift[i] == null)
 			{
 				connection.send(new GetOnEvent(passager.getId()));
-				passager.setNumberInLift(i);						//wprowadzam rozroznienia pomiedzy ludzmi w windzie
 				inLift[i] = passager;
 				numberOfPeople++;
 				break;
@@ -107,8 +108,4 @@ public class Lift {
 
 	}
 	
-	/*
-	 * Sprawdza czy ktos jeszcze zostal w kolejkach aby ewnetualnie dac jeszcze raz sygnal o tym ze 
-	 * ktos czeka na winde. 
-	 */
 }
