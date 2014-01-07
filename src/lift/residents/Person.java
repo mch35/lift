@@ -9,7 +9,7 @@ public class Person
 	private final Direction direction;
 	private final int id;							//numer rozrozniajacy czlowieka w windzie
 	
-	private int numberInLift;
+
 	
 	public Person(final int startFloor,final int destFloor, final int id)
 	{
@@ -25,12 +25,6 @@ public class Person
 
 			
 	}
-	
-	public void setNumberInLift(int number)
-	{
-		numberInLift = number;
-	}
-	
 	public Direction getDirection()
 	{
 		return direction;

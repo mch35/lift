@@ -67,6 +67,11 @@ public class ResidentsSimulation implements Runnable{
                                         
         }
         
+        /**
+         * Funkcja tworzaca czlowieka zleconego przez uzytkownika z podanymi parametrami
+         * @param hf - home floor
+         * @param df - destination floor
+         */
         private void generatePerson(final int hf, final int df)
         {
                 int homeFloor = hf;
@@ -80,7 +85,7 @@ public class ResidentsSimulation implements Runnable{
                 if(destFloor >= numberOfFloors)
                 	destFloor = 1;
                 if(destFloor == homeFloor)
-                        destFloor+=1%numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
+                        destFloor = (destFloor+1) % numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
                 Person nextPerson = new Person(homeFloor, destFloor, createId());
                 
                 //przekazuje czlowieka "pietru"

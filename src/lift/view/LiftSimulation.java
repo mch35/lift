@@ -519,7 +519,9 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   System.out.println("Lift Ready");
 		   //readyToRide=true;
-		   closeTheDoor();
+		   if(currentDirection!=Direction.STOP){
+			   closeTheDoor();
+		   }
 	   }
 	   
 	   if(event.getClass() == GetOnEvent.class)
@@ -553,7 +555,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   
 		   if(currentDirection==Direction.STOP){
-			   readyToRide=true;
+			   //readyToRide=true;
 		   }
 		   else{
 			   readyToRide=false;
