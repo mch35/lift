@@ -99,7 +99,7 @@ public class LiftSimulation extends JFrame implements Runnable
       
       for(int i = 0; i < numberOfFloors; ++i)
       {
-    	  floorList[i] = new LogicFloor(i);
+    	  floorList[i] = new LogicFloor(i, numberOfFloors);
       }
       
       lift = new LogicLift();

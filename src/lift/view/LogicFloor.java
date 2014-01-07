@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import lift.common.Direction;
-
+import lift.view.Consts;
 
 
 public class LogicFloor
 {
 
 	private final int floorNumber;
+	private final int numberOfFloors;
 	private final ArrayList<Resident> people;
 
         public ArrayList<Resident> getPeople() {
@@ -19,9 +20,10 @@ public class LogicFloor
         }
         boolean up, down;
 	
-	public LogicFloor(final int floorNumber)
+	public LogicFloor(final int floorNumber, final int numberOfFloors)
 	{
 		this.floorNumber = floorNumber;
+		this.numberOfFloors=numberOfFloors;
 		people = new ArrayList<Resident>();
                 up = down = false;
 	}
@@ -65,9 +67,13 @@ public class LogicFloor
    
    public void paint(Graphics g) {
       g.setColor(Color.BLACK);
-      g.drawString("Up", 905, 126*floorNumber + 55);
-      g.drawString("Dw", 905, 126*floorNumber + 80);
-      if(up == false)
+      if(floorNumber!=0){
+      	g.drawString("Up", 905, 126*floorNumber + 55);
+      }
+      if(floorNumber!=numberOfFloors-1){
+      	g.drawString("Dw", 905, 126*floorNumber + 80);
+      }
+      	if(up == false)
       {
           g.setColor(Color.GRAY);
       }
@@ -75,7 +81,9 @@ public class LogicFloor
       {
           g.setColor(Color.RED);
       }
-      g.fillOval(925, 126*floorNumber + 40, 20, 20);
+      if(floorNumber!=0){
+      		g.fillOval(925, 126*floorNumber + 40, 20, 20);
+      }
       if(down == false)
       {
           g.setColor(Color.GRAY);
@@ -84,7 +92,9 @@ public class LogicFloor
       {
           g.setColor(Color.RED);
       }
-      g.fillOval(925, 126*floorNumber + 65, 20, 20);
+      if(floorNumber!=numberOfFloors-1){
+      	g.fillOval(925, 126*floorNumber + 65, 20, 20);
+      }
    }
 	
 	/*
