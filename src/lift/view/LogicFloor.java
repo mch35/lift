@@ -55,6 +55,14 @@ public class LogicFloor
 		people.remove(res);
 	
 	}
+	
+	public void getOff(Resident res)
+	{
+
+		people.add(res);
+	
+	}
+	
    public void setDown(boolean down) {
        
        this.down = down;

@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import lift.common.Direction;
@@ -239,55 +240,13 @@ public class LiftSimulation extends JFrame implements Runnable
   			
   		}
   	});
-      
-      btnMoveManLeft.addActionListener(new ActionListener()
-      {		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-		
-			openTheDoor();
-            requestFocus(); // change the focus to JFrame to receive KeyEvent
-			
-		}
-	});
-      btnMoveManRight.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
-			closeTheDoor();
-            requestFocus(); // change the focus to JFrame to receive KeyEvent
-			
-		}
-	});
-      
-      btnMoveBoxUp.addActionListener(new ActionListener() {
-  		
-  		@Override
-  		public void actionPerformed(ActionEvent arg0) {
-  			// TODO Auto-generated method stub
-  			moveBoxUp();
-              requestFocus(); // change the focus to JFrame to receive KeyEvent
-  			
-  		}
-  	});
-        btnMoveBoxDown.addActionListener(new ActionListener() {
-  		
-  		@Override
-  		public void actionPerformed(ActionEvent arg0) {
-  			// TODO Auto-generated method stub
-  			moveBoxDown();
-              requestFocus(); // change the focus to JFrame to receive KeyEvent
-  			
-  		}
-  	});
  
       // Add both panels to this JFrame
+      
       Container cp = getContentPane();
+      JScrollPane scrollPane = new JScrollPane(canvas);
       cp.setLayout(new BorderLayout());
-      cp.add(canvas, BorderLayout.CENTER);
+      cp.add(scrollPane, BorderLayout.CENTER);
       cp.add(setTimeIntervalPanel, BorderLayout.SOUTH);
       cp.add(addResidentPanel, BorderLayout.NORTH);
 
@@ -421,17 +380,6 @@ public class LiftSimulation extends JFrame implements Runnable
 //		   };
 //		   animationThread.start(); 
 //   }
-
-
-//   private void moveManLeft() {
-//      // Save the current dimensions for repaint to erase the sprite
-//      int savedX = man.x;
-//      // update sprite
-//      man.x -= 10;
-//      // Repaint only the affected areas, not the entire JFrame, for efficiency
-//      canvas.repaint(savedX, man.y, man.width, man.height); // Clear old area to background
-//      canvas.repaint(man.x, man.y, man.width, man.height); // Paint new location
-//   }
    
 
    private void moveManRight(final Resident res) {
@@ -490,6 +438,7 @@ public class LiftSimulation extends JFrame implements Runnable
 					}
 			   
 		       }
+			   floorList[res.getDestFloor()].getOn(res);
        	}
 	   };
 	   animationThread.start();
@@ -697,7 +646,11 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   lift.removeFromTheLift(newResident);
 	   // tu mozna zadbac o jakas animacje wysiadania typa z windy
-	   //moveManLeft(newResident);
+	   
+	   floorList[lift.getCurrentFloor()].getOff(newResident);
+	   newResident.setExitCoordinate();
+	   
+	   moveManLeft(newResident);
 	   
 	   // to nie jestem pewny czy trzeba wstawic
 	   liftInsideSimulation.pole.repaint();
