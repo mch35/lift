@@ -219,7 +219,6 @@ public class ResidentsSimulation implements Runnable{
 	                                
 	                        } catch (InterruptedException e)
 	                        {
-	                        	System.out.println("Dziwny exception");
 	                                e.printStackTrace();
 	                        }
 	                        generatePerson();
