@@ -34,6 +34,7 @@ import lift.common.events.UpButtonEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
+import lift.server.Timer;
 import lift.server.exception.ConnectionExitsException;
 
 public class LiftSimulation extends JFrame implements Runnable
@@ -72,6 +73,8 @@ public class LiftSimulation extends JFrame implements Runnable
    
    /** Polaczenie z serwerem */
    private final Connection connection;
+   
+   private final Timer timer;
 
  
    /** 
@@ -94,6 +97,8 @@ public class LiftSimulation extends JFrame implements Runnable
       currentFloor=0;
       readyToRide=false;
       allIn=false;
+      
+      this.timer = server.getTimer();
       
       listOfPeople = new LinkedList<Resident>();
       
@@ -308,13 +313,20 @@ public class LiftSimulation extends JFrame implements Runnable
 	   liftAnimationThread = new Thread(){
 		   @Override
 			   public void run(){
-				   while(true){
-					   try {
-						Thread.sleep(25);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			   		Object obj = new Object();
+			   		while(true){
+						timer.notifyAt(obj, 25);
+						synchronized(obj)
+						{
+							try
+							{
+								obj.wait();
+							} catch (InterruptedException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 					   if(readyToRide==true){
 						   if(currentDirection==Direction.UP){
 							   moveBoxUp();
@@ -427,16 +439,24 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Thread animationThread = new Thread () {
        @Override
 	         public void run() {
+    	   	   Object obj = new Object();
 			   while(res.tempX < res.x)
 			   {
 				   res.tempX += 8;
 				   canvas.repaint();
-				   try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				   
+						timer.notifyAt(obj, 200);
+						synchronized(obj)
+						{
+							try
+							{
+								obj.wait();
+							} catch (InterruptedException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 			   
 		       }
        	}
@@ -449,18 +469,25 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Thread animationThread = new Thread () {
        @Override
 	         public void run() {
+	   	   		Object obj = new Object();
     	   		res.tempX = CANVAS_WIDTH - 50 - IMAGE_WIDTH;
     	   		res.tempY = res.exitY;
 			   while(res.tempX > 0)
 			   {
 				   res.tempX -= 8;
 				   canvas.repaint();
-				   try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				   timer.notifyAt(obj, 200);
+					synchronized(obj)
+					{
+						try
+						{
+							obj.wait();
+						} catch (InterruptedException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 			   
 		       }
        	}
