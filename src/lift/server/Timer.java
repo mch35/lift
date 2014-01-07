@@ -11,16 +11,25 @@ public class Timer implements Runnable
 	
 	private final LinkedBlockingQueue<ToNotify> toNotify;
 	
+	private final LinkedBlockingQueue<Long> whenNotify;
+	
 	private final Object toWait;
 	
+	private final Object nextStep;
+	
 	private Boolean isWaiting;
+	
+	private Boolean stepWorking;
 	
 	public Timer()
 	{
 		currentTime = System.currentTimeMillis();
 		toNotify = new LinkedBlockingQueue<>();
+		whenNotify = new LinkedBlockingQueue<>();
 		toWait = new Object();
+		nextStep = new Object();
 		isWaiting = true;
+		stepWorking = false;
 		startTime = currentTime;
 	}
 	
@@ -46,6 +55,18 @@ public class Timer implements Runnable
 		if(when > currentTime)
 		{
 			toNotify.add(new ToNotify(who, when));
+			
+			if(!whenNotify.contains(when))
+			{
+				try
+				{
+					whenNotify.put(when);
+				} catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}			
 		}
 		else
 		{
@@ -53,7 +74,7 @@ public class Timer implements Runnable
 		}		
 	}
 	
-	public void start()
+	public synchronized void start()
 	{
 		synchronized(toWait)
 		{
@@ -62,7 +83,7 @@ public class Timer implements Runnable
 		}
 	}
 	
-	public void stop()
+	public synchronized void stop()
 	{
 		synchronized(isWaiting)
 		{
@@ -70,6 +91,38 @@ public class Timer implements Runnable
 		}
 	}
 	
+	public synchronized void doStep()
+	{
+		synchronized(nextStep)
+		{
+			nextStep.notify();
+		}
+	}
+	
+	public synchronized void setStepWorking(Boolean stepWorking)
+	{
+		synchronized(this.stepWorking)
+		{
+			if(!stepWorking)
+			{
+				synchronized(nextStep)
+				{
+					nextStep.notify();
+				}
+			}
+			this.stepWorking = stepWorking;
+		}
+	}
+	
+	public synchronized Boolean getIsStepWorking()
+	{
+		return stepWorking;
+	}
+	
+	public synchronized Boolean getIsWaiting()
+	{
+		return isWaiting;
+	}
 
 	@Override
 	public void run()
@@ -77,22 +130,48 @@ public class Timer implements Runnable
 		long oldTime;
 		while(true)
 		{
-			oldTime = System.nanoTime();
-			synchronized(toWait)
+			if(getIsStepWorking())
 			{
-				if(isWaiting)
+				synchronized (nextStep)
 				{
 					try
 					{
-						toWait.wait();
+						nextStep.wait();
 					} catch (InterruptedException e)
 					{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
+				
+				while(!whenNotify.contains(currentTime))
+				{
+					increment();
+					System.out.println(currentTime);
+				}
 			}
-
+			else
+			{
+				oldTime = System.nanoTime();
+				synchronized(toWait)
+				{
+					if(getIsWaiting())
+					{
+						try
+						{
+							toWait.wait();
+						} catch (InterruptedException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}				
+				
+				while(System.nanoTime() - oldTime < 1000000);
+				increment();
+			}
+			
 			Iterator<ToNotify> it = toNotify.iterator();
 			
 			while(it.hasNext())
@@ -104,12 +183,10 @@ public class Timer implements Runnable
 					{
 						notify.who.notify();
 					}
+					whenNotify.remove(notify.when);
 					it.remove();
 				}
 			}
-			
-			while(System.nanoTime() - oldTime < 1000000);
-			increment();
 		}
 	}
 	

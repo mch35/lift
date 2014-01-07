@@ -73,6 +73,7 @@ class Worker implements Runnable
 		guiStrategy.addStrategy(SimulationStopEvent.class, new SimulationStopStrategy());
 		guiStrategy.addStrategy(SimulationStartEvent.class, new SimulationStartStrategy());
 		guiStrategy.addStrategy(StepSimulationEvent.class, new StepSimulationStrategy());
+		guiStrategy.addStrategy(NextStepEvent.class, new NextStepStrategy());
 		guiStrategy.addStrategy(GuiGeneratePersonEvent.class, new GuiGeneratePersonStrategy());
 		guiStrategy.addStrategy(SetTimeIntervalEvent.class, new SetTimeIntervalStrategy());
 		guiStrategy.addStrategy(LiftOnTheFloorEvent.class, new LiftOnTheFloorStrategy());
@@ -278,13 +279,16 @@ class Worker implements Runnable
 		@Override
 		public void execute(final LiftEvent event)
 		{
-			channels.get(ModuleID.MIESZKANCY).add(new SimulationStopEvent());
-			channels.get(ModuleID.WINDA).add(new SimulationStopEvent());
-			
-			synchronized (monitor)
-			{
-				monitor.notify();
-			}
+			timer.setStepWorking(!timer.getIsStepWorking());			
+		}
+	}
+	
+	class NextStepStrategy extends LiftEventStrategy
+	{
+		@Override
+		public void execute(final LiftEvent event)
+		{
+			timer.doStep();
 		}
 	}
 }
