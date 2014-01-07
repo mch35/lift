@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import lift.common.Direction;
@@ -280,9 +281,11 @@ public class LiftSimulation extends JFrame implements Runnable
   	});
  
       // Add both panels to this JFrame
+      
       Container cp = getContentPane();
+      JScrollPane scrollPane = new JScrollPane(canvas);
       cp.setLayout(new BorderLayout());
-      cp.add(canvas, BorderLayout.CENTER);
+      cp.add(scrollPane, BorderLayout.CENTER);
       cp.add(setTimeIntervalPanel, BorderLayout.SOUTH);
       cp.add(addResidentPanel, BorderLayout.NORTH);
 
