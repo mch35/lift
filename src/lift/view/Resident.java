@@ -15,6 +15,8 @@ public class Resident {
    /** Aktualne wspolrzedne mieszkanca */
    int tempX, tempY;
    
+   int exitY;
+   
    /** Wymiary mieszkanca */
    private final int width = 85;
    private final int height = 126; 
@@ -48,6 +50,8 @@ public class Resident {
 	      
 	      this.tempX = 5;
 	      this.tempY = getY();
+	      
+	      setExitCoordinate();
 	      
 	      loadImage();
    }
@@ -105,6 +109,12 @@ public class Resident {
 	public void setYCoordinate(int homeFloor)
 	{
 		this.y = (this.floorNumber-homeFloor)*height;
+	}
+	
+	/** Ustawia wspolrzedna y polozenia mieszkanca wysiadajacego z windy */
+	public void setExitCoordinate()
+	{
+		this.exitY = (this.floorNumber-this.destFloor)*height;
 	}
 	
 	public int getX()
