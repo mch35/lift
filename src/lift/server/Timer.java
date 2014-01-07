@@ -146,7 +146,6 @@ public class Timer implements Runnable
 				while(!whenNotify.contains(currentTime))
 				{
 					increment();
-					System.out.println(currentTime);
 				}
 			}
 			else
