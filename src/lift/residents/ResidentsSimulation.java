@@ -199,7 +199,7 @@ public class ResidentsSimulation implements Runnable{
 	                        generatePerson();
 	                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
 	                        
-	                        long anticipatingTime = (long)(10000* randomValue);
+	                        long anticipatingTime = (long)(1000* randomValue);
 	                        
 	                        try
 	                        {
