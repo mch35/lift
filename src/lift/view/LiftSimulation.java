@@ -317,7 +317,7 @@ public class LiftSimulation extends JFrame implements Runnable
 				   box.width--;
 				   canvas.repaint();
 				   try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -341,7 +341,7 @@ public class LiftSimulation extends JFrame implements Runnable
 				   box.width++;
 				   canvas.repaint();
 				   try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -353,7 +353,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   animationThread.start(); 
 
 	   try {
-		liftAnimationThread.sleep(1200);
+		liftAnimationThread.sleep(2000);
 	} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -555,7 +555,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   canvas.repaint();
 		   }
 		   try {
-			liftAnimationThread.sleep(1200); 
+			liftAnimationThread.sleep(2000); 
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -585,7 +585,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   canvas.repaint();
 		   }
 		   try {
-				liftAnimationThread.sleep(1200);
+				liftAnimationThread.sleep(2000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
