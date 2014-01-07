@@ -551,7 +551,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   canvas.repaint();
 		   }
 		   try {
-			liftAnimationThread.sleep(1000);
+			liftAnimationThread.sleep(1000); 
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
