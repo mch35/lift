@@ -82,6 +82,7 @@ public class LiftSimulation extends JFrame implements Runnable
     * Constructor to set up the GUI
     * 
     * @throws ConnectionExitsException
+    * 
     *  
  	*/
    public LiftSimulation(final int iloscPieter, final Server server) throws ConnectionExitsException
