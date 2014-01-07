@@ -551,7 +551,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
 		   
-		   if(currentDirection==Direction.STOP){
+		   if(currentDirection!=Direction.STOP){
 			   readyToRide=true;
 		   }
 		   else{
