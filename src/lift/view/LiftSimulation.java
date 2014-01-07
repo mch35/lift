@@ -99,7 +99,7 @@ public class LiftSimulation extends JFrame implements Runnable
       
       for(int i = 0; i < numberOfFloors; ++i)
       {
-    	  floorList[i] = new LogicFloor(i);
+    	  floorList[i] = new LogicFloor(i, numberOfFloors);
       }
       
       lift = new LogicLift();
@@ -349,11 +349,12 @@ public class LiftSimulation extends JFrame implements Runnable
 //         	}
 //	   };
 //	   animationThread.start();
-	   while(box.width > 0)
-		   {
-			   box.width--;
-			   canvas.repaint();
-		   }
+//	   while(box.width > 0)
+//		   {
+//			   box.width--;
+//			   canvas.repaint();
+//		   }
+	  
    }
    
    public void closeTheDoor() 
@@ -377,11 +378,11 @@ public class LiftSimulation extends JFrame implements Runnable
 //         	}
 //	   };
 //	   animationThread.start(); 
-	   while(box.width < IMAGE_WIDTH)
-		   {
-			   box.width++;
-			   canvas.repaint();
-		   }
+//	   while(box.width < IMAGE_WIDTH)
+//		   {
+//			   box.width++;
+//			   canvas.repaint();
+//		   }
 	   readyToRide=true;
    }
    
