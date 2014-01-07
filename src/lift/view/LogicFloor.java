@@ -135,7 +135,7 @@ public class LogicFloor
       }
       else
       {
-          g.setColor(Color.GREEN);
+          g.setColor(Color.RED);
       }
       if(floorNumber!=numberOfFloors-1){
     	  g.fillPolygon(x, yy, 3 );
