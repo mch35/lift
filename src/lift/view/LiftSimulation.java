@@ -307,7 +307,7 @@ public class LiftSimulation extends JFrame implements Runnable
          @Override
 	         public void run() {
         	 try {
-				liftAnimationThread.sleep(300);
+				liftAnimationThread.sleep(100);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -337,7 +337,7 @@ public class LiftSimulation extends JFrame implements Runnable
          @Override
 	         public void run() {
         	 try {
-				liftAnimationThread.sleep(500);
+				liftAnimationThread.sleep(1500);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -358,13 +358,6 @@ public class LiftSimulation extends JFrame implements Runnable
 	   };
 	   animationThread.start(); 
 
-	   try {
-		liftAnimationThread.sleep(2500);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	   readyToRide=true;
    }
    
    
@@ -528,10 +521,16 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == LiftIsReadyEvent.class)
 	   {
 		   System.out.println("Lift Ready");
-		   //readyToRide=true;
 		   if(currentDirection!=Direction.STOP){
 			   closeTheDoor();
+			   try {
+					liftAnimationThread.sleep(3500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		   }
+		   readyToRide=true;
 	   }
 	   
 	   if(event.getClass() == GetOnEvent.class)
@@ -570,12 +569,15 @@ public class LiftSimulation extends JFrame implements Runnable
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
 
-		   if(currentDirection==Direction.STOP){
-			   //readyToRide=true;
-		   }
-		   else{
+		   if(currentDirection!=Direction.STOP){
 			   readyToRide=false;
 			   openTheDoor();
+			   try {
+					liftAnimationThread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 		   }
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   System.out.println("Change Direction "+e.getNewDirection());
@@ -590,12 +592,17 @@ public class LiftSimulation extends JFrame implements Runnable
 			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
 			   canvas.repaint();
 		   }
-		   try {
-				liftAnimationThread.sleep(2000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		   else{
+
+			   closeTheDoor();
+			   try {
+					liftAnimationThread.sleep(3500);
+				} catch (InterruptedException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+		   }
+
 	   }
 	   
        if(event.getClass() == DownButtonEvent.class)
