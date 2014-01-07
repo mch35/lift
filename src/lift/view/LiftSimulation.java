@@ -67,7 +67,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private int currentFloor;
    private Direction currentDirection;
    private boolean readyToRide;
-   private boolean allIn;
+   private boolean doorClosed;
    private Thread liftAnimationThread;
    
    private LogicLift lift;
@@ -104,7 +104,7 @@ public class LiftSimulation extends JFrame implements Runnable
       currentDirection=Direction.STOP;
       currentFloor=0;
       readyToRide=false;
-      allIn=false;
+      doorClosed=true;
       
       this.timer = server.getTimer();
       
@@ -351,6 +351,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Thread animationThread = new Thread () {
          @Override
 	         public void run() {
+        	 doorClosed=false;
         	 try {
 				liftAnimationThread.sleep(100);
 			} catch (InterruptedException e1) {
@@ -381,12 +382,22 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Thread animationThread = new Thread () {
          @Override
 	         public void run() {
-        	 try {
-				liftAnimationThread.sleep(1500);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+        	 if(currentDirection==Direction.STOP){
+            	 try {
+     				liftAnimationThread.sleep(3500);
+     			} catch (InterruptedException e1) {
+     				// TODO Auto-generated catch block
+     				e1.printStackTrace();
+     			}
+        	 }
+        	 else{
+	        	 try {
+					liftAnimationThread.sleep(1500);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        	 }
 			   while(box.width < IMAGE_WIDTH)
 			   {
 				   box.width++;
@@ -399,6 +410,7 @@ public class LiftSimulation extends JFrame implements Runnable
 				}
 			   
 		       }
+			   doorClosed=true;
 	      	}
 	   };
 	   animationThread.start(); 
@@ -645,12 +657,16 @@ public class LiftSimulation extends JFrame implements Runnable
 	   {
 		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   if(e.getNewDirection()==Direction.DOWN){
-			   floorList[numberOfFloors-e.getFloor()-1].setLightDown(true);
+			   if(floorList[numberOfFloors-e.getFloor()-1].down==true){
+				   floorList[numberOfFloors-e.getFloor()-1].setLightDown(true);
+			   }
 			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
 			   canvas.repaint();
 		   }
 		   else if(e.getNewDirection()==Direction.UP){
-			   floorList[numberOfFloors-e.getFloor()-1].setLightUp(true);
+			   if(floorList[numberOfFloors-e.getFloor()-1].up==true){
+				   floorList[numberOfFloors-e.getFloor()-1].setLightUp(true);
+			   }
 			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
 			   canvas.repaint();
 		   }
@@ -682,12 +698,12 @@ public class LiftSimulation extends JFrame implements Runnable
 		   if(currentDirection==Direction.STOP){
 
 			   closeTheDoor();
-			   try {
-					liftAnimationThread.sleep(3500);
-				} catch (InterruptedException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				}
+//			   try {
+//					liftAnimationThread.sleep(3500);
+//				} catch (InterruptedException ex) {
+//					// TODO Auto-generated catch block
+//					ex.printStackTrace();
+//				}
 		   }
 
 	   }
