@@ -586,7 +586,7 @@ public class LiftSimulation extends JFrame implements Runnable
    		  System.out.println("Up Button");
     	   UpButtonEvent e = (UpButtonEvent) event;
    		  floorList[numberOfFloors-e.getFloor()-1].setUp(true);
-   		  canvas.repaint();	   
+   		  canvas.repaint();	  
    	   }
        
        if(event.getClass() == InnerButtonEvent.class)
