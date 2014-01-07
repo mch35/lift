@@ -336,6 +336,12 @@ public class LiftSimulation extends JFrame implements Runnable
 	   Thread animationThread = new Thread () {
          @Override
 	         public void run() {
+        	 try {
+				liftAnimationThread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			   while(box.width < IMAGE_WIDTH)
 			   {
 				   box.width++;
@@ -353,7 +359,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   animationThread.start(); 
 
 	   try {
-		liftAnimationThread.sleep(2000);
+		liftAnimationThread.sleep(2500);
 	} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
