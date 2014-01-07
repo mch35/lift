@@ -7,6 +7,8 @@ public class Timer implements Runnable
 {
 	private long currentTime;
 	
+	private final long startTime;
+	
 	private final LinkedBlockingQueue<ToNotify> toNotify;
 	
 	private final Object toWait;
@@ -19,11 +21,17 @@ public class Timer implements Runnable
 		toNotify = new LinkedBlockingQueue<>();
 		toWait = new Object();
 		isWaiting = true;
+		startTime = currentTime;
 	}
 	
 	public synchronized long getTime()
 	{
 		return currentTime;
+	}
+	
+	public synchronized long getStartTime()
+	{
+		return startTime;
 	}
 	
 	public synchronized void increment()
