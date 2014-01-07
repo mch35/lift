@@ -31,7 +31,7 @@ public class LiftResidents extends JPanel{
         this.people = people;
         IMAGE_WIDTH = imageX;
         IMAGE_HEIGHT = imageY;
-        loadImage();
+        //loadImage();
     }
     
     private void loadImage() 
@@ -82,7 +82,7 @@ public class LiftResidents extends JPanel{
                 tempY = (IMAGE_HEIGHT + 15) * (i - 1)/2;
             }
             
-            g.drawImage(img, tempX, tempY, null);
+            g.drawImage(people.get(i).getImg(), tempX, tempY, null);
             g.drawString("ID: "+ people.get(i).getId()+" Dest: "+people.get(i).getDestFloor(), tempX+10, tempY+IMAGE_HEIGHT + 10);
         }
     }
