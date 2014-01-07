@@ -156,8 +156,10 @@ public class LiftSimulation extends JFrame implements Runnable
       // Set up TextFields and Labels
       final JLabel srcFloorJLabel = new JLabel("Source Floor:");
       final JTextField srcJTextField = new JTextField(2);
+      srcJTextField.setText(1 + "");
       final JLabel dstFloorJLabel = new JLabel("Destination Floor:");
       final JTextField dstJTextField = new JTextField(2);
+      dstJTextField.setText(2 + "");
       
       time = new JLabel(((timer.getTime() - timer.getStartTime()) / 1000) + "s ");
       
@@ -165,8 +167,10 @@ public class LiftSimulation extends JFrame implements Runnable
      
       final JLabel minTimeLabel = new JLabel("Min Time Interval [s]:");
       final JTextField minTimeTextField = new JTextField(4);
+      minTimeTextField.setText(5 + "");
       final JLabel maxTimeLabel = new JLabel("Max Time Interval [s]:");
       final JTextField maxTimeTextField = new JTextField(4);
+      maxTimeTextField.setText(10 + "");
       
       // Add buttons to Panels
       addResidentPanel.add(time);
