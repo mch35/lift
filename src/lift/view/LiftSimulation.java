@@ -80,6 +80,8 @@ public class LiftSimulation extends JFrame implements Runnable
    private final Timer timer;
    
    private final JLabel time;
+   
+   private final JLabel mode;
 
  
    /** 
@@ -158,6 +160,8 @@ public class LiftSimulation extends JFrame implements Runnable
       final JTextField dstJTextField = new JTextField(2);
       
       time = new JLabel(((timer.getTime() - timer.getStartTime()) / 1000) + "s ");
+      
+      mode = new JLabel("Auto");
      
       final JLabel minTimeLabel = new JLabel("Min Time Interval [s]:");
       final JTextField minTimeTextField = new JTextField(4);
@@ -174,7 +178,8 @@ public class LiftSimulation extends JFrame implements Runnable
       addResidentPanel.add(srcJTextField);
       addResidentPanel.add(dstFloorJLabel);
       addResidentPanel.add(dstJTextField);
-      
+
+      setTimeIntervalPanel.add(mode);
       setTimeIntervalPanel.add(stepOrAutomatic);
       setTimeIntervalPanel.add(nextStep);
       setTimeIntervalPanel.add(setTimeInterval);
@@ -235,7 +240,16 @@ public class LiftSimulation extends JFrame implements Runnable
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			connection.send(new StepSimulationEvent());	
+			connection.send(new StepSimulationEvent());
+			
+			if(mode.getText() == "Auto")
+			{
+				mode.setText("Step");
+			}
+			else
+			{
+				mode.setText("Auto");
+			}
 		}
 	});
       
