@@ -303,58 +303,67 @@ public class LiftSimulation extends JFrame implements Runnable
    
    public void openTheDoor() 
    {
-//	   Thread animationThread = new Thread () {
-//         @Override
-//	         public void run() {
-//			   while(box.width > 0)
-//			   {
-//				   box.width--;
-//				   canvas.repaint();
-//				   try {
-//					Thread.sleep(50);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			   
-//		       }
-//         	}
-//	   };
-//	   animationThread.start();
-//	   while(box.width > 0)
-//		   {
-//			   box.width--;
-//			   canvas.repaint();
-//		   }
+	   Thread animationThread = new Thread () {
+         @Override
+	         public void run() {
+        	 try {
+				liftAnimationThread.sleep(300);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			   while(box.width > 4)
+			   {
+				   box.width--;
+				   canvas.repaint();
+				   try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+		       }
+         	}
+	   };
+	   animationThread.start();
+
 	  
    }
    
    public void closeTheDoor() 
    {
-//	   Thread animationThread = new Thread () {
-//         @Override
-//	         public void run() {
-//			   while(box.width < IMAGE_WIDTH)
-//			   {
-//				   box.width++;
-//				   canvas.repaint();
-//				   try {
-//					Thread.sleep(50);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			   
-//		       }
-//			   readyToRide=true;
-//         	}
-//	   };
-//	   animationThread.start(); 
-//	   while(box.width < IMAGE_WIDTH)
-//		   {
-//			   box.width++;
-//			   canvas.repaint();
-//		   }
+	   Thread animationThread = new Thread () {
+         @Override
+	         public void run() {
+        	 try {
+				liftAnimationThread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			   while(box.width < IMAGE_WIDTH)
+			   {
+				   box.width++;
+				   canvas.repaint();
+				   try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+		       }
+	      	}
+	   };
+	   animationThread.start(); 
+
+	   try {
+		liftAnimationThread.sleep(2500);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	   readyToRide=true;
    }
    
@@ -552,7 +561,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   canvas.repaint();
 		   }
 		   try {
-			liftAnimationThread.sleep(1000); 
+			liftAnimationThread.sleep(2000); 
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -582,7 +591,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   canvas.repaint();
 		   }
 		   try {
-				liftAnimationThread.sleep(1000);
+				liftAnimationThread.sleep(2000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
