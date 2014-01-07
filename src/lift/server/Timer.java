@@ -139,7 +139,6 @@ public class Timer implements Runnable
 						nextStep.wait();
 					} catch (InterruptedException e)
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
