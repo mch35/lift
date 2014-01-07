@@ -249,7 +249,7 @@ public class LiftDriver implements Runnable {
 									else {
 										connection.send(new ChangeDirectionEvent(Direction.DOWN, event.getFloor()));
 										direction=Direction.DOWN;
-										System.out.println("22222222");
+										System.out.println("22222222"); 
 									}
 								}
 								else {
