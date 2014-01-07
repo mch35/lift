@@ -535,6 +535,7 @@ public class LiftSimulation extends JFrame implements Runnable
          for(int i = 0; i < numberOfFloors; i++)
          {
              floorList[i].paint(g);
+        	 //System.out.println("kaszanka");
              for(Resident person: floorList[i].getPeople())
              {
                  person.paint(g);
