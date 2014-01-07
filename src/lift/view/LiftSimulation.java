@@ -331,47 +331,58 @@ public class LiftSimulation extends JFrame implements Runnable
    
    public void openTheDoor() 
    {
-	   Thread animationThread = new Thread () {
-         @Override
-	         public void run() {
-			   while(box.width > 0)
-			   {
-				   box.width--;
-				   canvas.repaint();
-				   try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			   
-		       }
-         	}
-	   };
-	   animationThread.start(); 
+//	   Thread animationThread = new Thread () {
+//         @Override
+//	         public void run() {
+//			   while(box.width > 0)
+//			   {
+//				   box.width--;
+//				   canvas.repaint();
+//				   try {
+//					Thread.sleep(50);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			   
+//		       }
+//         	}
+//	   };
+//	   animationThread.start();
+	   while(box.width > 0)
+		   {
+			   box.width--;
+			   canvas.repaint();
+		   }
    }
    
    public void closeTheDoor() 
    {
-	   Thread animationThread = new Thread () {
-         @Override
-	         public void run() {
-			   while(box.width < IMAGE_WIDTH)
-			   {
-				   box.width++;
-				   canvas.repaint();
-				   try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			   
-		       }
-			   readyToRide=true;
-         	}
-	   };
-	   animationThread.start(); 
+//	   Thread animationThread = new Thread () {
+//         @Override
+//	         public void run() {
+//			   while(box.width < IMAGE_WIDTH)
+//			   {
+//				   box.width++;
+//				   canvas.repaint();
+//				   try {
+//					Thread.sleep(50);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			   
+//		       }
+//			   readyToRide=true;
+//         	}
+//	   };
+//	   animationThread.start(); 
+	   while(box.width < IMAGE_WIDTH)
+		   {
+			   box.width++;
+			   canvas.repaint();
+		   }
+	   readyToRide=true;
    }
    
    
@@ -474,10 +485,6 @@ public class LiftSimulation extends JFrame implements Runnable
          setBackground(CANVAS_BG_COLOR);
 
          
-         for(Resident person: listOfPeople)
-         {
-        	 person.paint(g);
-         }
          for(int i = 0; i < numberOfFloors; i++)
          {
              floorList[i].paint(g);
@@ -593,7 +600,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   //Wsadzam czlowieka do windy
            lift.addToTheLift(newResident);
            
-	   while(newResident.tempX < CANVAS_WIDTH - 50 - IMAGE_WIDTH)
+	   while(newResident.tempX < CANVAS_WIDTH - IMAGE_WIDTH)
 	   {
 		   newResident.tempX++;
 		   canvas.repaint();
