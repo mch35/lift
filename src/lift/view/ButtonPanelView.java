@@ -43,14 +43,14 @@ public class ButtonPanelView extends JPanel
                 tempY = 50 * (i - 1)/2 + 15;
             }
             g.setColor(Color.BLACK);
-            g.drawString("Pietro: "+i, tempX, tempY);;
+            g.drawString("FLOOR "+i, tempX, tempY);;
             g.setColor(Color.GRAY);
             for(Resident person: people)
             {
                 if(person.getDestFloor() == i)
                     g.setColor(Color.RED);
             }
-            g.fillOval(tempX + 10, tempY + 5, 20, 20);
+            g.fillOval(tempX + 15, tempY + 5, 20, 20);
         }
         
     }
