@@ -108,13 +108,13 @@ public class Resident {
 	/** Ustawia wspolrzedna y polozenia mieszkanca stojacego w kolejce */
 	public void setYCoordinate(int homeFloor)
 	{
-		this.y = (this.floorNumber-homeFloor)*height;
+		this.y = (this.floorNumber-1-homeFloor)*height;
 	}
 	
 	/** Ustawia wspolrzedna y polozenia mieszkanca wysiadajacego z windy */
 	public void setExitCoordinate()
 	{
-		this.exitY = (this.floorNumber-this.destFloor)*height;
+		this.exitY = (this.floorNumber-1-this.destFloor)*height;
 	}
 	
 	public int getX()

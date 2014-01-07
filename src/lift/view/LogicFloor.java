@@ -41,7 +41,7 @@ public class LogicFloor
 	 */
 	public Resident addPerson(final int id, final int homeFloor, final int destFloor)
 	{ // TODO: na sztywno jest ilosc pieter wpisana !!!
-		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor, 4);
+		Resident newResident = new Resident(id,homeFloor,people.size()+1, destFloor, numberOfFloors);
 		people.add(newResident);
 		return newResident;
 	}

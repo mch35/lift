@@ -30,7 +30,7 @@ public class Main
 		
 		try
 		{
-			residents = new ResidentsSimulation(5, server);
+			residents = new ResidentsSimulation(7, server);
 		} catch (ConnectionExitsException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -39,7 +39,7 @@ public class Main
 		// Start gui windy
 		try
 		{
-			(new Thread(new LiftSimulation(5, server))).start();
+			(new Thread(new LiftSimulation(7, server))).start();
 		}
 		catch (ConnectionExitsException e)
 		{		
@@ -49,7 +49,7 @@ public class Main
 		// Start drivera windy
 		try
 		{
-			(new Thread(LiftDriver.getInstance(5, server))).start();
+			(new Thread(LiftDriver.getInstance(7, server))).start();
 		}
 		catch (ConnectionExitsException e)
 		{		
