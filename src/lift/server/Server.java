@@ -59,6 +59,7 @@ public class Server
 	}
 		
 	/** 
+	 * 
 	 * Ustanawia polaczenie z serwerem.
 	 * 
 	 * @param id Id klienta 
