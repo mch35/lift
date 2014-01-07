@@ -33,7 +33,6 @@ public class Timer implements Runnable
 	
 	public void notifyAt(final Object who, final long interval)
 	{
-		System.out.println("new");
 		long when = currentTime + interval;
 		
 		if(when > currentTime)
