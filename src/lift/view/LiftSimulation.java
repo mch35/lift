@@ -411,6 +411,7 @@ public class LiftSimulation extends JFrame implements Runnable
 				}
 			   
 		       }
+			   floorList[res.getDestFloor()].getOn(res);
        	}
 	   };
 	   animationThread.start();
@@ -618,7 +619,11 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   lift.removeFromTheLift(newResident);
 	   // tu mozna zadbac o jakas animacje wysiadania typa z windy
-	   //moveManLeft(newResident);
+	   
+	   floorList[lift.getCurrentFloor()].getOff(newResident);
+	   newResident.setExitCoordinate();
+	   
+	   moveManLeft(newResident);
 	   
 	   // to nie jestem pewny czy trzeba wstawic
 	   liftInsideSimulation.pole.repaint();
