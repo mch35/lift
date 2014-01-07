@@ -497,6 +497,7 @@ public class LiftSimulation extends JFrame implements Runnable
       if((box.y%IMAGE_HEIGHT)==0){
        	  System.out.println("pietro"+(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
     	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
+    	  currentFloor=numberOfFloors-1-(box.y/IMAGE_HEIGHT);
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
@@ -512,6 +513,7 @@ public class LiftSimulation extends JFrame implements Runnable
       if((box.y%IMAGE_HEIGHT)==0){
     	  System.out.println("pietro"+(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
     	  connection.send(new LiftOnTheFloorEvent(numberOfFloors-1-(box.y/IMAGE_HEIGHT)));
+    	  currentFloor=numberOfFloors-1-(box.y/IMAGE_HEIGHT);
       }
       // Repaint only the affected areas, not the entire JFrame, for efficiency
       canvas.repaint(box.x, saved_y, box.width, box.height); // Clear old area to background
@@ -570,6 +572,8 @@ public class LiftSimulation extends JFrame implements Runnable
 					e.printStackTrace();
 				}
 		   }
+		   floorList[numberOfFloors-1-currentFloor].setLightUp(false);
+		   floorList[numberOfFloors-1-currentFloor].setLightDown(false);
 		   readyToRide=true;
 	   }
 	   
@@ -585,20 +589,21 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
-
-		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
-		   System.out.println("Lift Stop " + e.getFloor());
-		   lift.setCurrentFloor( e.getFloor());
-		   openTheDoor();
 		   if(currentDirection==Direction.UP){
 			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
+			   floorList[numberOfFloors-e.getFloor()-1].setLightUp(true);
 			   canvas.repaint();
 		   }
 		   else if(currentDirection==Direction.DOWN){
 			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
+			   floorList[numberOfFloors-e.getFloor()-1].setLightDown(true);
 			   canvas.repaint();
 		   }
+		   readyToRide=false;
+		   System.out.println("Lift Stop " + e.getFloor());
+		   lift.setCurrentFloor( e.getFloor());
+		   openTheDoor();
 		   try {
 			liftAnimationThread.sleep(2000); 
 		} catch (InterruptedException e1) {
@@ -608,7 +613,13 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
-
+		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
+		   if(e.getNewDirection()==Direction.DOWN){
+			   floorList[numberOfFloors-e.getFloor()-1].setLightDown(true);
+		   }
+		   else if(e.getNewDirection()==Direction.UP){
+			   floorList[numberOfFloors-e.getFloor()-1].setLightUp(true);
+		   }
 		   if(currentDirection!=Direction.STOP){
 			   readyToRide=false;
 			   openTheDoor();
@@ -619,7 +630,6 @@ public class LiftSimulation extends JFrame implements Runnable
 					e1.printStackTrace();
 				}
 		   }
-		   ChangeDirectionEvent e = (ChangeDirectionEvent) event;
 		   System.out.println("Change Direction "+e.getNewDirection());
 		   lift.setCurrentDirection(e.getNewDirection());
 		   currentDirection=e.getNewDirection();
