@@ -35,8 +35,6 @@ class Worker implements Runnable
 		this.monitor = new Object();
 		this.timer = timer;
 		addStrategies();
-		
-		System.out.println(clientsStrategies.size());
 	}
 	
 	/**
