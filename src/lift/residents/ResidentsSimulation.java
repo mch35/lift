@@ -12,6 +12,7 @@ import lift.common.events.SetTimeIntervalEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
 import lift.server.Server;
+import lift.server.Timer;
 import lift.server.exception.ConnectionExitsException;
 
 
@@ -29,6 +30,8 @@ public class ResidentsSimulation implements Runnable{
         
         private int id = 0;
         
+        private final Timer timer;
+        
         public ResidentsSimulation(int N, final Server server) throws ConnectionExitsException
         {
         	
@@ -45,6 +48,8 @@ public class ResidentsSimulation implements Runnable{
                         floorList.add(i,pietro);
                 }
                 lift = new Lift(8,connection);
+                
+                this.timer = server.getTimer();
         }
         
         /**
@@ -199,19 +204,24 @@ public class ResidentsSimulation implements Runnable{
 					Random generator = new Random();
 	                while(true)
 	                {
-	                        generatePerson();
 	                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
 	                        
 	                        long anticipatingTime = (long)(1000* randomValue);
 	                        
 	                        try
 	                        {
-	                                Thread.sleep(anticipatingTime);
+	                                Object obj = new Object();
+	                                timer.notifyAt(obj, anticipatingTime);
+	                                synchronized(obj)
+	                                {
+	                                	obj.wait();
+	                                }
+	                                
 	                        } catch (InterruptedException e)
 	                        {
-	                        	System.out.println("Dziwny exception");
 	                                e.printStackTrace();
 	                        }
+	                        generatePerson();
 	                }	
 				}
 			}).start();
