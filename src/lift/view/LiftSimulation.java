@@ -316,7 +316,7 @@ public class LiftSimulation extends JFrame implements Runnable
 			   public void run(){
 			   		Object obj = new Object();
 			   		while(true){
-						timer.notifyAt(obj, 25);
+						timer.notifyAt(obj, 20);
 						synchronized(obj)
 						{
 							try
