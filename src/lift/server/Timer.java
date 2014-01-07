@@ -161,7 +161,6 @@ public class Timer implements Runnable
 							toWait.wait();
 						} catch (InterruptedException e)
 						{
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
