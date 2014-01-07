@@ -33,7 +33,6 @@ public class ButtonPanel
        pole.setLocation(1250, 10);
        pole.setResizable(false);
        pole.setVisible(true);
-       pole.setUndecorated(true);
   
    }
 
