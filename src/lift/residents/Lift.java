@@ -45,7 +45,8 @@ public class Lift {
 		removePeopleFromLift(floorNumber);
 		System.out.println("Winda ma w sobie " + numberOfPeople + " ludzi");
 		
-		for(int i =0; i < (maxNumberOfPeople - numberOfPeople); i++)
+		int currentNumberOfPeople = numberOfPeople;
+		for(int i =0; i < (maxNumberOfPeople - currentNumberOfPeople); i++)
 		{
 			Person passager = floor.getPassager(direction);
 			if(passager == null)

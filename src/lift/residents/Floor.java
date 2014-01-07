@@ -87,20 +87,19 @@ public class Floor {
 		if(person.getDirection() == Direction.DOWN)
 		{
 			queueDown.addLast(person);
-			if(!downButton)
-			{
+			
+			
 				connection.send(new DownButtonEvent(getFloorNumber()));
 				setDownButton(true);
-			}
+			
 		}
 		else
 		{
 			queueUp.addLast(person);
-			if(!upButton)
-			{
+			
 				connection.send(new UpButtonEvent(getFloorNumber()));
 				setUpButton(true);
-			}
+			
 		}
 	}
 

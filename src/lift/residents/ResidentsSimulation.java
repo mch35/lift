@@ -85,7 +85,7 @@ public class ResidentsSimulation implements Runnable{
                 if(destFloor >= numberOfFloors)
                 	destFloor = 1;
                 if(destFloor == homeFloor)
-                        destFloor+=1%numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
+                        destFloor = (destFloor+1) % numberOfFloors;                                                        // Jakby chcial jechac na to pietro na ktorym jest
                 Person nextPerson = new Person(homeFloor, destFloor, createId());
                 
                 //przekazuje czlowieka "pietru"
