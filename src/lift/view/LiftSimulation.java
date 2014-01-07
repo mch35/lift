@@ -375,7 +375,7 @@ public class LiftSimulation extends JFrame implements Runnable
 					Thread.sleep(20);
 				} catch (InterruptedException e) { 
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e.printStackTrace(); 
 				}
 			   
 		       }
