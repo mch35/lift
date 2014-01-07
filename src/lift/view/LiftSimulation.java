@@ -76,6 +76,8 @@ public class LiftSimulation extends JFrame implements Runnable
    private final Connection connection;
    
    private final Timer timer;
+   
+   private final JLabel time;
 
  
    /** 
@@ -153,6 +155,7 @@ public class LiftSimulation extends JFrame implements Runnable
       final JLabel dstFloorJLabel = new JLabel("Destination Floor:");
       final JTextField dstJTextField = new JTextField(2);
       
+      time = new JLabel(((timer.getTime() - timer.getStartTime()) / 1000) + "s ");
      
       final JLabel minTimeLabel = new JLabel("Min Time Interval [s]:");
       final JTextField minTimeTextField = new JTextField(4);
@@ -160,6 +163,7 @@ public class LiftSimulation extends JFrame implements Runnable
       final JTextField maxTimeTextField = new JTextField(4);
       
       // Add buttons to Panels
+      addResidentPanel.add(time);
       addResidentPanel.add(startSimulation);
       addResidentPanel.add(stopSimulation);
       
@@ -259,6 +263,27 @@ public class LiftSimulation extends JFrame implements Runnable
       requestFocus();    // "this" JFrame requests focus to receive KeyEvent
       
       animateLiftMovement();
+      
+      (new Thread(new Runnable() {
+  		
+  		@Override
+  		public void run()
+  		{
+  			while(true)
+  			{
+  				time.setText(((timer.getTime() - timer.getStartTime()) / 1000) + "s ");
+  				
+  				try
+  				{
+  					Thread.sleep(500);
+  				} catch (InterruptedException e)
+  				{
+  					// TODO Auto-generated catch block
+  					e.printStackTrace();
+  				}
+  			}
+  		}
+        })).start();
    }
    
    /**
