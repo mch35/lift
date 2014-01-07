@@ -108,8 +108,11 @@ public class Timer implements Runnable
 				synchronized(nextStep)
 				{
 					nextStep.notify();
+					start();
 				}
 			}
+			
+			start();
 			this.stepWorking = stepWorking;
 		}
 	}
