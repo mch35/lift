@@ -28,9 +28,11 @@ import lift.common.events.LiftEvent;
 import lift.common.events.LiftIsReadyEvent;
 import lift.common.events.LiftOnTheFloorEvent;
 import lift.common.events.LiftStopEvent;
+import lift.common.events.NextStepEvent;
 import lift.common.events.SetTimeIntervalEvent;
 import lift.common.events.SimulationStartEvent;
 import lift.common.events.SimulationStopEvent;
+import lift.common.events.StepSimulationEvent;
 import lift.common.events.UpButtonEvent;
 import lift.server.Connection;
 import lift.server.ModuleID;
@@ -231,18 +233,18 @@ public class LiftSimulation extends JFrame implements Runnable
       stepOrAutomatic.addActionListener(new ActionListener() {
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+		public void actionPerformed(ActionEvent e)
+		{
+			connection.send(new StepSimulationEvent());	
 		}
 	});
       
       nextStep.addActionListener(new ActionListener() {
   		
   		@Override
-  		public void actionPerformed(ActionEvent e) {
-  			// TODO Auto-generated method stub
-  			
+  		public void actionPerformed(ActionEvent e)
+  		{
+			connection.send(new NextStepEvent());
   		}
   	});
  
