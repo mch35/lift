@@ -64,6 +64,7 @@ public class LiftSimulation extends JFrame implements Runnable
    private Direction currentDirection;
    private boolean readyToRide;
    private boolean allIn;
+   private Thread liftAnimationThread;
    
    private LogicLift lift;
    private LiftInsideSimulation liftInsideSimulation;
@@ -93,7 +94,6 @@ public class LiftSimulation extends JFrame implements Runnable
       currentFloor=0;
       readyToRide=false;
       allIn=false;
-      
       
       listOfPeople = new LinkedList<Resident>();
       
@@ -305,7 +305,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
    }
    public void animateLiftMovement(){
-	   Thread liftAnimationThread = new Thread(){
+	   liftAnimationThread = new Thread(){
 		   @Override
 			   public void run(){
 				   while(true){
@@ -560,7 +560,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   }
 	   if(event.getClass() == LiftStopEvent.class)
 	   {
-		   
+
 		   readyToRide=false;
 		   LiftStopEvent e = (LiftStopEvent) event;
 		   System.out.println("Lift Stop " + e.getFloor());
@@ -574,10 +574,16 @@ public class LiftSimulation extends JFrame implements Runnable
 			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
 			   canvas.repaint();
 		   }
+		   try {
+			liftAnimationThread.sleep(1000); 
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
-		   
+
 		   if(currentDirection==Direction.STOP){
 			   //readyToRide=true;
 		   }
@@ -598,6 +604,12 @@ public class LiftSimulation extends JFrame implements Runnable
 			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
 			   canvas.repaint();
 		   }
+		   try {
+				liftAnimationThread.sleep(1000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 	   }
 	   
        if(event.getClass() == DownButtonEvent.class)
