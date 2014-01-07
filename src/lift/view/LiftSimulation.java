@@ -444,6 +444,30 @@ public class LiftSimulation extends JFrame implements Runnable
 	   animationThread.start();
    }
    
+   private void moveManLeft(final Resident res) {
+	      
+	   Thread animationThread = new Thread () {
+       @Override
+	         public void run() {
+    	   		res.tempX = CANVAS_WIDTH - 50 - IMAGE_WIDTH;
+    	   		res.tempY = res.exitY;
+			   while(res.tempX > 0)
+			   {
+				   res.tempX -= 8;
+				   canvas.repaint();
+				   try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+		       }
+       	}
+	   };
+	   animationThread.start();
+   }
+   
    /** Helper method to move the sprite left */
    private void moveBoxUp() {
       // Save the current dimensions for repaint to erase the sprite
@@ -634,6 +658,7 @@ public class LiftSimulation extends JFrame implements Runnable
 	   
 	   lift.removeFromTheLift(newResident);
 	   // tu mozna zadbac o jakas animacje wysiadania typa z windy
+	   //moveManLeft(newResident);
 	   
 	   // to nie jestem pewny czy trzeba wstawic
 	   liftInsideSimulation.pole.repaint();
