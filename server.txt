@@ -1,0 +1,6 @@
+Modu³ serwera poœredniczy w komunikacji miêdzy poszczególnymi modu³ami symulacji windy. Pobiera otrzymane wiadomoœci od modu³ów i przetwarza je w zale¿noœci od strategii. Centrum przetwarzania jest obiekt klasy Worker, który dla konkretnej wiadomoœci otrzymanej od konkretnego modu³u wykonuje odpowiedni¹ strategiê.
+
+¯eby po³¹czyæ siê z serwerem nale¿y wywo³aæ metodê server.connection(id), która zwraca obiekt typu Connection. Wywo³anie po³¹czenia powoduje stworzenie obiektu klasy Listener, który nas³uchuje dane po³¹czenie i przekazuje wiadomoœci do obiektu klasy Worker. Wywo³uj¹c metodê connection.send(event) mo¿na wysy³aæ wiadomoœci do serwera. Connection.recieve() zwraca wiadomoœci otrzymywane od serwera.
+
+Serwer udostêpnia obiekt klasy Timer, który przechowuje i zarz¹dza czasem symulacji. Wywo³anie metody Timer.notifyAt(who, when) spowoduje obudzenie danego obiektu po okreœlonym czasie. W przypadku symulacji ci¹g³ej przetwarzanie wykonywane jest na podstawie "czasu rzeczywistego". W przypadku symulacji krokowej, wywo³anie kolejnego kroku powoduje przeszkoczenie do najbli¿szego obudzenia obiektu.
+
