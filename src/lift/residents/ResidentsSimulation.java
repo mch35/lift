@@ -200,7 +200,7 @@ public class ResidentsSimulation implements Runnable{
 	                        double randomValue = minTimeAnticipating + (generator.nextDouble()*(maxTimeAnticipating - minTimeAnticipating));
 	                        
 	                        long anticipatingTime = (long)(1000* randomValue);
-	                        
+	                         
 	                        try
 	                        {
 	                                Thread.sleep(anticipatingTime);
