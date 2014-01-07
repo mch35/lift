@@ -22,15 +22,17 @@ public class Main
 		
 	}
 	
+	
 	/** The entry main() method */
 	public static void main(String[] args)
 	{
 		final Server server = new Server();
 		ResidentsSimulation residents = null;
+		int floors = 5;
 		
 		try
 		{
-			residents = new ResidentsSimulation(10, server);
+			residents = new ResidentsSimulation(floors, server);
 		} catch (ConnectionExitsException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -39,7 +41,7 @@ public class Main
 		// Start gui windy
 		try
 		{
-			(new Thread(new LiftSimulation(10, server))).start();
+			(new Thread(new LiftSimulation(floors, server))).start();
 		}
 		catch (ConnectionExitsException e)
 		{		
@@ -49,7 +51,7 @@ public class Main
 		// Start drivera windy
 		try
 		{
-			(new Thread(LiftDriver.getInstance(10, server))).start();
+			(new Thread(LiftDriver.getInstance(floors, server))).start();
 		}
 		catch (ConnectionExitsException e)
 		{		
