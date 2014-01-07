@@ -131,5 +131,10 @@ public class Resident {
 	{
 		return destFloor;
 	}
+        
+     public Image getImg()
+     {
+    	 return img;
+     }
 
 }

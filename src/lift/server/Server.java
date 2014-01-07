@@ -24,6 +24,8 @@ public class Server
 	/** Czy serwer pracuje */
 	private Boolean isRunning;
 	
+	private Timer timer;
+	
 	/**
 	 * 
 	 */
@@ -31,7 +33,8 @@ public class Server
 	{		
 		recieved = new Channel<>();
 		listeners = new ConcurrentHashMap<ModuleID, Listener>();
-		worker = new Worker(recieved);
+		timer = new Timer();
+		worker = new Worker(recieved, timer);
 		isRunning = false;
 	}
 	
@@ -44,12 +47,19 @@ public class Server
 		if(!isRunning)
 		{
 			(new Thread(worker)).start();
+			(new Thread(timer)).start();
 		}
 		
 		isRunning = true;
 	}
+	
+	public Timer getTimer()
+	{
+		return timer;
+	}
 		
 	/** 
+	 * 
 	 * Ustanawia polaczenie z serwerem.
 	 * 
 	 * @param id Id klienta 

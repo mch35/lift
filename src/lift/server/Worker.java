@@ -25,13 +25,15 @@ class Worker implements Runnable
 	
 	private final Object monitor;
 	
-	public Worker(final Channel<Packet> recieved)
+	private final Timer timer;
+	
+	public Worker(final Channel<Packet> recieved, final Timer timer)
 	{
 		this.channels = new ConcurrentHashMap<>();
 		this.clientsStrategies = new ConcurrentHashMap<>();
 		this.recieved = recieved;
 		this.monitor = new Object();
-		
+		this.timer = timer;
 		addStrategies();
 		
 		System.out.println(clientsStrategies.size());
@@ -256,6 +258,8 @@ class Worker implements Runnable
 		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
 			channels.get(ModuleID.WINDA).add(event);
+			
+			timer.stop();
 		}
 	}
 	
@@ -266,6 +270,8 @@ class Worker implements Runnable
 		{
 			channels.get(ModuleID.MIESZKANCY).add(event);
 			channels.get(ModuleID.WINDA).add(event);
+			
+			timer.start();
 		}
 	}
 	
