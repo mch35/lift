@@ -43,10 +43,7 @@ public class Timer implements Runnable
 		else
 		{
 			who.notify();
-			System.out.println(who.toString() + "tututututututututututututuu" + when);
-		}
-		
-		System.out.println(who.toString() + " " + currentTime + " at: " + when);
+		}		
 	}
 	
 	public void start()
@@ -78,7 +75,6 @@ public class Timer implements Runnable
 			{
 				if(isWaiting)
 				{
-					System.out.println("---------------- czeka od " + currentTime);
 					try
 					{
 						toWait.wait();
@@ -100,7 +96,6 @@ public class Timer implements Runnable
 					synchronized(notify.who)
 					{
 						notify.who.notify();
-						System.out.println("notify --------------------- " + currentTime);
 					}
 					it.remove();
 				}
