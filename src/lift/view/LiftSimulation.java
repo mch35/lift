@@ -539,6 +539,14 @@ public class LiftSimulation extends JFrame implements Runnable
 		   System.out.println("Lift Stop " + e.getFloor());
 		   lift.setCurrentFloor( e.getFloor());
 		   openTheDoor();
+		   if(currentDirection==Direction.UP){
+			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
+			   canvas.repaint();
+		   }
+		   else if(currentDirection==Direction.DOWN){
+			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
+			   canvas.repaint();
+		   }
 	   }
 	   if(event.getClass() == ChangeDirectionEvent.class)
 	   {
@@ -555,6 +563,14 @@ public class LiftSimulation extends JFrame implements Runnable
 		   lift.setCurrentDirection(e.getNewDirection());
 		   currentDirection=e.getNewDirection();
 		   lift.setCurrentFloor(e.getFloor());
+		   if(currentDirection==Direction.UP){
+			   floorList[numberOfFloors-e.getFloor()-1].setUp(false);
+			   canvas.repaint();
+		   }
+		   else if(currentDirection==Direction.DOWN){
+			   floorList[numberOfFloors-e.getFloor()-1].setDown(false);
+			   canvas.repaint();
+		   }
 	   }
 	   
        if(event.getClass() == DownButtonEvent.class)
