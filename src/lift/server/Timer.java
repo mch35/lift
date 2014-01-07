@@ -21,10 +21,15 @@ public class Timer implements Runnable
 		isWaiting = true;
 	}
 	
-	public long getTime()
+	public synchronized long getTime()
 	{
 		return currentTime;
 	}
+	
+	public synchronized void increment()
+	{
+		++currentTime;
+	}	
 	
 	public void notifyAt(final Object who, final long interval)
 	{
@@ -102,7 +107,7 @@ public class Timer implements Runnable
 			}
 			
 			while(System.nanoTime() - oldTime < 1000000);
-			++currentTime;
+			increment();
 		}
 	}
 	
